@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import AppBar from './AppBar';
 import Menu from './Menu';
@@ -20,35 +21,35 @@ const styles = theme => ({
     position: 'relative',
   },
   selectionMobile: {
-    
+
     display: 'none',
     [theme.breakpoints.up('md')]: {
       display: 'block',
+      width: '250px',
     },
   },
 });
 
-function AutoGrid(props) {
+function MainFrame(props) {
   const { classes } = props;
 
   return (
     <div className={classes.root}>
       <Grid container spacing={0}>
-        <Grid item md={2} xs={3} className={classes.selectionMobile}>
+        <Grid item md={3} lg={2} className={classes.selectionMobile}>
           <Paper className={classes.paper} >
             <Menu></Menu>
           </Paper>
         </Grid>
-        <Grid item sm={12} md={10}>
+        <Grid item sm={12} md={9} lg={10} >
           <Paper className={classes.paper}>
-            <AppBar/>
+            <AppBar />
             <Grid container>
-                <Grid item sm={6}>
-                    <Paper>6col</Paper>
-                </Grid>
-                <Grid item sm={6}>
-                    <Paper>6col</Paper>
-                </Grid>
+              <BrowserRouter>
+                <Switch>
+                  
+                </Switch>
+              </BrowserRouter>
             </Grid>
           </Paper>
         </Grid>
@@ -57,8 +58,8 @@ function AutoGrid(props) {
   );
 }
 
-AutoGrid.propTypes = {
+MainFrame.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AutoGrid);
+export default withStyles(styles)(MainFrame);

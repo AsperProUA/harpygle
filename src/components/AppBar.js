@@ -13,13 +13,14 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
+import Message from '@material-ui/icons/ChatBubble';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
 const styles = theme => ({
   root: {
     width: '100%',
+    color: theme.palette.grey[900],
   },
   grow: {
     flexGrow: 1,
@@ -138,27 +139,27 @@ class PrimarySearchAppBar extends React.Component {
         onClose={this.handleMobileMenuClose}
       >
         <MenuItem>
-          <IconButton color="inherit">
-            {/* <Badge badgeContent={null} color="secondary"> */}
-              <MailIcon />
-            {/* </Badge> */}
-          </IconButton>
-          <p>Messages</p>
-        </MenuItem>
-        <MenuItem>
-          <IconButton color="inherit">
-            <Badge badgeContent={11} color="secondary">
+          <IconButton >
+            {/* <Badge badgeContent={11} color="secondary"> */}
               <NotificationsIcon />
-            </Badge>
+            {/* </Badge> */}
           </IconButton>
           <p>Notifications</p>
         </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
+        <MenuItem>
+          <IconButton >
+            <Badge badgeContent={2} color="secondary">
+              <Message />
+            </Badge>
+          </IconButton>
+          <p>Messages</p>
+        </MenuItem>
+        {/* <MenuItem onClick={this.handleProfileMenuOpen}>
+          <IconButton >
             <AccountCircle />
           </IconButton>
           <p>Profile</p>
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     );
 
@@ -166,12 +167,12 @@ class PrimarySearchAppBar extends React.Component {
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
+            <IconButton className={classes.menuButton}  aria-label="Open drawer">
               <MenuIcon />
             </IconButton>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+            {/* <Typography className={classes.title} variant="h6" noWrap>
               Harpygle
-            </Typography>
+            </Typography> */}
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -186,27 +187,27 @@ class PrimarySearchAppBar extends React.Component {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <IconButton color="inherit">
-                {/* <Badge badgeContent={''} color="secondary"> */}
-                  <MailIcon />
+              <IconButton >
+                {/* <Badge badgeContent={2} color="secondary"> */}
+                  <NotificationsIcon />
                 {/* </Badge> */}
               </IconButton>
-              <IconButton color="inherit">
+              <IconButton >
                 <Badge badgeContent={2} color="secondary">
-                  <NotificationsIcon />
+                  <Message />
                 </Badge>
               </IconButton>
-              <IconButton
+              {/* <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
-                color="inherit"
+                
               >
                 <AccountCircle />
-              </IconButton>
+              </IconButton> */}
             </div>
             <div className={classes.sectionMobile}>
-              <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
+              <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} >
                 <MoreIcon />
               </IconButton>
             </div>
