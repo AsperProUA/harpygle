@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import AppBar from './AppBar';
 import Menu from './Menu';
+import Profile from './businessOwners/Profile';
 
 const styles = theme => ({
   root: {
@@ -35,25 +36,27 @@ function MainFrame(props) {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={0}>
-        <Grid item md={3} lg={2} className={classes.selectionMobile}>
-          <Paper className={classes.paper} >
-            <Menu></Menu>
-          </Paper>
-        </Grid>
-        <Grid item sm={12} md={9} lg={10} >
-          <Paper className={classes.paper}>
-            <AppBar />
-            <Grid container>
-              <BrowserRouter>
+      <BrowserRouter>
+        <Grid container spacing={0}>
+          <Grid item md={3} lg={2} className={classes.selectionMobile}>
+            <Paper className={classes.paper} >
+              <Menu></Menu>
+            </Paper>
+          </Grid>
+          <Grid item sm={12} md={9} lg={10} >
+            <Paper className={classes.paper}>
+              <AppBar />
+              <Grid container>
+
                 <Switch>
-                  
+                  <Route exact path='/profile' render={() => <Profile />} />
                 </Switch>
-              </BrowserRouter>
-            </Grid>
-          </Paper>
+
+              </Grid>
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
+      </BrowserRouter>
     </div>
   );
 }

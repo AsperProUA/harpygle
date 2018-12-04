@@ -6,13 +6,15 @@ import './App.css';
 import MainFrame from './components/MainFrame';
 import Intro from './components/intro'
 
-window.myOwnProps = { apiPath: 'http://api.asper.pro/api' };
+window.myOwnProps = { apiPath: 'http://192.168.0.92:4500/' };
 
 class App extends Component {
   constructor() {
     super();
 
     let appState = {};
+
+    console.log(localStorage['appState'])
 
     if (localStorage['appState']) {
       appState = JSON.parse(localStorage['appState']);
@@ -24,6 +26,7 @@ class App extends Component {
       }
 
     } else {
+      console.log('nologed');
       appState = {
         isLoggedIn: false,
         user: {},
@@ -33,6 +36,34 @@ class App extends Component {
     appState.isLoad = false;
     appState.success = true;
     this.state = appState;
+
+    window.myOwnProps.getData = (data) => {
+      this.setState({ isLoad: true });
+      return new Promise((resolve) => {
+        axios.get(window.myOwnProps.apiPath + data.url).then((response) => {
+
+          if (response.data.auth) {
+            this.setState({ success: response.data.success, isLoad: false });
+            return resolve(response);
+          }
+        }).catch((error) => {
+          if (error.response) {
+            if (error.response.status == '401') {
+              this.logoutUser();
+            }
+            if (error.response.status == '403') {
+              this.setState({
+                success: false,
+                isError: true,
+                isLoading: false,
+              });
+            }
+          } else {
+            console.log(error);
+          }
+        });
+      });
+    }
 
     window.myOwnProps.getData = (data) => {
       this.setState({ isLoad: true });

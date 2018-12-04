@@ -36,7 +36,10 @@ const styles = theme => ({
     color: theme.palette.grey[500],
   },
   menu: {
-    '& hr': { color: theme.palette.grey[500], },
+    '& a':{
+      textDecoration: 'none',
+    },
+    '& hr': { borderColor: theme.palette.grey[500], },
   },
   root: {
     // position: 'fixed',
@@ -53,7 +56,7 @@ function ListItemComposition(props) {
     <Paper className={classes.root}>
       <div className={classes.logo}>
         <Link to='/'>
-          <img src='harpygle Logo white@1x.png' width={114}></img>
+          <img src='harpygle Logo white.png' width={114}></img>
         </Link>
       </div>
       <MenuList className={classes.menu}>
@@ -78,12 +81,14 @@ function ListItemComposition(props) {
           <ListItemText classes={{ primary: classes.primary }} inset primary="Products" />
         </MenuItem>
         <hr></hr>
-        <MenuItem className={classes.menuItem}>
-          <ListItemIcon className={classes.icon}>
-            <SettingsIcon />
-          </ListItemIcon>
-          <ListItemText classes={{ primary: classes.primary }} inset primary="Account Settings" />
-        </MenuItem>
+        <Link to='profile'>
+          <MenuItem className={classes.menuItem}>
+            <ListItemIcon className={classes.icon}>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText classes={{ primary: classes.primary }} inset primary="Account Settings" />
+          </MenuItem>
+        </Link>
         <hr></hr>
         <MenuItem className={classes.menuItem}>
           <ListItemIcon className={classes.icon}>

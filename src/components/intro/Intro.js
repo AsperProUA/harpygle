@@ -4,8 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import HomeIcon from '@material-ui/icons/Home'
+import { Link } from 'react-router-dom';
 
 const style = theme => ({
     root: {
@@ -152,7 +151,7 @@ const style = theme => ({
         [theme.breakpoints.up('md')]: {
             boxSizing: 'border-box',
         },
-         
+
     },
     footerMenuItem: {
         margin: '5px 0',
@@ -167,8 +166,8 @@ const style = theme => ({
         flexDirection: 'row',
         margin: 'auto',
         [theme.breakpoints.up('md')]: {
-             padding: '96px',
-             margin: 0,
+            padding: '96px',
+            margin: 0,
         },
     },
     socialBtn: {
@@ -188,9 +187,8 @@ const style = theme => ({
 });
 
 function scroll() {
-    let staticLocation = window.location.href;
     return () => {
-        window.location.href = staticLocation + '#howItWork';
+        window.location.href = window.location.hostname + '#howItWork';
     }
 }
 
@@ -220,13 +218,15 @@ function Intro(props) {
                             >
                                 How It Works
                             </Button>
-                            <Button
-                                variant="contained"
-                                style={{ backgroundColor: "#FFCC00" }}
-                                className={classes.button}
-                            >
-                                Join Us Now
+                            <Link style={{textDecoration:'none'}} to='/presign'>
+                                <Button
+                                    variant="contained"
+                                    style={{ backgroundColor: "#FFCC00" }}
+                                    className={classes.button}
+                                >
+                                    Join Us Now
                             </Button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -236,7 +236,7 @@ function Intro(props) {
                 <Grid container spacing={0}>
                     <Grid item md={6} >
                         <Paper className={classes.paper} >
-                            <img style={{ margin: '20px' }} src={'pictures/HowItWork/undraw_Container_ship_urt4 (1)@2x.png'}></img>
+                            <img style={{ margin: '20px' }} src={'pictures/Intro/undraw_Container_ship_urt4 (1)@2x.png'}></img>
                             <div className={classes.badge}>
                                 <p className={classes.bageNum}>01</p>
                                 <p className={classes.badgeName}>Buy Directly From The Supplier</p>
@@ -247,7 +247,7 @@ function Intro(props) {
                     </Grid>
                     <Grid item md={6} >
                         <Paper className={classes.paper} >
-                            <img style={{ margin: '20px' }} src={'pictures/HowItWork/undraw_credit_card_payment_12va@2x.png'}></img>
+                            <img style={{ margin: '20px' }} src={'pictures/Intro/undraw_credit_card_payment_12va@2x.png'}></img>
                             <div className={classes.badge}>
                                 <p className={classes.bageNum}>02</p>
                                 <p className={classes.badgeName}>COD in Morocco</p>
@@ -258,7 +258,7 @@ function Intro(props) {
                     </Grid>
                     <Grid item sm={6} >
                         <Paper className={classes.paper} >
-                            <img style={{ margin: '20px' }} src={'pictures/HowItWork/Group 55@2x.png'}></img>
+                            <img style={{ margin: '20px' }} src={'pictures/Intro/Group 55@2x.png'}></img>
                             <div className={classes.badge}>
                                 <p className={classes.bageNum}>03</p>
                                 <p className={classes.badgeName}>An Easy Way To Be  Your Own Boss</p>
@@ -268,7 +268,7 @@ function Intro(props) {
                     </Grid>
                     <Grid item sm={6} >
                         <Paper className={classes.paper} >
-                            <img style={{ margin: '20px' }} src={'pictures/HowItWork/undraw_add_to_cart_vkjp@2x.png'}></img>
+                            <img style={{ margin: '20px' }} src={'pictures/Intro/undraw_add_to_cart_vkjp@2x.png'}></img>
                             <div className={classes.badge}>
                                 <p className={classes.bageNum}>04</p>
                                 <p className={classes.badgeName}>Import & Sell Your Products Very Quickly To The Right Customers</p>
