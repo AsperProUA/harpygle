@@ -17,7 +17,7 @@ const styles = theme => ({
     padding: 0, // theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    height: '100vh',
+    minHeight: '100vh',
     borderRadius: 0,
     position: 'relative',
   },
@@ -40,7 +40,7 @@ function MainFrame(props) {
         <Grid container spacing={0}>
           <Grid item md={3} lg={2} className={classes.selectionMobile}>
             <Paper className={classes.paper} >
-              <Menu></Menu>
+              <Menu role={props.role}></Menu>
             </Paper>
           </Grid>
           <Grid item sm={12} md={9} lg={10} >

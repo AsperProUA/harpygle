@@ -44,14 +44,14 @@ const styles = theme => ({
   root: {
     // position: 'fixed',
     backgroundColor: theme.palette.grey[900],
-    height: '100%',
+    height: '100vh',
     width: '100%',
   },
 });
 
 function ListItemComposition(props) {
   const { classes } = props;
-
+  //console.log(props.role);
   return (
     <Paper className={classes.root}>
       <div className={classes.logo}>

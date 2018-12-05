@@ -7,7 +7,6 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
 import Header from './Header';
-import SignUp from './SignUp';
 
 const style = theme => ({
     root: {
@@ -15,7 +14,7 @@ const style = theme => ({
         height: '100vh',
     },
     body: {
-        position:'relative',
+        position: 'relative',
         padding: '0 50px',
         paddingTop: '90px',
         minHeight: 'calc(100% - 130px)',
@@ -92,23 +91,23 @@ const style = theme => ({
 });
 
 class PreSignUp extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
-        this.state ={
+        this.state = {
             modalOpen: false,
             currentRegistered: null,
         }
     }
 
     closeModal = () => {
-        this.setState({modalOpen: false});
+        this.setState({ modalOpen: false });
     }
 
     render() {
 
         const { classes } = this.props;
-        
+
         return (
             <div className={classes.root}>
                 <Header />
@@ -124,7 +123,9 @@ class PreSignUp extends Component {
                             <p className={classes.description}>Cash Settlement</p>
                             <p className={classes.description}>Delivery</p>
                             <p className={classes.description}>Pick Up</p>
-                            <Button onClick={() => this.setState({modalOpen: true, currentRegistered: 'business owner'})}>GET STARTED</Button>
+                            <Link to='owner/signup'>
+                                <Button>GET STARTED</Button>
+                            </Link>
                             <br />
                             <Link to='/about'>LEARN MORE</Link>
                         </Paper>
@@ -140,7 +141,9 @@ class PreSignUp extends Component {
                             <p className={classes.description}>Be Your Own Boss</p>
                             <p className={classes.description}>Make Your Own Money</p>
                             <p className={classes.description}>Control Your Own Life</p>
-                            <Button onClick={() => this.setState({modalOpen: true, currentRegistered: 'courier'})}>GET STARTED</Button>
+                            <Link to='courier/signup'>
+                                <Button>GET STARTED</Button>
+                            </Link>
                             <br />
                             <Link to='/about'>LEARN MORE</Link>
                         </Paper>
@@ -156,12 +159,13 @@ class PreSignUp extends Component {
                             <p className={classes.description}>Verified Suppliers</p>
                             <p className={classes.description}>Easy Live Quotes </p>
                             <p className={classes.description}>Delivery</p>
-                            <Button onClick={() => this.setState({modalOpen: true, currentRegistered: 'supplier'})}>GET STARTED</Button>
+                            <Link to='supplier/signup'>
+                                <Button>GET STARTED</Button>
+                            </Link>
                             <br />
                             <Link to='/about'>LEARN MORE</Link>
                         </Paper>
                     </Grid>
-                    {this.state.modalOpen ? <div className={classes.modalBg} ><SignUp close={this.closeModal} registered={this.state.currentRegistered}/></div> : ''}
                 </Grid>
             </div >
         );

@@ -4,13 +4,17 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import Intro from './Intro';
 import PreSignUp from './PreSignUp';
+import OwnerSignUp from './OwnerSignUp';
+import SignIn from './SignIn';
 
 function NonAuth() {
     return (
         <BrowserRouter>
             <Switch>
                 <Route exact path='/presign' render={() => <PreSignUp/>} />
-                <Route exact path='/ownersignup' render={() => <div></div>} />
+                <Route exact path='/owner/signup' render={() => <OwnerSignUp/>} />
+                <Route exact path='/signin' render={() => <SignIn/>} />
+
                 <Route path='/' render={() => <Intro />} />
                 
             </Switch>

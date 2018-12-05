@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -8,10 +9,7 @@ import PhotoIcon from '@material-ui/icons/PhotoCamera';
 import ClearIcon from '@material-ui/icons/Clear';
 import CheckIcon from '@material-ui/icons/CheckCircle';
 import FormGroup from '@material-ui/core/FormGroup';
-import FormLabel from '@material-ui/core/FormLabel';
-import Input from '@material-ui/core/Input';
-
-
+import TextField from '@material-ui/core/TextField';
 
 const style = theme => ({
     avatar: {
@@ -81,19 +79,8 @@ const style = theme => ({
         margin: 'auto',
         textAlign: 'left',
         padding: '35px 0',
-        '& label': {
-            fontSize: 18,
-            fontWeight: 'bold',
-            color: '#979797',
-            margin: '18px',
-        },
-        '& input': {
-            padding: '12px 22px',
-            borderRadius: '6px',
-            border: '1px solid #D0D0D0',
-        }
     },
-    submitBtn:{
+    submitBtn: {
         width: 214,
         height: 60,
         margin: '20px 0',
@@ -114,18 +101,88 @@ class Profile extends Component {
         super(props);
         this.state = {
             user: {
-                id: null,
+                id: '',
                 avatar: null,
-            }
+                email: {
+                    value: '',
+                    isValid: false,
+                    errMsg: 'invalid email',
+                },
+                password: {
+                    value: '',
+                    isValid: false,
+                    errMsg: 'password is too short',
+                },
+                passwordRepeat: {
+                    value: '',
+                    isValid: false,
+                    errMsg: 'passwords are not equal',
+                },
+                name: { value: '', },
+                city: { value: '', },
+                phoneNum: { value: '', },
+                pickupAddress: { value: '', },
+            },
+            isValid: false,
+            isChecked: false,
         }
+        this.fetchOwner();
+    }
+
+    fetchOwner = () => {
+        window.myOwnProps.getData({ url: `business/get/${JSON.parse(localStorage['appState']).user.id}` })
+            .then(response => {
+
+                const { ownerID, name, city, phoneNum, email, pickupAddress, password } = response.data;
+                console.log(response);
+                this.setState(currentState => {
+                    const { user } = currentState;
+                    user.id = ownerID;
+                    user.name.value = name;
+                    user.city.value = city;
+                    user.phoneNum.value = phoneNum;
+                    user.email.value = email;
+                    user.pickupAddress.value = pickupAddress;
+                    user.password.value = password;
+                    return currentState;
+                });
+            });
+
+    }
+
+    handleInput = (name, value) => {
+
+        this.setState(currentState => {
+            currentState.user[name].value = value;
+            return currentState;
+        });
+
+    }
+
+    updateOwner = (e) => {
+        e.preventDefault();
+        const {id, name, city,phoneNum, pickupAddress, password} = this.state.user;
+        console.log(name);
+        axios.put(`${window.myOwnProps.apiPath}business/update/${id}`,{
+                password: password.value,
+                name: name.value,
+                city: city.value,
+                phoneNum: phoneNum.value,
+                pickupAddress: pickupAddress.value,
+        },{
+            headers: {'Content-Type': 'application/json'}, 
+        }).then(console.log);
     }
 
     render() {
+        console.log(this.state.user)
         const { classes } = this.props;
+        const { name, city, pickupAddress, phoneNum, email, password, passwordRepeat, isChecked, isValid } = this.state.user;
+        const { handleInput } = this;
         return (
             <Grid container spacing={0}>
-                <Grid item md={6} className={classes.column}>
-                    {this.state.user.avatar ? <div className={classes.avatar}>Img</div> : <div className={[classes.avatar ,classes.defaultAvatar].join(' ')}></div>}
+                <Grid item md={6}  sm={12}  xs={12} className={classes.column}>
+                    {this.state.user.avatar ? <div className={classes.avatar}>Img</div> : <div className={[classes.avatar, classes.defaultAvatar].join(' ')}></div>}
                     <Button><PhotoIcon /> Change Image</Button>
                     <p className={classes.removeImgText}><ClearIcon /> REMOVE IMAGE</p>
                     <div className={classes.accountId}>
@@ -141,38 +198,69 @@ class Profile extends Component {
                         <Button style={{ backgroundColor: 'inherit', color: '#979797', fontSize: 14, margin: 0, textTransform: 'none' }}>Delete account</Button>
                     </div>
                 </Grid>
-                <Grid item md={6}>
-                    <form>
+                <Grid item md={6} sm={12} xs={12}>
+                    <form onSubmit={(event) => this.updateOwner(event)}>
+                        <h2>{email.value}</h2>
                         <FormGroup className={classes.formGroup}>
-                            <FormLabel>
-                                Email Address<br />
-                                <Input fullWidth placeholder='example@mail.com' type='email'>
-                                </Input>
-                            </FormLabel>
-                            <FormLabel>
-                                Sequrity Question<br />
-                                <Input fullWidth placeholder='What are you favorite color' >
-                                </Input>
-                            </FormLabel>
-                            <FormLabel>
-                                Sequrity Answer<br />
-                                <Input fullWidth placeholder='Red'>
-                                </Input>
-                            </FormLabel>
-                            <FormLabel>
-                                Current Password<br />
-                                <Input fullWidth placeholder='Type you password' type='password'>
-                                </Input>
-                            </FormLabel>
-                            <FormLabel>
-                                New Password<br />
-                                <Input fullWidth type='password' placeholder='Type you password'>
-                                </Input>
-                            </FormLabel>
+                            <TextField
+                                error={isChecked && !isValid && name.errMsg && !name.isValid}
+                                label="Full Name"
+                                value={name.value}
+                                onInput={(event) => { this.handleInput('name', event.target.value) }}
+                                helperText={isChecked && !isValid && !name.isValid && name.errMsg}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                            <TextField
+                                error={isChecked && !isValid && city.errMsg && !city.isValid}
+                                label="City"
+                                value={city.value}
+                                onInput={(event) => { this.handleInput('city', event.target.value) }}
+                                helperText={isChecked && !isValid && !city.isValid && city.errMsg}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                            <TextField
+                                error={isChecked && !isValid && phoneNum.errMsg && !phoneNum.isValid}
+                                label="Phone Number"
+                                value={phoneNum.value}
+                                type='number'
+                                onInput={(event) => { this.handleInput('phoneNum', event.target.value) }}
+                                helperText={isChecked && !isValid && !phoneNum.isValid && phoneNum.errMsg}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                            <TextField
+                                error={isChecked && !isValid && pickupAddress.errMsg && !pickupAddress.isValid}
+                                label="Pickup Address"
+                                value={pickupAddress.value}
+                                onInput={(event) => { this.handleInput('pickupAddress', event.target.value) }}
+                                helperText={isChecked && !isValid && !pickupAddress.isValid && pickupAddress.errMsg}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                            <TextField
+                                error={isChecked && !isValid && password.errMsg && !password.isValid}
+                                label="Password"
+                                value={password.value}
+                                onInput={(event) => { this.handleInput('password', event.target.value) }}
+                                helperText={isChecked && !isValid && !password.isValid && password.errMsg}
+                                type='password'
+                                margin="normal"
+                                variant="outlined"
+                            />
+                            <TextField
+                                error={isChecked && !isValid && passwordRepeat.errMsg && !passwordRepeat.isValid}
+                                label="Repeat password"
+                                value={passwordRepeat.value}
+                                onInput={(event) => { this.handleInput('passwordRepeat', event.target.value) }}
+                                helperText={isChecked && !isValid && !passwordRepeat.isValid && passwordRepeat.errMsg}
+                                type='password'
+                                margin="normal"
+                                variant="outlined"
+                            />
                         </FormGroup>
-                        <FormGroup>
-                            <Button className={classes.submitBtn}>Submit</Button>
-                        </FormGroup>
+                        <Button className={classes.submitBtn} type='submit'>Submit</Button>
                     </form>
                 </Grid>
             </Grid>

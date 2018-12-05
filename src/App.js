@@ -14,7 +14,7 @@ class App extends Component {
 
     let appState = {};
 
-    console.log(localStorage['appState'])
+    // console.log(localStorage['appState'])
 
     if (localStorage['appState']) {
       appState = JSON.parse(localStorage['appState']);
@@ -26,7 +26,6 @@ class App extends Component {
       }
 
     } else {
-      console.log('nologed');
       appState = {
         isLoggedIn: false,
         user: {},
@@ -70,7 +69,7 @@ class App extends Component {
       return new Promise((resolve) => {
         axios.get(window.myOwnProps.apiPath + data.url).then((response) => {
 
-          if (response.data.auth) {
+          if (/*response.data.auth*/true) {
             this.setState({ success: response.data.success, isLoad: false });
             return resolve(response);
           }
@@ -92,6 +91,47 @@ class App extends Component {
         });
       });
     }
+
+    window.myOwnProps.loginUser = (email, password, type) => {
+
+      return new Promise((resolve, reject) => {
+        axios.post(window.myOwnProps.apiPath + "login", {
+          userType: type,
+          email: email,
+          password: password,
+        })
+          .then(response => {
+            return response;
+          })
+          .then(json => {
+            if ('bOwner logged in successfully' == json.data.msg) {
+
+              let userData = {
+                id: json.data.businessOwnerID,
+                token: json.data.accessToken,
+                expireAt: json.data.expires_at
+              };
+              let appState = {
+                isLoggedIn: true,
+                user: userData
+              };
+              // save app state with user date in local storage
+              localStorage["appState"] = JSON.stringify(appState);
+              this.setState({
+                isLoggedIn: appState.isLoggedIn,
+                user: appState.user
+              });
+              return resolve(true);
+            } else alert("Login Failed!");
+
+          })
+          .catch(error => {
+            if (error.response.data.error) {
+              return reject(error.response.data.msg);
+            }
+          });
+      })
+    }
   }
 
   logoutUser = () => {
@@ -105,52 +145,15 @@ class App extends Component {
     this.setState(appState);
 
   };
-  loginUser = (email, password, remember) => {
-    document.querySelector('#login-form button')
-      .setAttribute('disabled', 'disabled');
-    var formData = new FormData();
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("rember_me", remember);
 
-    axios.post(window.myOwnProps.apiPath + "/auth/login", formData, { headers: {} })
-      .then(response => {
-        return response;
-      })
-      .then(json => {
-        if (json.data.success) {
-          console.log(json);
-          let userData = {
-            auth_token: json.data.auth_token,
-            expires_at: json.data.expires_at
-          };
-          let appState = {
-            isLoggedIn: true,
-            user: userData
-          };
-          // save app state with user date in local storage
-          localStorage["appState"] = JSON.stringify(appState);
-          this.setState({
-            isLoggedIn: appState.isLoggedIn,
-            user: appState.user
-          });
-        } else alert("Login Failed!");
-
-      })
-      .catch(error => {
-        alert(`An Error Occured! ${error}`);
-        document.querySelector("#login-form button")
-          .removeAttribute("disabled");
-      });
-  }
 
   render() {
     if (this.state.isLoggedIn) {
 
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage['appState']).user.auth_token;
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage['appState']).user.token;
       return (
 
-        <MainFrame />
+        <MainFrame role={this.state.user.role} />
 
       );
     } else {
