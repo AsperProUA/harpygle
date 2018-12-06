@@ -19,6 +19,7 @@ const style = theme => ({
         verticalAlign: 'middle',
         backgroundColor: theme.palette.grey[300],
         borderRadius: '50%',
+        backgroundPosition: 'center',
     },
     column: {
         display: 'flex',
@@ -91,7 +92,21 @@ const style = theme => ({
     },
     defaultAvatar: {
         backgroundImage: `url(${defaultAvatar})`,
-    }
+    },
+    fileUpload: {
+        position: 'relative',
+        overflow: 'hidden',
+        '& input': {
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            width: '100%',
+            height: '100%',
+            transform: 'scale(20)',
+            opacity: 0,
+            cursor: 'pointer',
+        }
+    },
 });
 
 const defaultAvatar = 'pictures/poy_benbernanke.png';
@@ -102,7 +117,10 @@ class Profile extends Component {
         this.state = {
             user: {
                 id: '',
-                avatar: null,
+                avatar: {
+                    updated: false,
+                    value: null,
+                },
                 email: {
                     value: '',
                     isValid: false,
@@ -133,7 +151,7 @@ class Profile extends Component {
         window.myOwnProps.getData({ url: `business/get/${JSON.parse(localStorage['appState']).user.id}` })
             .then(response => {
 
-                const { ownerID, name, city, phoneNum, email, pickupAddress, password } = response.data;
+                const { ownerID, name, city, phoneNum, email, pickupAddress, password, pictureUrl } = response.data;
                 console.log(response);
                 this.setState(currentState => {
                     const { user } = currentState;
@@ -143,7 +161,7 @@ class Profile extends Component {
                     user.phoneNum.value = phoneNum;
                     user.email.value = email;
                     user.pickupAddress.value = pickupAddress;
-                    user.password.value = password;
+                    user.avatar.value = pictureUrl;
                     return currentState;
                 });
             });
@@ -160,30 +178,97 @@ class Profile extends Component {
     }
 
     updateOwner = (e) => {
-        e.preventDefault();
-        const {id, name, city,phoneNum, pickupAddress, password} = this.state.user;
-        console.log(name);
-        axios.put(`${window.myOwnProps.apiPath}business/update/${id}`,{
-                password: password.value,
-                name: name.value,
-                city: city.value,
-                phoneNum: phoneNum.value,
-                pickupAddress: pickupAddress.value,
-        },{
-            headers: {'Content-Type': 'application/json'}, 
+        e && e.preventDefault();
+        const { id, name, city, phoneNum, pickupAddress, avatar, password } = this.state.user;
+        let body = {
+            password: password.value,
+            name: name.value,
+            city: city.value,
+            phoneNum: phoneNum.value,
+            pickupAddress: pickupAddress.value,
+        };
+        avatar.updated && (body.picture = avatar.value);
+
+        axios.put(`${window.myOwnProps.apiPath}business/update/${id}`, body, {
+            headers: { 'Content-Type': 'application/json' },
+        }).then(console.log);
+    }
+
+    handleFile = (e) => {
+        //console.log(e.target.files)
+        e.preventDefault && e.preventDefault();
+        var image, canvas, i;
+        var images = 'files' in e.target ? e.target.files : 'dataTransfer' in e ? e.dataTransfer.files : [];
+        if (images && images.length) {
+            for (i in images) {
+                if (typeof images[i] != 'object') continue;
+                image = new Image();
+                image.src = this.createObjectURL(images[i]);
+                image.onload = (e) => {
+                    var mybase64resized = this.resizeCrop(e.target, 150, 150).toDataURL('image/jpg', 90);
+                    this.setState(currentState => {
+                        currentState.user.avatar.value = mybase64resized;
+                        currentState.user.avatar.updated = true;
+                        return currentState;
+                    });
+                }
+            }
+        }
+    }
+
+    resizeCrop = (src, width, height) => {
+        var crop = width == 0 || height == 0;
+        // not resize
+        if (src.width <= width && height == 0) {
+            width = src.width;
+            height = src.height;
+        }
+        // resize
+        if (src.width > width && height == 0) {
+            height = src.height * (width / src.width);
+        }
+
+        // check scale
+        var xscale = width / src.width;
+        var yscale = height / src.height;
+        var scale = crop ? Math.min(xscale, yscale) : Math.max(xscale, yscale);
+        // create empty canvas
+        var canvas = document.createElement("canvas");
+        canvas.width = width ? width : Math.round(src.width * scale);
+        canvas.height = height ? height : Math.round(src.height * scale);
+        canvas.getContext("2d").scale(scale, scale);
+        // crop it top center
+        canvas.getContext("2d").drawImage(src, ((src.width * scale) - canvas.width) * -.5, ((src.height * scale) - canvas.height) * -.5);
+        return canvas;
+    }
+
+    createObjectURL = (i) => {
+        var URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+        return URL.createObjectURL(i);
+    }
+
+    handleDelete = () => {
+        const { id } = this.state.user;
+        axios.put(`${window.myOwnProps.apiPath}business/update/${id}`, { isDeletedAcc: true }, {
+            headers: { 'Content-Type': 'application/json' },
         }).then(console.log);
     }
 
     render() {
-        console.log(this.state.user)
+        // console.log(this.state.user.avatar)
         const { classes } = this.props;
-        const { name, city, pickupAddress, phoneNum, email, password, passwordRepeat, isChecked, isValid } = this.state.user;
+        const { name, city, pickupAddress, phoneNum, email, password, passwordRepeat, isChecked, isValid, avatar } = this.state.user;
         const { handleInput } = this;
+        console.log(password);
         return (
+
             <Grid container spacing={0}>
-                <Grid item md={6}  sm={12}  xs={12} className={classes.column}>
-                    {this.state.user.avatar ? <div className={classes.avatar}>Img</div> : <div className={[classes.avatar, classes.defaultAvatar].join(' ')}></div>}
-                    <Button><PhotoIcon /> Change Image</Button>
+                <Grid item md={6} sm={12} xs={12} className={classes.column}>
+                    {avatar.value ? <div className={classes.avatar} style={{ backgroundImage: `url(${avatar.value})` }}></div> : <div className={[classes.avatar, classes.defaultAvatar].join(' ')}></div>}
+                    <Button className={classes.fileUpload}>
+                        <PhotoIcon /> Change Image
+                        <input type='file' onChange={(event) => { this.handleFile(event) }} />
+                    </Button>
                     <p className={classes.removeImgText}><ClearIcon /> REMOVE IMAGE</p>
                     <div className={classes.accountId}>
                         <p className={classes.removeImgText}><CheckIcon /><span className={classes.secondaryText}>Your Account Is Verified</span></p>
@@ -195,7 +280,7 @@ class Profile extends Component {
                         https://egypt.souq.com/
                     </div>
                     <div className={classes.accountId} style={{ paddingBottom: 0 }}>
-                        <Button style={{ backgroundColor: 'inherit', color: '#979797', fontSize: 14, margin: 0, textTransform: 'none' }}>Delete account</Button>
+                        <Button onClick={this.handleDelete} style={{ backgroundColor: 'inherit', color: '#979797', fontSize: 14, margin: 0, textTransform: 'none' }}>Delete account</Button>
                     </div>
                 </Grid>
                 <Grid item md={6} sm={12} xs={12}>

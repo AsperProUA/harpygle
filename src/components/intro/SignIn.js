@@ -117,6 +117,7 @@ class SignIn extends Component {
     }
 
     validateField = (field, value) => {
+        console.log(value)
         let valid = false;
         let errMsg = undefined;
         switch (field) {
@@ -126,6 +127,7 @@ class SignIn extends Component {
                 break;
             case 'password':
                 valid = !!value.match(/\s*([\w]{6,})\s*/);
+                console.log(valid);
                 break;
             case 'role':
                 valid = !!value;
@@ -175,8 +177,7 @@ class SignIn extends Component {
             <div>
                 <Header />
                 <form className={classes.root} onSubmit={this.handleSign}>
-                    <h1>SIGN UP</h1>
-                    as business owner
+                    <h1>SIGN IN</h1>
                         <FormGroup>
                         <TextField
                             error={isChecked && !isValid && email.errMsg && !email.isValid}

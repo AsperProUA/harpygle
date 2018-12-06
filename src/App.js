@@ -150,7 +150,7 @@ class App extends Component {
   render() {
     if (this.state.isLoggedIn) {
 
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage['appState']).user.token;
+      axios.defaults.headers.common['Authorization'] = JSON.parse(localStorage['appState']).user.token;
       return (
 
         <MainFrame role={this.state.user.role} />
