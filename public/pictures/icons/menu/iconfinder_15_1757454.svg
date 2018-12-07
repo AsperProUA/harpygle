@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.404 22.34">
+  <defs>
+    <style>
+      .cls-1 {
+        opacity: 0.5;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="iconfinder_15_1757454" class="cls-1" transform="translate(-6 -78.14)">
+    <circle id="XMLID_368_" class="cls-2" cx="1.57" cy="1.57" r="1.57" transform="translate(8.311 97.339)"/>
+    <path id="XMLID_367_" class="cls-2" d="M37.368,79.111a1.261,1.261,0,0,0-1.52-.936l-5.308,1.263a1.284,1.284,0,0,0-.867.722L26.012,96.032H7.263a1.263,1.263,0,0,0,0,2.525h.484a2.164,2.164,0,0,1,4.271,0h8.2a2.164,2.164,0,0,1,4.271,0h2.368a1.255,1.255,0,0,0,1.156-.76l3.75-16.048,4.692-1.118A1.261,1.261,0,0,0,37.368,79.111Z" transform="translate(0 0)"/>
+    <circle id="XMLID_366_" class="cls-2" cx="1.57" cy="1.57" r="1.57" transform="translate(20.773 97.339)"/>
+    <rect id="XMLID_365_" class="cls-2" width="4.19" height="3.819" transform="translate(12.137 87.201)"/>
+    <rect id="XMLID_364_" class="cls-2" width="4.19" height="3.819" transform="translate(17.143 87.201)"/>
+    <rect id="XMLID_363_" class="cls-2" width="4.19" height="3.819" transform="translate(14.643 82.842)"/>
+    <rect id="XMLID_362_" class="cls-2" width="4.19" height="3.819" transform="translate(19.731 91.554)"/>
+    <rect id="XMLID_361_" class="cls-2" width="4.19" height="3.819" transform="translate(14.643 91.554)"/>
+    <rect id="XMLID_360_" class="cls-2" width="4.19" height="3.819" transform="translate(9.549 91.554)"/>
+  </g>
+</svg>

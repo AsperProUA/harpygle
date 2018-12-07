@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { connect } from 'react-redux'
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -6,6 +7,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
+import apiPath from '../../services/apiPath';
 
 import Header from './Header';
 
@@ -61,6 +63,7 @@ const style = theme => ({
 class SignIn extends Component {
     constructor(props) {
         super(props);
+        console.log(props)
         this.state = {
             email: {
                 value: '',
@@ -83,7 +86,7 @@ class SignIn extends Component {
                     label: 'Business owner'
                 },
                 {
-                    value: 'Suppliers',
+                    value: 'suppliers',
                     label: 'Supplier'
                 },
                 {
@@ -146,27 +149,55 @@ class SignIn extends Component {
         this.setState({ isChecked: true });
         this.validateForm();
         if (this.state.isValid) {
-            window.myOwnProps.loginUser(email.value, password.value, role.value)
-            .then(console.log)
-            .catch((err) => {
-                console.log('err: ',err)
-                if('No user found in this email' == err){
-                    this.setState(currentState => {
-                        currentState.email.isValid = false;
-                        currentState.email.errMsg = 'No user found in this email';
-                        currentState.isValid = false;
-                        return currentState;
-                    });
-                } else if('password did not match with the email' == err){
-                    this.setState(currentState => {
-                        currentState.password.isValid = false;
-                        currentState.password.errMsg = 'password did not match with the email';
-                        currentState.isValid = false;
-                        return currentState;
-                    });
-                }
-                
-            });
+            axios.post(apiPath + "login", {
+                userType: role.value,
+                email: email.value,
+                password: password.value,
+            })
+                .then(response => {
+                    return response;
+                })
+                .then(json => {
+                    if ('bOwner logged in successfully' === json.data.msg) {
+                        let userData = {
+                            id: json.data.businessOwnerID,
+                            token: json.data.accessToken,
+                            expireAt: json.data.expires_at,
+                            role: role.value,
+                            email: email.value,
+                        };
+                        let appState = {
+                            isLoggedIn: true,
+                            user: userData
+                        };
+                        // save app state with user date in local storage
+                        this.props.onLogin(appState);
+                    } else alert("Login Failed!");
+
+                })
+                .catch(error => {
+                    if (error.response) {
+                        
+                        const msg = error.response.data.msg;
+                        console.log(msg)
+                        if ('No user found in this email' === msg) {
+                            this.setState(currentState => {
+                                currentState.email.isValid = false;
+                                currentState.email.errMsg = msg;
+                                currentState.isValid = false;
+                                return currentState;
+                            });
+                        } else if ('password did not match with the email' === msg) {
+                            this.setState(currentState => {
+                                currentState.password.isValid = false;
+                                currentState.password.errMsg = msg;
+                                currentState.isValid = false;
+                                return currentState;
+                            });
+                        }
+                    }
+                });
+
         }
     }
 
@@ -178,7 +209,7 @@ class SignIn extends Component {
                 <Header />
                 <form className={classes.root} onSubmit={this.handleSign}>
                     <h1>SIGN IN</h1>
-                        <FormGroup>
+                    <FormGroup>
                         <TextField
                             error={isChecked && !isValid && email.errMsg && !email.isValid}
                             label="Email"
@@ -231,4 +262,13 @@ SignIn.propTypes = {
     classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(style)(SignIn);
+export default withStyles(style)(connect(
+    state => ({
+        loginData: state.loginData,
+    }),
+    dispath => ({
+        onLogin: (userData) => {
+            dispath({ type: 'LOGIN_USER', payload: userData });
+        }
+    }),
+)(SignIn));

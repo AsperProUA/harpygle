@@ -204,7 +204,7 @@ function Intro(props) {
                 </div>
                 <div className={classes.body}>
                     <div className={classes.logo}>
-                        <img src={window.location.origin + '/harpygle Logo white.png'}></img>
+                        <img src={window.location.origin + '/harpygle Logo white.png'} alt='Logo white'></img>
                     </div>
                     <div className={classes.bodyContent}>
                         <p className={classes.bodyLabel}>A Reliable Young, Agile, Flexible Company</p>
@@ -236,7 +236,7 @@ function Intro(props) {
                 <Grid container spacing={0}>
                     <Grid item md={6} >
                         <Paper className={classes.paper} >
-                            <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/undraw_Container_ship_urt4 (1)@2x.png'}></img>
+                            <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/undraw_Container_ship_urt4 (1)@2x.png'} alt='Ship'></img>
                             <div className={classes.badge}>
                                 <p className={classes.bageNum}>01</p>
                                 <p className={classes.badgeName}>Buy Directly From The Supplier</p>
@@ -247,7 +247,7 @@ function Intro(props) {
                     </Grid>
                     <Grid item md={6} >
                         <Paper className={classes.paper} >
-                            <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/undraw_credit_card_payment_12va@2x.png'}></img>
+                            <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/undraw_credit_card_payment_12va@2x.png'} alt='Card'></img>
                             <div className={classes.badge}>
                                 <p className={classes.bageNum}>02</p>
                                 <p className={classes.badgeName}>COD in Morocco</p>
@@ -258,7 +258,7 @@ function Intro(props) {
                     </Grid>
                     <Grid item sm={6} >
                         <Paper className={classes.paper} >
-                            <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/Group 55@2x.png'}></img>
+                            <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/Group 55@2x.png'} alt='Group'></img>
                             <div className={classes.badge}>
                                 <p className={classes.bageNum}>03</p>
                                 <p className={classes.badgeName}>An Easy Way To Be  Your Own Boss</p>
@@ -268,7 +268,7 @@ function Intro(props) {
                     </Grid>
                     <Grid item sm={6} >
                         <Paper className={classes.paper} >
-                            <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/undraw_add_to_cart_vkjp@2x.png'}></img>
+                            <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/undraw_add_to_cart_vkjp@2x.png'} alt='Cart'></img>
                             <div className={classes.badge}>
                                 <p className={classes.bageNum}>04</p>
                                 <p className={classes.badgeName}>Import & Sell Your Products Very Quickly To The Right Customers</p>
@@ -300,16 +300,16 @@ function Intro(props) {
                 </Grid>
                 <Grid item md={6} className={classes.footerSocial}>
                     <div className={classes.socialBtn}>
-                        <img src={window.location.origin + '/pictures/icons/pinterest.png'}></img>
+                        <img src={window.location.origin + '/pictures/icons/pinterest.png'} alt='pinterest'></img>
                     </div>
                     <div className={classes.socialBtn}>
-                        <img src={window.location.origin + '/pictures/icons/linkedin-in.png'}></img>
+                        <img src={window.location.origin + '/pictures/icons/linkedin-in.png'} alt='linkedin'></img>
                     </div>
                     <div className={classes.socialBtn}>
-                        <img src={window.location.origin + '/pictures/icons/twitter.png'}></img>
+                        <img src={window.location.origin + '/pictures/icons/twitter.png'} alt='twitter'></img>
                     </div>
                     <div className={classes.socialBtn}>
-                        <img src={window.location.origin + '/pictures/icons/facebook-f.png'}></img>
+                        <img src={window.location.origin + '/pictures/icons/facebook-f.png'} alt='fb'></img>
                     </div>
                 </Grid>
             </Grid>

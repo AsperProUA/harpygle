@@ -37,7 +37,7 @@ const style = theme => ({
         border: 'none',
         boxShadow: '0px 3px 6px rgba(0,0,0,0.15)',
         borderRadius: 0,
-        padding: '68px',
+        padding: '68px 0',
         textAlign: 'center',
         [theme.breakpoints.down('sm')]: {
             padding: '10px',
@@ -115,7 +115,7 @@ class PreSignUp extends Component {
                     <Grid item md={4} className={classes.item}>
                         <Paper className={classes.paper}>
                             <div>
-                                <img width={164} src='./pictures/Intro/undraw_credit_card_df1m.png'></img>
+                                <img width={164} src='./pictures/Intro/undraw_credit_card_df1m.png' alt='Card'></img>
                             </div>
                             <p className={classes.label}>
                                 BUSINESS OWNER
@@ -133,7 +133,7 @@ class PreSignUp extends Component {
                     <Grid item md={4} className={classes.item}>
                         <Paper className={classes.paper}>
                             <div>
-                                <img width={164} src='./pictures/Intro/Mask Group 1.png'></img>
+                                <img width={164} src='./pictures/Intro/Mask Group 1.png' alt='Mask'></img>
                             </div>
                             <p className={classes.label}>
                                 COURIER
@@ -151,7 +151,7 @@ class PreSignUp extends Component {
                     <Grid item md={4} className={classes.item}>
                         <Paper className={classes.paper}>
                             <div>
-                                <img width={164} src='./pictures/Intro/undraw_Container_ship_urt4 (1).png'></img>
+                                <img width={164} src='./pictures/Intro/undraw_Container_ship_urt4 (1).png' alt='Ship'></img>
                             </div>
                             <p className={classes.label}>
                                 SUPPLIERS
