@@ -14,6 +14,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Message from '@material-ui/icons/ChatBubble';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { connect } from 'react-redux';
 
 const styles = theme => ({
   root: {
@@ -75,7 +76,7 @@ const styles = theme => ({
   sectionDesktop: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
-      display: 'flex',  
+      display: 'flex',
     },
   },
   sectionMobile: {
@@ -84,7 +85,23 @@ const styles = theme => ({
       display: 'none',
     },
   },
+  avatar: {
+    display: 'inline-block',
+    width: 60,
+    height: 60,
+    textAlign: 'center',
+    verticalAlign: 'middle',
+    backgroundColor: theme.palette.grey[300],
+    borderRadius: '50%',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+  },
+  defaultAvatar: {
+    backgroundImage: `url(${defaultAvatar})`,
+  },
 });
+
+const defaultAvatar = 'pictures/poy_benbernanke.png';
 
 class PrimarySearchAppBar extends React.Component {
   state = {
@@ -111,7 +128,7 @@ class PrimarySearchAppBar extends React.Component {
 
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
-    const { classes } = this.props;
+    const { classes, user } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -139,7 +156,7 @@ class PrimarySearchAppBar extends React.Component {
         <MenuItem>
           <IconButton >
             {/* <Badge badgeContent={11} color="secondary"> */}
-              <NotificationsIcon />
+            <NotificationsIcon />
             {/* </Badge> */}
           </IconButton>
           <p>Notifications</p>
@@ -152,12 +169,13 @@ class PrimarySearchAppBar extends React.Component {
           </IconButton>
           <p>Messages</p>
         </MenuItem>
-        {/* <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton >
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
-        </MenuItem> */}
+        <MenuItem >
+          {
+            user.avatar ?
+              <div className={classes.avatar} style={{ backgroundImage: `url(${user.avatar})` }} /> :
+              <div className={[classes.avatar, classes.defaultAvatar].join(' ')} />
+          }
+        </MenuItem>
       </Menu>
     );
 
@@ -165,7 +183,7 @@ class PrimarySearchAppBar extends React.Component {
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Toolbar>
-            <IconButton className={classes.menuButton}  aria-label="Open drawer">
+            <IconButton className={classes.menuButton} aria-label="Open drawer">
               <MenuIcon />
             </IconButton>
             {/* <Typography className={classes.title} variant="h6" noWrap>
@@ -187,7 +205,7 @@ class PrimarySearchAppBar extends React.Component {
             <div className={classes.sectionDesktop}>
               <IconButton >
                 {/* <Badge badgeContent={2} color="secondary"> */}
-                  <NotificationsIcon />
+                <NotificationsIcon />
                 {/* </Badge> */}
               </IconButton>
               <IconButton >
@@ -195,14 +213,18 @@ class PrimarySearchAppBar extends React.Component {
                   <Message />
                 </Badge>
               </IconButton>
-              {/* <IconButton
+              <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
-                
+
               >
-                <AccountCircle />
-              </IconButton> */}
+                {
+                  user.avatar ?
+                    <div className={classes.avatar} style={{ backgroundImage: `url(${user.avatar})` }} /> :
+                    <div className={[classes.avatar, classes.defaultAvatar].join(' ')} />
+                }
+              </IconButton>
             </div>
             <div className={classes.sectionMobile}>
               <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} >
@@ -222,4 +244,8 @@ PrimarySearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PrimarySearchAppBar);
+export default withStyles(styles)(connect(
+  state => ({
+    user: state.loginData.user,
+  })
+)(PrimarySearchAppBar));

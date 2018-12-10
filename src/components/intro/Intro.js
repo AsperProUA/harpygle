@@ -9,9 +9,9 @@ import { Link } from 'react-router-dom';
 const style = theme => ({
     root: {
         width: '100%',
-        height: '100vh',
+        minHeight: '100vh',
         backgroundImage: `url(${window.location.origin}/pictures/chuttersnap-255215-unsplash.png)`,
-        backgroundPosition: 'center',
+        backgroundPosition: 'top',
     },
     header: {
         width: '100%',
@@ -28,7 +28,7 @@ const style = theme => ({
         position: 'relative',
         backgroundColor: 'rgba(0,0,0,.85)',
         width: '100%',
-        minHeight: '100%',
+        minHeight: '100vh',
         zIndex: 0,
     },
     body: {
@@ -44,12 +44,14 @@ const style = theme => ({
     },
     howItWork: {
         minHeight: '900px',
+        backgroundColor: 'white',
     },
     logo: {
         height: 'calc(50% - 40px)',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+       
     },
     bodyContent: {
         display: 'flex',
@@ -63,12 +65,16 @@ const style = theme => ({
         color: '#FC3429',
         margin: '10px',
         textAlign: 'center',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 25,
+        }
     },
     bodyText: {
         maxWidth: '1122px',
         color: theme.palette.common.white,
         fontSize: 24,
         textAlign: 'center',
+        margin: 15,
     },
     button: {
         width: '258px',
@@ -87,12 +93,18 @@ const style = theme => ({
         werticalAlign: 'middle',
         display: 'flex',
         alignItems: 'center',
+        [theme.breakpoints.down('xs')]: {
+            flexWrap: 'wrap',
+            margin: 16,
+        },
     },
     hiwLabel: {
         textAlign: 'center',
         fontSize: 72,
         fontWeight: 200,
         color: '#636363',
+        margin: 'auto',
+        padding: 1,
     },
     badge: {
         whiteSpace: 'normal',
@@ -183,7 +195,14 @@ const style = theme => ({
         // [theme.breakpoints.up('md')]: {
         //     justifyContent: 'flex-start',
         // },
-    }
+    },
+    // paper: {
+    //     display: 'flex',
+
+    //     [theme.breakpoints.down('sm')]: {
+    //         flexWrap: 'wrap',
+    //     },
+    // }
 });
 
 function scroll() {
@@ -218,7 +237,7 @@ function Intro(props) {
                             >
                                 How It Works
                             </Button>
-                            <Link style={{textDecoration:'none'}} to='/presign'>
+                            <Link style={{ textDecoration: 'none' }} to='/presign'>
                                 <Button
                                     variant="contained"
                                     style={{ backgroundColor: "#FFCC00" }}
@@ -236,7 +255,9 @@ function Intro(props) {
                 <Grid container spacing={0}>
                     <Grid item md={6} >
                         <Paper className={classes.paper} >
-                            <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/undraw_Container_ship_urt4 (1)@2x.png'} alt='Ship'></img>
+                            <div>
+                                <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/undraw_Container_ship_urt4 (1)@2x.png'} alt='Ship'></img>
+                            </div>
                             <div className={classes.badge}>
                                 <p className={classes.bageNum}>01</p>
                                 <p className={classes.badgeName}>Buy Directly From The Supplier</p>
@@ -247,7 +268,9 @@ function Intro(props) {
                     </Grid>
                     <Grid item md={6} >
                         <Paper className={classes.paper} >
-                            <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/undraw_credit_card_payment_12va@2x.png'} alt='Card'></img>
+                            <div>
+                                <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/undraw_credit_card_payment_12va@2x.png'} alt='Card'></img>
+                            </div>
                             <div className={classes.badge}>
                                 <p className={classes.bageNum}>02</p>
                                 <p className={classes.badgeName}>COD in Morocco</p>
@@ -256,9 +279,11 @@ function Intro(props) {
                             </div>
                         </Paper>
                     </Grid>
-                    <Grid item sm={6} >
+                    <Grid item md={6} >
                         <Paper className={classes.paper} >
-                            <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/Group 55@2x.png'} alt='Group'></img>
+                            <div>
+                                <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/Group 55@2x.png'} alt='Group'></img>
+                            </div>
                             <div className={classes.badge}>
                                 <p className={classes.bageNum}>03</p>
                                 <p className={classes.badgeName}>An Easy Way To Be  Your Own Boss</p>
@@ -266,9 +291,11 @@ function Intro(props) {
                             </div>
                         </Paper>
                     </Grid>
-                    <Grid item sm={6} >
+                    <Grid item md={6} >
                         <Paper className={classes.paper} >
-                            <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/undraw_add_to_cart_vkjp@2x.png'} alt='Cart'></img>
+                            <div>
+                                <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/undraw_add_to_cart_vkjp@2x.png'} alt='Cart'></img>
+                            </div>
                             <div className={classes.badge}>
                                 <p className={classes.bageNum}>04</p>
                                 <p className={classes.badgeName}>Import & Sell Your Products Very Quickly To The Right Customers</p>

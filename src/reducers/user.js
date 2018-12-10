@@ -16,6 +16,12 @@ export default function loginData(state = initialState, action) {
         newState.user = action.payload.user;
         localStorage["appState"] = JSON.stringify(newState);
         return state = newState;
+    } else if('USER_DATA' == action.type){
+        let newState = {... state}
+        newState.user.name = action.payload.name;
+        newState.user.avatar = action.payload.avatar;
+        newState.user.city = action.payload.city;
+        localStorage["appState"] = JSON.stringify(newState);
     } else if('LOGOUT_USER' == action.type){
         localStorage["appState"] = JSON.stringify(initialState);
         return initialState;
