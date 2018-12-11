@@ -13,6 +13,7 @@ const styles = theme => ({
         width: 494,
         padding: 30,
         boxSizing: 'border-box',
+        textAlign: 'center',
         [theme.breakpoints.down('sm')]: {
             width: 300,
         },

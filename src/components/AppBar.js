@@ -15,11 +15,15 @@ import Message from '@material-ui/icons/ChatBubble';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
 
+import BusinessMenu from './businessOwners/Menu';
 const styles = theme => ({
   root: {
     width: '100%',
     color: theme.palette.grey[900],
+    height: 'auto',
   },
   grow: {
     flexGrow: 1,
@@ -27,6 +31,9 @@ const styles = theme => ({
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
   },
   title: {
     display: 'none',
@@ -99,6 +106,11 @@ const styles = theme => ({
   defaultAvatar: {
     backgroundImage: `url(${defaultAvatar})`,
   },
+  drawerPaper:{
+    backgroundColor: theme.palette.grey[900],
+    width: 240,
+    textAlign: 'center',
+  }
 });
 
 const defaultAvatar = 'pictures/poy_benbernanke.png';
@@ -107,6 +119,19 @@ class PrimarySearchAppBar extends React.Component {
   state = {
     anchorEl: null,
     mobileMoreAnchorEl: null,
+    mobileOpen: false,
+  };
+
+  renderMenu = () => {
+    switch (this.props.role) {
+      case 'BOwners': return <BusinessMenu hide={this.handleDrawerToggle}/>;
+      case 'suppliers': return <div>supplierMenu</div>
+  
+    }
+  }
+
+  handleDrawerToggle = () => {
+    this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
 
   handleProfileMenuOpen = event => {
@@ -183,7 +208,23 @@ class PrimarySearchAppBar extends React.Component {
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Toolbar>
-            <IconButton className={classes.menuButton} aria-label="Open drawer">
+            <Hidden mdUp implementation="css">
+              <Drawer
+                // container={this.props.container}
+                variant="temporary"
+                open={this.state.mobileOpen}
+                onClose={this.handleDrawerToggle}
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+                ModalProps={{
+                  keepMounted: true, // Better open performance on mobile.
+                }}
+              >
+                {this.renderMenu()}
+              </Drawer>
+            </Hidden>
+            <IconButton className={classes.menuButton} onClick={this.handleDrawerToggle} aria-label="Open drawer">
               <MenuIcon />
             </IconButton>
             {/* <Typography className={classes.title} variant="h6" noWrap>
