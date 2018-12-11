@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import apiPath from '../../services/apiPath';
+import getData from '../../services/getData';
 
 import Header from './Header';
 
@@ -170,7 +171,8 @@ class SignIn extends Component {
                             isLoggedIn: true,
                             user: userData
                         };
-                        // save app state with user date in local storage
+                        // save app state with user date in reducer
+
                         this.props.onLogin(appState);
                     } else alert("Login Failed!");
 
@@ -267,8 +269,15 @@ export default withStyles(style)(connect(
         loginData: state.loginData,
     }),
     dispath => ({
-        onLogin: (userData) => {
-            dispath({ type: 'LOGIN_USER', payload: userData });
+        onLogin: (loginData) => {
+            dispath({ type: 'LOGIN_USER', payload: loginData });
+            getData({ url: `business/get/${loginData.user.id}` }).then(response => {
+                let userData = {};
+                userData.name = response.data.name;
+                userData.avatar = response.data.pictureUrl;
+                userData.city = response.data.city;
+                dispath({type: 'USER_DATA', payload: userData});
+            });
         }
     }),
 )(SignIn));

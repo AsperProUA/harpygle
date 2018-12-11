@@ -22,6 +22,7 @@ const style = theme => ({
         backgroundColor: theme.palette.grey[300],
         borderRadius: '50%',
         backgroundPosition: 'center',
+        backgroundSize: 'cover',
     },
     column: {
         display: 'flex',

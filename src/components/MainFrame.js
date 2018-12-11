@@ -9,6 +9,11 @@ import AppBar from './AppBar';
 import BusinessMenu from './businessOwners/Menu';
 import BusinessProfile from './businessOwners/Profile';
 import Products from './products';
+import BusinessEarnings from './businessOwners/Earning';
+import BusinessAnalytics from './businessOwners/Analytics';
+import BusinessSuppliers from './businessOwners/Suppliers';
+import BusinessOrders from './businessOwners/Orders';
+import BusinessDelivery from './businessOwners/Delivery';
 
 const styles = theme => ({
   root: {
@@ -30,7 +35,7 @@ const styles = theme => ({
       width: '250px',
     },
   },
-  relative:{
+  relative: {
     position: 'relative',
     height: '100%',
   },
@@ -38,7 +43,7 @@ const styles = theme => ({
     position: 'absolute',
     height: '100%',
     width: '100%',
-    backgroundColor:'rgba(0,0,0,0.8)',
+    backgroundColor: 'rgba(0,0,0,0.8)',
   }
 });
 
@@ -89,7 +94,56 @@ function MainFrame(props) {
                       }
 
                     }} />
+                  <Route
+                    exact path='/earnings'
+                    render={() => {
+                      switch (role) {
+                        case 'BOwners': return <BusinessEarnings />;
+                        case 'suppliers': return <div>supplierProfile</div>
 
+                      }
+
+                    }} />
+                  <Route
+                    exact path='/analytics'
+                    render={() => {
+                      switch (role) {
+                        case 'BOwners': return <BusinessAnalytics />;
+                        case 'suppliers': return <div>supplierProfile</div>
+
+                      }
+
+                    }} />
+                  <Route
+                    exact path='/suppliers'
+                    render={() => {
+                      switch (role) {
+                        case 'BOwners': return <BusinessSuppliers />;
+                        case 'suppliers': return <div>supplierProfile</div>
+
+                      }
+
+                    }} />
+                  <Route
+                    exact path='/orders'
+                    render={() => {
+                      switch (role) {
+                        case 'BOwners': return <BusinessOrders />;
+                        case 'suppliers': return <div>supplierProfile</div>
+
+                      }
+
+                    }} />
+                  <Route
+                    exact path='/delivery'
+                    render={() => {
+                      switch (role) {
+                        case 'BOwners': return <BusinessDelivery />;
+                        case 'suppliers': return <div>supplierProfile</div>
+
+                      }
+
+                    }} />
                   <Route
                     exact path='/products'
                     render={() => <Products />}
