@@ -12,6 +12,8 @@ import Products from './products';
 import BusinessEarnings from './businessOwners/Earning';
 import BusinessAnalytics from './businessOwners/Analytics';
 import BusinessSuppliers from './businessOwners/Suppliers';
+import BusinessOrders from './businessOwners/Orders';
+import BusinessDelivery from './businessOwners/Delivery';
 
 const styles = theme => ({
   root: {
@@ -112,11 +114,31 @@ function MainFrame(props) {
                       }
 
                     }} />
-                    <Route
+                  <Route
                     exact path='/suppliers'
                     render={() => {
                       switch (role) {
                         case 'BOwners': return <BusinessSuppliers />;
+                        case 'suppliers': return <div>supplierProfile</div>
+
+                      }
+
+                    }} />
+                  <Route
+                    exact path='/orders'
+                    render={() => {
+                      switch (role) {
+                        case 'BOwners': return <BusinessOrders />;
+                        case 'suppliers': return <div>supplierProfile</div>
+
+                      }
+
+                    }} />
+                  <Route
+                    exact path='/delivery'
+                    render={() => {
+                      switch (role) {
+                        case 'BOwners': return <BusinessDelivery />;
                         case 'suppliers': return <div>supplierProfile</div>
 
                       }

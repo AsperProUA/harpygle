@@ -23,17 +23,19 @@
       }
     </style>
   </defs>
-  <g id="iconfinder_order_2639879" class="cls-1" transform="translate(-3 -3)">
-    <g id="Symbol_1_1" data-name="Symbol 1 – 1">
-      <path id="Path_403" data-name="Path 403" class="cls-2" d="M7,22V4H25V22a4,4,0,0,1-4,4"/>
+  <g id="iconfinder_order_2639879" transform="translate(-40 -448)">
+    <g id="iconfinder_order_2639879-2" data-name="iconfinder_order_2639879" class="cls-1" transform="translate(37 445)">
+      <g id="Symbol_1_1" data-name="Symbol 1 – 1">
+        <path id="Path_403" data-name="Path 403" class="cls-2" d="M7,22V4H25V22a4,4,0,0,1-4,4"/>
+      </g>
+      <path id="Path_404" data-name="Path 404" class="cls-2" d="M17,22H4a4,4,0,0,0,4,4H21A4,4,0,0,1,17,22Z"/>
+      <line id="Line_44" data-name="Line 44" class="cls-3" x2="6" transform="translate(15 13)"/>
+      <line id="Line_45" data-name="Line 45" class="cls-3" x2="2" transform="translate(11 13)"/>
+      <line id="Line_46" data-name="Line 46" class="cls-3" x2="6" transform="translate(15 17)"/>
+      <line id="Line_47" data-name="Line 47" class="cls-3" x2="2" transform="translate(11 17)"/>
+      <line id="Line_48" data-name="Line 48" class="cls-3" x2="6" transform="translate(15 9)"/>
+      <line id="Line_49" data-name="Line 49" class="cls-3" x2="2" transform="translate(11 9)"/>
+      <path id="Path_405" data-name="Path 405" class="cls-4" d="M17,22H4a4,4,0,0,0,4,4H21A4,4,0,0,1,17,22Z"/>
     </g>
-    <path id="Path_404" data-name="Path 404" class="cls-2" d="M17,22H4a4,4,0,0,0,4,4H21A4,4,0,0,1,17,22Z"/>
-    <line id="Line_44" data-name="Line 44" class="cls-3" x2="6" transform="translate(15 13)"/>
-    <line id="Line_45" data-name="Line 45" class="cls-3" x2="2" transform="translate(11 13)"/>
-    <line id="Line_46" data-name="Line 46" class="cls-3" x2="6" transform="translate(15 17)"/>
-    <line id="Line_47" data-name="Line 47" class="cls-3" x2="2" transform="translate(11 17)"/>
-    <line id="Line_48" data-name="Line 48" class="cls-3" x2="6" transform="translate(15 9)"/>
-    <line id="Line_49" data-name="Line 49" class="cls-3" x2="2" transform="translate(11 9)"/>
-    <path id="Path_405" data-name="Path 405" class="cls-4" d="M17,22H4a4,4,0,0,0,4,4H21A4,4,0,0,1,17,22Z"/>
   </g>
 </svg>

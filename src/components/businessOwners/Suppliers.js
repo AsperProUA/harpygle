@@ -5,7 +5,7 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import SvgIcon from '@material-ui/core/SvgIcon';
+import RateToStars from '../globalComponents/RateToStars';
 import Button from '@material-ui/core/Button';
 import Message from '@material-ui/icons/ChatBubble';
 import getData from '../../services/getData';
@@ -51,16 +51,6 @@ const styles = theme => ({
         width: 303,
         height: 303,
     },
-    starEmpty: {
-        color: '#979797',
-    },
-    starFill: {
-        color: '#EBF223',
-    },
-    rate: {
-        display: 'flex',
-        justifyContent: 'flex-start',
-    },
     between: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -90,16 +80,35 @@ const styles = theme => ({
 ////////////////////////////////////////////////////////////////////////////////////////
 // this is a fake data. Delete when backend will be working
 const fakeCategories = [
-    'Mobiles & Tablets',
-    'Electronics',
-    'Appliances',
-    'Health & Beauty',
-    'Moms & Babies',
-    'Lifestyle',
+    {
+        id: 1,
+        name: 'Mobiles & Tablets'
+    },
+    {
+        id: 2,
+        name: 'Electronics',
+    },
+    {
+        id: 3,
+        name: 'Appliances',
+    },
+    {
+        id: 4,
+        name: 'Health & Beauty',
+    },
+    {
+        id: 5,
+        name: 'Moms & Babies',
+    },
+    {
+        id: 6,
+        name: 'Lifestyle',
+    },
 ];
 
 const fakeProducts = [
     {
+        id: 'asdf1',
         img: 'pictures/fakeData/item_XL_11871414_17506387.png',
         name: 'Honor 7S Dual SIM',
         description: '16GB, 2GB RAM, 4G LTE, Sapphire Blue',
@@ -112,6 +121,7 @@ const fakeProducts = [
         quantityPerOrder: 20,
     },
     {
+        id: 'asdf2',
         img: 'pictures/fakeData/item_XL_11871414_17506387.png',
         name: 'Honor 7S Dual SIM',
         description: '16GB, 2GB RAM, 4G LTE, Sapphire Blue',
@@ -124,6 +134,7 @@ const fakeProducts = [
         quantityPerOrder: 20,
     },
     {
+        id: 'asdf3',
         img: 'pictures/fakeData/item_XL_11871414_17506387.png',
         name: 'Honor 7S Dual SIM',
         description: '16GB, 2GB RAM, 4G LTE, Sapphire Blue',
@@ -136,6 +147,7 @@ const fakeProducts = [
         quantityPerOrder: 20,
     },
     {
+        id: 'asdf4',
         img: 'pictures/fakeData/item_XL_11871414_17506387.png',
         name: 'Honor 7S Dual SIM',
         description: '16GB, 2GB RAM, 4G LTE, Sapphire Blue',
@@ -161,11 +173,11 @@ class Suppliers extends Component {
             categoryList: fakeCategories,
         }
         getData({ url: 'api/categories/' }).then(data => {
-            this.setState({categoryList: data.categories});
+            this.setState({ categoryList: data.categories });
         });
 
         getData({ url: 'business/suppliers/' /* + &selects*/ }).then(data => {
-            this.setState({productList: data.productList});
+            this.setState({ productList: data.productList });
         });
     }
 
@@ -174,35 +186,10 @@ class Suppliers extends Component {
         this.setState({ value: value });
     }
 
-    renderRate = (rate) => {
-        const { classes } = this.props;
-        let starsArray = [];
-        for (let i = 0; i < 5; i++) {
-            if (i < rate) {
-                starsArray.push(
-                    <SvgIcon className={classes.starFill}>
-                        <path id="star" class="cls-1" d="M27.641.52,25.688,4.48l-4.369.637A.957.957,0,0,0,20.79,6.75l3.161,3.08L23.2,14.181a.956.956,0,0,0,1.388,1.008L28.5,13.135l3.909,2.055A.957.957,0,0,0,33.8,14.181L33.048,9.83l3.161-3.08a.957.957,0,0,0-.529-1.633L31.311,4.48,29.358.52A.958.958,0,0,0,27.641.52Z" transform="translate(-20.5 0.013)" />
-                    </SvgIcon>
-                );
-            } else {
-                starsArray.push(
-                    <SvgIcon className={classes.starEmpty}>
-                        <path id="star" class="cls-1" d="M27.641.52,25.688,4.48l-4.369.637A.957.957,0,0,0,20.79,6.75l3.161,3.08L23.2,14.181a.956.956,0,0,0,1.388,1.008L28.5,13.135l3.909,2.055A.957.957,0,0,0,33.8,14.181L33.048,9.83l3.161-3.08a.957.957,0,0,0-.529-1.633L31.311,4.48,29.358.52A.958.958,0,0,0,27.641.52Z" transform="translate(-20.5 0.013)" />
-                    </SvgIcon>
-                );
-            }
-        }
-        return (
-            <div className={classes.rate}>
-                {starsArray}
-            </div>
-        );
-    }
-
     renderProduct = (product) => {
         const { classes } = this.props;
         return (
-            <Grid item xs={12}  md={6} lg={3} >
+            <Grid key={product.id} item xs={12} sm={6} md={6} lg={3} >
                 <Paper className={classes.item} >
                     <div className={classes.img}>
                         <img src={product.img}></img>
@@ -210,7 +197,7 @@ class Suppliers extends Component {
                     <p >{product.name}</p>
                     <p >{product.description}</p>
                     <p style={{ margin: '12px 0' }}>Suppliers <span className={classes.supplier}>{product.suppliersName}</span></p>
-                    {this.renderRate(product.rate)}
+                    <RateToStars rate={product.rate} />
                     <p className={classes.between}><span>Item Price</span>
                         {product.sale && (<span>
                             <span style={{ textDecoration: 'line-through' }}>
@@ -248,7 +235,7 @@ class Suppliers extends Component {
                     onChange={this.changeCategory}
                 >
                     {categoryList.map(category => {
-                        return (<BottomNavigationAction label={category} className={classes.categoryItem} classes={{
+                        return (<BottomNavigationAction key={category.id} label={category.name} className={classes.categoryItem} classes={{
                             selected: classes.ctegorySelected,
                             label: classes.categoryLabel,
                             root: classes.categoryRoot,
