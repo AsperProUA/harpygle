@@ -118,35 +118,34 @@ class partner extends Component {
                 <Header />
                 <div class="content-box">
                 <div class="row">
-                    <div class="div50">
-                        <div class="div100 text-center">
+                    <div class="div40 m-auto">
+                        <div class="div100 text-center mt-3">
                             <h2><b>Start your own business and earn with Hapygle</b></h2>
                         </div>				
                         <div class="div100 mt-2">
                             <div class="row">
                                 <div class="div60 d-inline">
-                                    <h4>Successful owners can expect</h4>
-                                    <ol class="p-2">
-                                        <li>Startup cost as low as 25,000 MAD</li>
-                                        <li>Annual revenue potential 3M-7.5M MAD</li>
-                                        <li>Annual Profit potential 750K-2.5M MAD</li>
-                                    </ol>
+                                    <h4>Successful owners can expect</h4>                                    
+                                    <p class="m-2">1. Startup cost as low as 25,000 MAD</p>
+                                    <p class="m-2">2. Annual revenue potential 3M-7.5M MAD</p>
+                                    <p class="m-2">3. Annual Profit potential 750K-2.5M MAD</p>
+                                    
                                 </div>		
-                                <div class="div40 pt-3">
+                                <div class="div40 d-inline text-right">
                                     <img src="./pictures/partner/image.png"></img>
                                 </div>				
                             </div>					
                         </div>
                     </div>
                 </div>
-                <div class="row  mt-2 p-4 box-border">
+                <div class="row  mt-2 p-2 box-border">
                     <div class="div80 m-auto text-center">
                         <img src="./pictures/partner/hand.png"></img>
                         <h4 class="mt-3">Why being a partner with us ?</h4>
                         <p class="mt-3">if you want to start your own business and loves coaching teams in a high speed, ever-changing enviroment, becoming a Harpygle Delivery Service Partner is an ideal opportunity for you. As an owner, you will operate with 25-50 vans and have 50-100 employees. You'll be fully responsible for hiring and developing a team ogf high-performing, hardowrking drivers, while we take care of gettiing you set up and ready to operate out of an Harpygle delivery station in your city. You'll be expected to provide consistent coaching and support for your team to ensure the succesfull delivery of packages in a 7 days/week, 365 days/year.</p>
                     </div>
                 </div>
-                <div class="row mt-2 p-4 box-border">
+                <div class="row mt-2 p-2 box-border">
                     <div class="div60 m-auto text-center">
                         <img src="./pictures/partner/user.png"></img>
                         <h4 class="mt-3">Are you a true team leader ?</h4>
@@ -155,7 +154,7 @@ class partner extends Component {
                 </div>
                 <div class="row p-2">
                     <div class="div100 text-center">
-                        <h4>What you do </h4>
+                        <h2>What you do </h2>
                         <h4 class="mt-1">Only 4 simple</h4>
                         <div class="row mt-2">
                             <div class="width25 div-grid text-center box-border p-2 mr-1">
@@ -194,18 +193,17 @@ class partner extends Component {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="div50">
+                    <div class="div40 m-auto">
                         <div class="row">
                             <div class="div60 d-inline">
                                 <h4>What we support</h4>
-                                <ol class="p-2">
-                                    <li>Get you started</li>
-                                    <li>Provide Training</li>
-                                    <li>Give you a comprehensive toolkit</li>
-                                    <li>Share your experience</li>
-                                </ol>
+                                <p class="m-2">1. Get you started</p>
+                                <p class="m-2">2. Provide Training</p>
+                                <p class="m-2">3. Give you a comprehensive toolkit</p>
+                                <p class="m-2">4. Share your experience</p>
+                                
                             </div>		
-                            <div class="div40 pt-3  d-inline">
+                            <div class="div40 pt-3 d-inline text-right">
                                 <img src="./pictures/partner/support.png" class="imgSupport"></img>
                             </div>				
                         </div>	
