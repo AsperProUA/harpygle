@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-
+import apiPath from '../../services/apiPath';
 import Header from './Header';
 import Thanks from './Thanks';
 
@@ -128,7 +128,7 @@ class OwnerSignUp extends Component {
         this.validateForm();
         if (this.state.isValid) {
             const { email, password, name, city, businessName, bussinessRegistration, companyBankAccount, ownerNationalID, showToBusOwner } = this.state;
-            axios.post(`${window.myOwnProps.apiPath}supplier/create`, {
+            axios.post(`${apiPath}supplier/create`, {
                 email: email.value,
                 password: password.value,
                 name: name.value,
