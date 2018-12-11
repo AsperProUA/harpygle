@@ -21,8 +21,7 @@
       color: white;
   }
   .imgGrid{
-    width: 50%;
-    height: 100px;
+    width: 45%;
   }
   body{
     font-family: 'Roboto', sans-serif;
@@ -88,7 +87,16 @@
   }
   .div-grid{
      padding-top: 2%;
-      padding-bottom: 5%;
+    padding-bottom: 5%;
+    height: 250px;
+    vertical-align: top;
+  }
+  .div-grid .div100.mt-5{
+    vertical-align: middle;
+    height: 200px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
   }
   .imgSupport{
     height: 100px;
