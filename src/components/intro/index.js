@@ -7,7 +7,7 @@ import PreSignUp from './PreSignUp';
 import OwnerSignUp from './OwnerSignUp';
 import SupplierSignUp from './SupplierSignUp';
 import SignIn from './SignIn';
-import Parnter from './partner';
+import Parnter from './partner/partner_survery';
 
 //partner
 
