@@ -8,6 +8,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import Divider from '@material-ui/core/Divider';
 
 import IconOrders from '../icons/icon_order';
 
@@ -17,6 +18,7 @@ const styles = theme => ({
     height: '200px',
     backgroundColor: 'inherit',
     paddingTop: '43px',
+    textAlign: 'center',
   },
   menuItem: {
     '&:focus': {
@@ -42,12 +44,13 @@ const styles = theme => ({
     '& a': {
       textDecoration: 'none',
     },
-    '& hr': { borderColor: theme.palette.grey[500], },
+    '& hr': { backgroundColor: theme.palette.grey[500], },
   },
   root: {
     backgroundColor: theme.palette.grey[900],
-    height: '100vh',
     width: '100%',
+    borderRadius: '0',
+    boxShadow: 'none',
   },
 });
 
@@ -55,7 +58,7 @@ function ListItemComposition(props) {
   const { classes } = props;
   //console.log(props.role);
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} onClick={() => {props.hide && props.hide()}}>
       <div className={classes.logo}>
         <Link to='/'>
           <img src='harpygle Logo white.png' width={114}></img>
@@ -78,7 +81,7 @@ function ListItemComposition(props) {
             <ListItemText classes={{ primary: classes.primary }} inset primary="Delivery" />
           </MenuItem>
         </Link>
-        <hr></hr>
+        <Divider />
         <Link to='inventory'>
           <MenuItem className={classes.menuItem}>
             <ListItemIcon className={classes.icon}>
@@ -89,7 +92,7 @@ function ListItemComposition(props) {
             <ListItemText classes={{ primary: classes.primary }} inset primary="Inventory" />
           </MenuItem>
         </Link>
-        <hr></hr>
+        <Divider />
         <Link to='orders'>
           <MenuItem className={classes.menuItem}>
             <ListItemIcon className={classes.icon}>
@@ -98,7 +101,7 @@ function ListItemComposition(props) {
             <ListItemText classes={{ primary: classes.primary }} inset primary="Orders" />
           </MenuItem>
         </Link>
-        <hr></hr>
+        <Divider />
         <Link to='earnings'>
           <MenuItem className={classes.menuItem}>
             <ListItemIcon className={classes.icon}>
@@ -109,7 +112,7 @@ function ListItemComposition(props) {
             <ListItemText classes={{ primary: classes.primary }} inset primary="Earnings" />
           </MenuItem>
         </Link>
-        <hr></hr>
+        <Divider />
         <Link to='analytics'>
           <MenuItem className={classes.menuItem}>
             <ListItemIcon className={classes.icon}>
@@ -125,7 +128,7 @@ function ListItemComposition(props) {
             <ListItemText classes={{ primary: classes.primary }} inset primary="Analytics" />
           </MenuItem>
         </Link>
-        <hr></hr>
+        <Divider />
         <Link to='suppliers'>
           <MenuItem className={classes.menuItem}>
             <ListItemIcon className={classes.icon}>
@@ -147,7 +150,7 @@ function ListItemComposition(props) {
             <ListItemText classes={{ primary: classes.primary }} inset primary="Suppliers" />
           </MenuItem>
         </Link>
-        <hr></hr>
+        <Divider />
         <Link to='profile'>
           <MenuItem className={classes.menuItem}>
             <ListItemIcon className={classes.icon}>

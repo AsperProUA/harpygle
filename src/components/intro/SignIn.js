@@ -2,6 +2,7 @@ import axios from 'axios';
 import { connect } from 'react-redux'
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
@@ -58,7 +59,13 @@ const style = theme => ({
         fontSize: 12,
         color: theme.palette.error.main,
         fontWeight: 300
-    }
+    },
+    forgot: {
+        '& a': {
+            textDecoration: 'none',
+            color: '#25AAE1',
+        },
+    },
 });
 
 class SignIn extends Component {
@@ -179,7 +186,7 @@ class SignIn extends Component {
                 })
                 .catch(error => {
                     if (error.response) {
-                        
+
                         const msg = error.response.data.msg;
                         console.log(msg)
                         if ('No user found in this email' === msg) {
@@ -253,7 +260,10 @@ class SignIn extends Component {
                         </TextField>
 
                     </FormGroup>
-                    <Button type='submit' className={classes.btn} >Sign Up</Button>
+                    <Button type='submit' className={classes.btn} >SUBMIT</Button>
+                    <div className={classes.forgot}>
+                        <Link to='/forgotpassword'>Forgot password</Link>
+                    </div>
                 </form>
             </div>
         );
@@ -276,7 +286,7 @@ export default withStyles(style)(connect(
                 userData.name = response.data.name;
                 userData.avatar = response.data.pictureUrl;
                 userData.city = response.data.city;
-                dispath({type: 'USER_DATA', payload: userData});
+                dispath({ type: 'USER_DATA', payload: userData });
             });
         }
     }),

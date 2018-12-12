@@ -13,7 +13,6 @@ import getData from '../../services/getData';
 const styles = theme => ({
     root: {
         width: '100%',
-        height: '100%',
         margin: 26,
     },
     categories: {
@@ -48,8 +47,10 @@ const styles = theme => ({
         margin: 12,
     },
     img: {
-        width: 303,
+        width: '100%',
         height: 303,
+        textAlign: 'center',
+        verticalAlign: 'middle',
     },
     between: {
         display: 'flex',

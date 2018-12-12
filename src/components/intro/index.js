@@ -7,9 +7,10 @@ import PreSignUp from './PreSignUp';
 import OwnerSignUp from './OwnerSignUp';
 import SupplierSignUp from './SupplierSignUp';
 import SignIn from './SignIn';
-import Parnter from './partner/partner_survery';
+import Parnter from './partner/partner_survey';
 
 //partner
+import ForgotPassword from './ForgotPassword';
 
 
 function NonAuth() {
@@ -21,6 +22,7 @@ function NonAuth() {
                 <Route exact path='/supplier/signup' render={() => <SupplierSignUp/>} />
                 <Route exact path='/signin' render={() => <SignIn/>} />
                 <Route exact path='/partner' render={() => <Parnter/>} />
+                <Route exact path='/forgotpassword' render={() => <ForgotPassword/>} />
 
                 <Route path='/' render={() => <Intro />} />
                 

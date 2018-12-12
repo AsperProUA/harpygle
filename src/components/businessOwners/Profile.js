@@ -285,7 +285,7 @@ class Profile extends Component {
                     </div>
                 </Grid>
                 <Grid item md={6} sm={12} xs={12}>
-                    <form onSubmit={(event) => this.updateOwner(event)}>
+                    <form style={{textAlign:'center'}} onSubmit={(event) => this.updateOwner(event)}>
                         <h2>{email.value}</h2>
                         <FormGroup className={classes.formGroup}>
                             <TextField

@@ -51,6 +51,7 @@ const styles = theme => ({
         fontSize: 40,
         fontWeight: 'bold',
         padding: '80px 0',
+        textAlign: 'center',
     },
     user: {
         display: 'flex',
@@ -87,6 +88,9 @@ const styles = theme => ({
         alignItems: 'center',
 
     },
+    orders: {
+        textAlign:'center',
+    },
     orderLabel: {
         fontSize: 20,
         fontWeight: 'bold',
@@ -110,7 +114,7 @@ const styles = theme => ({
     }
 })
 
-const defaultAvatar = 'pictures/poy_benbernanke.png';
+const defaultAvatar = '/pictures/fakeData/poy_benbernanke.png';
 
 class Analytics extends Component {
     constructor(props) {
@@ -144,7 +148,7 @@ class Analytics extends Component {
 
         return (
             <Grid container spacing={16} className={classes.root}>
-                <Grid item md={3} sm={6} xs={12}>
+                <Grid item lg={3} md={6} sm={6} xs={12}>
                     <Paper className={classes.paper}>
                         <div className={classes.label}>
                             <span className={classes.text}>Total Sales</span><span className={[classes.icon, classes.icon1].join(' ')} ></span>
@@ -155,7 +159,7 @@ class Analytics extends Component {
                         </div>
                     </Paper>
                 </Grid>
-                <Grid item md={3} sm={6} xs={12}>
+                <Grid item lg={3} md={6} sm={6} xs={12}>
                     <Paper className={classes.paper}>
                         <div className={classes.label}>
                             <span className={classes.text}>Total Cost</span><span className={[classes.icon, classes.icon2].join(' ')} ></span>
@@ -166,7 +170,7 @@ class Analytics extends Component {
                         </div>
                     </Paper>
                 </Grid>
-                <Grid item md={3} sm={6} xs={12}>
+                <Grid item lg={3} md={6} sm={6} xs={12}>
                     <Paper className={classes.paper}>
                         <div className={classes.label}>
                             <span className={classes.text}>Total Profit</span><span className={[classes.icon, classes.icon3].join(' ')} ></span>
@@ -177,7 +181,7 @@ class Analytics extends Component {
                         </div>
                     </Paper>
                 </Grid>
-                <Grid item md={3} sm={6} xs={12}>
+                <Grid item lg={3} md={6} sm={6} xs={12}>
                     <Paper className={classes.paper}>
                         <div className={classes.user}>
                             {

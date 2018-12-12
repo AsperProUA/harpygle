@@ -51,25 +51,11 @@ class OwnerSignUp extends Component {
                 isValid: false,
                 errMsg: 'invalid email',
             },
-            showToBusOwner: false,
             password: {
                 value: '',
                 isValid: false,
                 errMsg: 'password is too short',
             },
-            passwordRepeat: {
-                value: '',
-                isValid: false,
-                errMsg: 'passwords are not equal',
-            },
-            name: {
-                value: '',
-            },
-            businessName: { value: '', },
-            city: { value: '', },
-            bussinessRegistration: { value: '', },
-            companyBankAccount: { value: '', },
-            ownerNationalID: { value: '', },
 
             isValid: false,
             isChecked: false,
@@ -92,7 +78,7 @@ class OwnerSignUp extends Component {
 
     validateForm = () => {
         this.setState(currentState => {
-            currentState.isValid = (currentState.email.isValid && currentState.password.isValid && currentState.passwordRepeat.isValid);
+            currentState.isValid = (currentState.email.isValid && currentState.password.isValid);
             return currentState;
         });
     }
@@ -108,11 +94,8 @@ class OwnerSignUp extends Component {
             case 'password':
                 valid = !!value.match(/\s*([\w]{6,})\s*/);
                 break;
-            case 'passwordRepeat':
-                valid = (value === this.state.password.value);
-                break;
             default:
-            break;
+                break;
         }
         this.setState((currentState) => {
             currentState[field].isValid = valid;
@@ -127,17 +110,10 @@ class OwnerSignUp extends Component {
         this.setState({ isChecked: true });
         this.validateForm();
         if (this.state.isValid) {
-            const { email, password, name, city, businessName, bussinessRegistration, companyBankAccount, ownerNationalID, showToBusOwner } = this.state;
-            axios.post(`${apiPath}supplier/create`, {
+            const { email, password } = this.state;
+            axios.post(`${window.myOwnProps.apiPath}supplier/create`, {
                 email: email.value,
                 password: password.value,
-                name: name.value,
-                city: city.value,
-                businessName: businessName.value,
-                bussinessRegistration: bussinessRegistration.value,
-                companyBankAccount: companyBankAccount.value,
-                ownerNationalID: ownerNationalID.value,
-                showToBusOwner: showToBusOwner,
             }).then((response) => {
                 if (response.status == 201) {
                     console.log(response);
@@ -165,14 +141,6 @@ class OwnerSignUp extends Component {
         const {
             email,
             password,
-            name,
-            city,
-            businessName,
-            bussinessRegistration,
-            companyBankAccount,
-            ownerNationalID,
-            showToBusOwner,
-            passwordRepeat,
             isChecked,
             isValid
         } = this.state;
@@ -198,87 +166,11 @@ class OwnerSignUp extends Component {
                             variant="outlined"
                         />
                         <TextField
-                            error={isChecked && !isValid && name.errMsg && !name.isValid}
-                            label="Name"
-                            value={name.value}
-                            onInput={(event) => { this.handleInput('name', event.target.value) }}
-                            helperText={isChecked && !isValid && !name.isValid && name.errMsg}
-                            margin="normal"
-                            variant="outlined"
-                        />
-                        <TextField
-                            error={isChecked && !isValid && city.errMsg && !city.isValid}
-                            label="City"
-                            value={city.value}
-                            onInput={(event) => { this.handleInput('city', event.target.value) }}
-                            helperText={isChecked && !isValid && !city.isValid && city.errMsg}
-                            margin="normal"
-                            variant="outlined"
-                        />
-                        <TextField
-                            error={isChecked && !isValid && businessName.errMsg && !businessName.isValid}
-                            label="Business Name"
-                            value={businessName.value}
-                            onInput={(event) => { this.handleInput('businessName', event.target.value) }}
-                            helperText={isChecked && !isValid && !businessName.isValid && businessName.errMsg}
-                            margin="normal"
-                            variant="outlined"
-                        />
-                        <TextField
-                            error={isChecked && !isValid && bussinessRegistration.errMsg && !bussinessRegistration.isValid}
-                            label="Bussiness Registration"
-                            value={bussinessRegistration.value}
-                            onInput={(event) => { this.handleInput('bussinessRegistration', event.target.value) }}
-                            helperText={isChecked && !isValid && !bussinessRegistration.isValid && bussinessRegistration.errMsg}
-                            margin="normal"
-                            variant="outlined"
-                        />
-                        <TextField
-                            error={isChecked && !isValid && companyBankAccount.errMsg && !companyBankAccount.isValid}
-                            label="Company Bank Account"
-                            type='number'
-                            value={companyBankAccount.value}
-                            onInput={(event) => { this.handleInput('companyBankAccount', event.target.value) }}
-                            helperText={isChecked && !isValid && !companyBankAccount.isValid && companyBankAccount.errMsg}
-                            margin="normal"
-                            variant="outlined"
-                        />
-                        <TextField
-                            error={isChecked && !isValid && ownerNationalID.errMsg && !ownerNationalID.isValid}
-                            label="Owner National ID"
-                            value={ownerNationalID.value}
-                            onInput={(event) => { this.handleInput('ownerNationalID', event.target.value) }}
-                            helperText={isChecked && !isValid && !ownerNationalID.isValid && ownerNationalID.errMsg}
-                            margin="normal"
-                            variant="outlined"
-                        />
-                        <FormControlLabel
-                            control={
-                                <Switch
-                                    checked={showToBusOwner}
-                                    onChange={() => this.setState({showToBusOwner: !showToBusOwner})}
-                                    value="checkedB"
-                                    color="primary"
-                                />
-                            }
-                            label="Show To Bus Owner"
-                        />
-                        <TextField
                             error={isChecked && !isValid && password.errMsg && !password.isValid}
                             label="Password"
                             value={password.value}
                             onInput={(event) => { this.handleInput('password', event.target.value) }}
                             helperText={isChecked && !isValid && !password.isValid && password.errMsg}
-                            type='password'
-                            margin="normal"
-                            variant="outlined"
-                        />
-                        <TextField
-                            error={isChecked && !isValid && passwordRepeat.errMsg && !passwordRepeat.isValid}
-                            label="Repeat password"
-                            value={passwordRepeat.value}
-                            onInput={(event) => { this.handleInput('passwordRepeat', event.target.value) }}
-                            helperText={isChecked && !isValid && !passwordRepeat.isValid && passwordRepeat.errMsg}
                             type='password'
                             margin="normal"
                             variant="outlined"
