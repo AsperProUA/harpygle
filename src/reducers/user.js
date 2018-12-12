@@ -1,15 +1,14 @@
-let initialState = {
+const emptyState = {
     isLoggedIn: false,
     isLoad: false,
     user: {},
 };
-if(localStorage['appState']){
-    const currentStorage = JSON.parse(localStorage['appState']);
-    initialState.isLoggedIn = currentStorage.isLoggedIn;
-    initialState.user = currentStorage.user;
-}
-// console.log(initialState)
-export default function loginData(state = initialState, action) {
+
+let initialState;
+
+localStorage['appState'] && (initialState = JSON.parse(localStorage['appState']));
+
+export default function loginData(state = initialState || emptyState, action) {
     if ('LOGIN_USER' == action.type){
         let newState = {... state}
         newState.isLoggedIn = action.payload.isLoggedIn;
@@ -23,8 +22,8 @@ export default function loginData(state = initialState, action) {
         newState.user.city = action.payload.city;
         localStorage["appState"] = JSON.stringify(newState);
     } else if('LOGOUT_USER' == action.type){
-        localStorage["appState"] = JSON.stringify(initialState);
-        return initialState;
+        localStorage["appState"] = JSON.stringify(emptyState);
+        return emptyState;
     } else if('LOAD_START' == action.type){
         let newState = {... state}
         newState.isLoad = true;

@@ -17,8 +17,11 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 import BusinessMenu from './businessOwners/Menu';
+import logOut from '../services/logOut';
 const styles = theme => ({
   root: {
     width: '100%',
@@ -102,31 +105,112 @@ const styles = theme => ({
     borderRadius: '50%',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
+    position: 'relative',
+    '& span': {
+      position: 'absolute',
+      top: '72%',
+      left: '72%',
+      borderRadius: '50%',
+      width: 11,
+      height: 11,
+    }
   },
   defaultAvatar: {
     backgroundImage: `url(${defaultAvatar})`,
+    position: 'relative',
+    '& span': {
+      position: 'absolute',
+      top: '72%',
+      left: '72%',
+      borderRadius: '50%',
+      width: 11,
+      height: 11,
+    }
   },
-  drawerPaper:{
+  drawerPaper: {
     backgroundColor: theme.palette.grey[900],
     width: 240,
     textAlign: 'center',
+  },
+  accountMenuLink: {
+    textDecoration: 'none',
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#636363',
+    height: '40px',
+    lineHeight: '40px',
+    '& *': {
+      verticalAlign: 'middle',
+    }
+  },
+  accountIcon: {
+    width: 32,
+    height: 32,
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    padding: 1,
+    display: 'inline-block',
+  },
+  accountIcon1: {
+    backgroundImage: "url('pictures/icons/menu/Group 289.png')",
+  },
+  accountIcon2: {
+    backgroundImage: "url('pictures/icons/menu/Group 288.png')",
+  },
+  userMenuButtonsOnline: {
+    backgroundColor: '#88C601',
+    color: '#fff',
+    border: 'none',
+    width: 107,
+    height: 31,
+    borderRadius: 0,
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  userMenuButtonsOffline: {
+    backgroundColor: '#FFD013',
+    color: '#fff',
+    border: 'none',
+    width: 107,
+    height: 31,
+    borderRadius: 0,
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  userMenuButtons: {
+    width: 107,
+    height: 31,
+    borderRadius: 0,
+    fontSize: 12,
+    fontWeight: 'bold',
+    border: '1px solid #707070',
+  },
+  mobileAvatarItem: {
+    height: 60,
+  },
+  dotOnline: {
+    backgroundColor: '#88C601',
+  },
+  dotOffline: {
+    backgroundColor: '#FFD013',
   }
 });
 
 const defaultAvatar = 'pictures/poy_benbernanke.png';
 
-class PrimarySearchAppBar extends React.Component {
+class MainAppBar extends React.Component {
   state = {
     anchorEl: null,
     mobileMoreAnchorEl: null,
     mobileOpen: false,
+    online: false,
   };
 
-  renderMenu = () => {
+  renderMainMenu = () => {
     switch (this.props.role) {
-      case 'BOwners': return <BusinessMenu hide={this.handleDrawerToggle}/>;
+      case 'BOwners': return <BusinessMenu hide={this.handleDrawerToggle} />;
       case 'suppliers': return <div>supplierMenu</div>
-  
+
     }
   }
 
@@ -151,8 +235,12 @@ class PrimarySearchAppBar extends React.Component {
     this.setState({ mobileMoreAnchorEl: null });
   };
 
+  changeOnline = () => {
+    this.setState({ online: !this.state.online })
+  }
+
   render() {
-    const { anchorEl, mobileMoreAnchorEl } = this.state;
+    const { anchorEl, mobileMoreAnchorEl, online } = this.state;
     const { classes, user } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -165,8 +253,36 @@ class PrimarySearchAppBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+        <MenuItem >
+          <Button
+            className={online ? classes.userMenuButtonsOnline : classes.userMenuButtons}
+            onClick={() => {
+              if (online) {
+                return undefined;
+              }
+              this.changeOnline();
+              this.handleMenuClose();
+            }}
+          >Online</Button>
+          <Button
+            className={online ? classes.userMenuButtons : classes.userMenuButtonsOffline}
+            onClick={() => {
+              if (online) {
+                this.changeOnline();
+                this.handleMenuClose();
+              }
+              return undefined;
+            }}
+          >Offline</Button>
+        </MenuItem>
+        <MenuItem onClick={this.handleMenuClose} className={classes.accountMenuLink}>
+          <Link className={classes.accountMenuLink} to='/profile'>
+            <span className={[classes.accountIcon, classes.accountIcon1].join(' ')} /> Settings
+          </Link>
+        </MenuItem>
+        <MenuItem className={classes.accountMenuLink} onClick={logOut}>
+          <span className={[classes.accountIcon, classes.accountIcon2].join(' ')} /> Logout
+        </MenuItem>
       </Menu>
     );
 
@@ -194,12 +310,42 @@ class PrimarySearchAppBar extends React.Component {
           </IconButton>
           <p>Messages</p>
         </MenuItem>
-        <MenuItem >
+        <MenuItem classes={{root: classes.mobileAvatarItem}}>
           {
             user.avatar ?
-              <div className={classes.avatar} style={{ backgroundImage: `url(${user.avatar})` }} /> :
-              <div className={[classes.avatar, classes.defaultAvatar].join(' ')} />
+              <div className={classes.avatar} style={{ backgroundImage: `url(${user.avatar})` }} ><span className={online?classes.dotOnline:classes.dotOffline}/></div> :
+              <div className={[classes.avatar, classes.defaultAvatar].join(' ')} ><span className={online?classes.dotOnline:classes.dotOffline}/></div>
           }
+        </MenuItem>
+        <MenuItem>
+          <Button
+            className={online ? classes.userMenuButtonsOnline : classes.userMenuButtons}
+            onClick={() => {
+              if (online) {
+                return undefined;
+              }
+              this.changeOnline();
+              this.handleMenuClose();
+            }}
+          >Online</Button>
+          <Button
+            className={online ? classes.userMenuButtons : classes.userMenuButtonsOffline}
+            onClick={() => {
+              if (online) {
+                this.changeOnline();
+                this.handleMenuClose();
+              }
+              return undefined;
+            }}
+          >Offline</Button>
+        </MenuItem>
+        <MenuItem onClick={this.handleMenuClose} className={classes.accountMenuLink}>
+          <Link className={classes.accountMenuLink} to='/profile'>
+            <span className={[classes.accountIcon, classes.accountIcon1].join(' ')} /> Settings
+          </Link>
+        </MenuItem>
+        <MenuItem className={classes.accountMenuLink} onClick={logOut}>
+          <span className={[classes.accountIcon, classes.accountIcon2].join(' ')} /> Logout
         </MenuItem>
       </Menu>
     );
@@ -221,7 +367,7 @@ class PrimarySearchAppBar extends React.Component {
                   keepMounted: true, // Better open performance on mobile.
                 }}
               >
-                {this.renderMenu()}
+                {this.renderMainMenu()}
               </Drawer>
             </Hidden>
             <IconButton className={classes.menuButton} onClick={this.handleDrawerToggle} aria-label="Open drawer">
@@ -262,8 +408,8 @@ class PrimarySearchAppBar extends React.Component {
               >
                 {
                   user.avatar ?
-                    <div className={classes.avatar} style={{ backgroundImage: `url(${user.avatar})` }} /> :
-                    <div className={[classes.avatar, classes.defaultAvatar].join(' ')} />
+                    <div className={classes.avatar} style={{ backgroundImage: `url(${user.avatar})` }} ><span className={online?classes.dotOnline:classes.dotOffline}/></div> :
+                    <div className={[classes.avatar, classes.defaultAvatar].join(' ')} ><span className={online?classes.dotOnline:classes.dotOffline}/></div>
                 }
               </IconButton>
             </div>
@@ -281,7 +427,7 @@ class PrimarySearchAppBar extends React.Component {
   }
 }
 
-PrimarySearchAppBar.propTypes = {
+MainAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -289,4 +435,4 @@ export default withStyles(styles)(connect(
   state => ({
     user: state.loginData.user,
   })
-)(PrimarySearchAppBar));
+)(MainAppBar));

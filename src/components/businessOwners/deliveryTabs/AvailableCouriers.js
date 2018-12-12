@@ -66,6 +66,9 @@ const styles = theme => ({
     label: {
         fontSize: 36,
         margin: '8px auto',
+        [theme.breakpoints.down('md')]: {
+            fontSize: 21
+        },
     },
     cardButton: {
         margin: 'auto',

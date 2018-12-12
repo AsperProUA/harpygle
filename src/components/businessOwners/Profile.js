@@ -12,6 +12,7 @@ import CheckIcon from '@material-ui/icons/CheckCircle';
 import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
 import getData from '../../services/getData';
+import logOut from '../../services/logOut';
 
 const style = theme => ({
     avatar: {
@@ -251,9 +252,9 @@ class Profile extends Component {
 
     handleDelete = () => {
         const { id } = this.state.user;
-        axios.put(`${window.myOwnProps.apiPath}business/update/${id}`, { isDeletedAcc: true }, {
+        axios.put(`${apiPath}business/update/${id}`, { isDeletedAcc: true }, {
             headers: { 'Content-Type': 'application/json' },
-        }).then(console.log);
+        }).then(logOut);
     }
 
     render() {

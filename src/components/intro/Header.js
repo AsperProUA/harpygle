@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
     root: {
@@ -17,7 +18,9 @@ function Header(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
-            <img height={90} src={'/logo.png'} alt='Logo'></img>
+            <Link to='/'>
+                <img height={90} width='auto' src={'/logo.png'} alt='Logo'></img>
+            </Link>
         </div>
     );
 }
