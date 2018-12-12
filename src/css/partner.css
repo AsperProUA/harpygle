@@ -32,6 +32,13 @@
     width: 80%;
     margin: 0 auto;
   }
+  .div30{
+    width: 32%;
+    float: left;
+  }	
+  .div40{
+    width: 40%;
+  }	
   .div50{
     width: 50%;
     margin: 0 auto;
@@ -42,9 +49,7 @@
   .div80{
     width: 80%;
   }
-  .div40{
-    width: 40%;
-  }	
+
   .div100{
     width: 100%;
     display: inline-block;;
@@ -82,6 +87,9 @@
   .text-center{
     text-align: center;
   }
+  .text-left{
+    text-align: left;
+  }
   .d-inline{
     display: inline-block;;
   }
@@ -109,4 +117,8 @@
 }
 .m-2{
     margin: 2%;
+}
+
+.MuiFormControl-root-6{
+  width: 100%;
 }

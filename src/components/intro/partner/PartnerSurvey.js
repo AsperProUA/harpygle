@@ -211,7 +211,7 @@ class partner extends Component {
                 </div>
                 <div class="row p-4">
                     <div class="div100 text-center">
-                        <Link to='/signin'>
+                        <Link to='/partner/presignup'>
                             <button class="btn btn-story">START YOUR SUCCESS STORY NOW</button>
                         </Link>                        
                     </div>			
