@@ -123,7 +123,7 @@ class partner extends Component {
                             <h2><b>Start your own business and earn with Hapygle</b></h2>
                         </div>				
                         <div class="div100 mt-2">
-                            <div class="row">
+                            <div class="row response top">
                                 <div class="div60 d-inline">
                                     <h4>Successful owners can expect</h4>                                    
                                     <p class="m-2">1. Startup cost as low as 25,000 MAD</p>
@@ -131,7 +131,7 @@ class partner extends Component {
                                     <p class="m-2">3. Annual Profit potential 750K-2.5M MAD</p>
                                     
                                 </div>		
-                                <div class="div40 d-inline text-right">
+                                <div class="div40 d-inline imgTool text-right">
                                     <img src="./pictures/partner/image.png"></img>
                                 </div>				
                             </div>					
@@ -156,7 +156,7 @@ class partner extends Component {
                     <div class="div100 text-center">
                         <h2>What you do </h2>
                         <h4 class="mt-1">Only 4 simple</h4>
-                        <div class="row mt-2">
+                        <div class="row mt-2 response">
                             <div class="width25 div-grid text-center box-border p-2 mr-1">
                                 <div class="div100">
                                     <h4>1. Set up your busniness</h4>
@@ -194,7 +194,7 @@ class partner extends Component {
                 </div>
                 <div class="row">
                     <div class="div40 m-auto">
-                        <div class="row">
+                        <div class="row response">
                             <div class="div60 d-inline">
                                 <h4>What we support</h4>
                                 <p class="m-2">1. Get you started</p>
@@ -203,7 +203,7 @@ class partner extends Component {
                                 <p class="m-2">4. Share your experience</p>
                                 
                             </div>		
-                            <div class="div40 pt-3 d-inline text-right">
+                            <div class="div40 pt-3 d-inline text-right imgTool">
                                 <img src="./pictures/partner/support.png" class="imgSupport"></img>
                             </div>				
                         </div>	

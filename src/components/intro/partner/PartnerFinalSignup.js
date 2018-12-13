@@ -515,6 +515,17 @@ class PartnerFinalSignUp extends Component {
                         </div>
                     </FormGroup>
                     <div class="div100 text-left">
+                        <p>Becoming a Delivery Service Partner is the next level and a big commitment.</p>
+                        <p>Qualifications<br/>
+                        Experience hiring and developing great teams Ready to commit to being a owner full-time Available liquid assets of at least 25000 MAD Previous business ownership prefered, but not required<br/>
+                        The steps you'll take to launch your business Fill out a full application<br/>
+                        Decide whether this is the right opportunity for you<br/>
+                        Complete 2 weeks of hands-on training<br/>
+                        Set up your business and build your team<br/>
+                        Start delivering
+                        </p>
+                    </div>
+                    <div class="div100 text-left">
                         <Button className={classes.btn} type='submit'>Submit</Button>
                     </div>
                 </form>
