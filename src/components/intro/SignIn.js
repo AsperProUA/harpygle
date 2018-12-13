@@ -181,6 +181,7 @@ class SignIn extends Component {
                         // save app state with user date in reducer
 
                         this.props.onLogin(appState);
+                        window.location.href = window.location.origin + '/profile';
                     } else alert("Login Failed!");
 
                 })

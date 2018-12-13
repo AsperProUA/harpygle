@@ -15,6 +15,7 @@ import BusinessAnalytics from './businessOwners/Analytics';
 import BusinessSuppliers from './businessOwners/Suppliers';
 import BusinessOrders from './businessOwners/Orders';
 import BusinessDelivery from './businessOwners/Delivery';
+import BusinessInventory from './businessOwners/Inventory';
 
 const styles = theme => ({
   root: {
@@ -95,7 +96,7 @@ class MainFrame extends Component {
                 render={() => {
                   switch (role) {
                     case 'BOwners': return <BusinessProfile />;
-                    case 'suppliers': return <div>supplierProfile</div>
+                    case 'suppliers': return <div>supplierProfile</div>;
                   }
                 }} />
               <Route
@@ -103,7 +104,7 @@ class MainFrame extends Component {
                 render={() => {
                   switch (role) {
                     case 'BOwners': return <BusinessEarnings />;
-                    case 'suppliers': return <div>supplierProfile</div>
+                    case 'suppliers': return <div>supplierProfile</div>;
                   }
                 }} />
               <Route
@@ -111,7 +112,7 @@ class MainFrame extends Component {
                 render={() => {
                   switch (role) {
                     case 'BOwners': return <BusinessAnalytics />;
-                    case 'suppliers': return <div>supplierProfile</div>
+                    case 'suppliers': return <div>supplierProfile</div>;
                   }
                 }} />
               <Route
@@ -119,7 +120,7 @@ class MainFrame extends Component {
                 render={() => {
                   switch (role) {
                     case 'BOwners': return <BusinessSuppliers />;
-                    case 'suppliers': return <div>supplierProfile</div>
+                    case 'suppliers': return <div>supplierProfile</div>;
                   }
                 }} />
               <Route
@@ -127,7 +128,7 @@ class MainFrame extends Component {
                 render={() => {
                   switch (role) {
                     case 'BOwners': return <BusinessOrders />;
-                    case 'suppliers': return <div>supplierProfile</div>
+                    case 'suppliers': return <div>supplierProfile</div>;
                   }
                 }} />
               <Route
@@ -135,9 +136,18 @@ class MainFrame extends Component {
                 render={() => {
                   switch (role) {
                     case 'BOwners': return <BusinessDelivery />;
-                    case 'suppliers': return <div>supplierProfile</div>
+                    case 'suppliers': return <div>supplierProfile</div>;
                   }
                 }} />
+                <Route
+                  exact path='/inventory'
+                  render={() => {
+                    switch(role) {
+                      case 'BOwners': return <BusinessInventory />;
+                      case 'suppliers': return <div>supplierProfile</div>;
+                    }
+                  }}
+                />
               <Route
                 exact path='/products'
                 render={() => <Products />}

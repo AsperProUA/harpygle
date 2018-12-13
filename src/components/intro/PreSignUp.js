@@ -133,7 +133,7 @@ class PreSignUp extends Component {
                     <Grid item md={4} className={classes.item}>
                         <Paper className={classes.paper}>
                             <div>
-                                <img width={164} src='./pictures/Intro/Mask Group 1.png' alt='Mask'></img>
+                                <img width={164} src='./pictures/Intro/MaskGroup1.png' alt='Mask'></img>
                             </div>
                             <p className={classes.label}>
                                 COURIER
@@ -151,7 +151,7 @@ class PreSignUp extends Component {
                     <Grid item md={4} className={classes.item}>
                         <Paper className={classes.paper}>
                             <div>
-                                <img width={164} src='./pictures/Intro/undraw_Container_ship_urt4 (1).png' alt='Ship'></img>
+                                <img width={164} src='./pictures/Intro/undraw_Container_ship_urt4@2x.png' alt='Ship'></img>
                             </div>
                             <p className={classes.label}>
                                 SUPPLIERS

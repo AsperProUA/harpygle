@@ -19,6 +19,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import Avatar from './globalComponents/Avatar';
 
 import BusinessMenu from './businessOwners/Menu';
 import logOut from '../services/logOut';
@@ -95,38 +96,6 @@ const styles = theme => ({
       display: 'none',
     },
   },
-  avatar: {
-    display: 'inline-block',
-    width: 60,
-    height: 60,
-    textAlign: 'center',
-    verticalAlign: 'middle',
-    backgroundColor: theme.palette.grey[300],
-    borderRadius: '50%',
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    position: 'relative',
-    '& span': {
-      position: 'absolute',
-      top: '72%',
-      left: '72%',
-      borderRadius: '50%',
-      width: 11,
-      height: 11,
-    }
-  },
-  defaultAvatar: {
-    backgroundImage: `url(${defaultAvatar})`,
-    position: 'relative',
-    '& span': {
-      position: 'absolute',
-      top: '72%',
-      left: '72%',
-      borderRadius: '50%',
-      width: 11,
-      height: 11,
-    }
-  },
   drawerPaper: {
     backgroundColor: theme.palette.grey[900],
     width: 240,
@@ -188,15 +157,7 @@ const styles = theme => ({
   mobileAvatarItem: {
     height: 60,
   },
-  dotOnline: {
-    backgroundColor: '#88C601',
-  },
-  dotOffline: {
-    backgroundColor: '#FFD013',
-  }
 });
-
-const defaultAvatar = 'pictures/poy_benbernanke.png';
 
 class MainAppBar extends React.Component {
   state = {
@@ -310,12 +271,11 @@ class MainAppBar extends React.Component {
           </IconButton>
           <p>Messages</p>
         </MenuItem>
-        <MenuItem classes={{root: classes.mobileAvatarItem}}>
-          {
-            user.avatar ?
-              <div className={classes.avatar} style={{ backgroundImage: `url(${user.avatar})` }} ><span className={online?classes.dotOnline:classes.dotOffline}/></div> :
-              <div className={[classes.avatar, classes.defaultAvatar].join(' ')} ><span className={online?classes.dotOnline:classes.dotOffline}/></div>
-          }
+        <MenuItem classes={{ root: classes.mobileAvatarItem }}>
+          <Avatar
+            size={60}
+            online={online}
+          />
         </MenuItem>
         <MenuItem>
           <Button
@@ -406,11 +366,10 @@ class MainAppBar extends React.Component {
                 onClick={this.handleProfileMenuOpen}
 
               >
-                {
-                  user.avatar ?
-                    <div className={classes.avatar} style={{ backgroundImage: `url(${user.avatar})` }} ><span className={online?classes.dotOnline:classes.dotOffline}/></div> :
-                    <div className={[classes.avatar, classes.defaultAvatar].join(' ')} ><span className={online?classes.dotOnline:classes.dotOffline}/></div>
-                }
+                <Avatar
+                  size={60}
+                  online={online}
+                />
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>

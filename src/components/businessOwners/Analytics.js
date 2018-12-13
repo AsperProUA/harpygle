@@ -11,6 +11,8 @@ const styles = theme => ({
     paper: {
         boxShadow: '0 3px 6px rgba(0,0,0,0.16)',
         borderRadius: 0,
+        color: '#636363',
+        fontWeight: 'bold',
     },
     root: {
         padding: 16,
@@ -32,8 +34,7 @@ const styles = theme => ({
     },
     text: {
         fontSize: 24,
-        color: '#636363',
-        fontWeight: 'bold',
+        
     },
     icon1: {
         backgroundImage: "url('pictures/icons/business/Group 374.png')",
