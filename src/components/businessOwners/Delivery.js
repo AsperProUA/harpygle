@@ -6,6 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import getData from '../../services/getData';
+import AddIcon from '@material-ui/icons/Add';
 
 import AvailableCouriers from './deliveryTabs/AvailableCouriers';
 
@@ -16,16 +17,21 @@ const styles = theme => ({
     },
     tabRoot: {
         maxWidth: '100vw',
+
         [theme.breakpoints.up('md')]: {
             maxWidth: 'calc(100vw - 240px)',
         },
         display: 'inline-block',
     },
     tabs: {
-        marginTop: 5
-        // display: 'flex',
-        // flexWrap: 'wrap',
-        // textAlign: 'center',
+        marginTop: 5,
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+    },
+    container:{
+        width: '100%',
     },
     // categoryRoot: {
     //     color: '#979797',
@@ -51,7 +57,7 @@ const styles = theme => ({
         margin: 'auto',
         backgroundColor: '#88C601',
         color: theme.palette.common.white,
-        // alignSelf: 'center',
+        alignSelf: 'center',
         '&:hover': { backgroundColor: '#7BB203' },
     },
     btnShedule: {
@@ -86,6 +92,7 @@ class Delivery extends Component {
                             onChange={this.changeCategory}
                             classes={{
                                 indicator: classes.indicator,
+                                flexContainer: classes.container,
                             }}
                             scrollable
                             scrollButtons="auto"
@@ -123,7 +130,7 @@ class Delivery extends Component {
                             }} />
                         </Tabs>
                     </div>
-                    <Button className={[classes.btnShedule, classes.btn].join(' ')}>SCHEDULE A NEW ORDER</Button>
+                    <Button className={[classes.btnShedule, classes.btn].join(' ')}> <AddIcon />SCHEDULE A NEW ORDER</Button>
                 </div>
                 {currentTab == 0 && <AvailableCouriers />}
             </div>

@@ -6,6 +6,9 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 
+
+import Footer from './Footer';
+
 const style = theme => ({
     root: {
         width: '100%',
@@ -51,7 +54,7 @@ const style = theme => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-       
+
     },
     bodyContent: {
         display: 'flex',
@@ -146,63 +149,6 @@ const style = theme => ({
         margin: '20px',
 
     },
-    footer: {
-        minHeight: '246px',
-        backgroundColor: '#5A5A5A',
-        display: 'flex',
-    },
-    footerMenu: {
-        color: theme.palette.common.white,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        display: 'flex',
-        padding: '0px 50px',
-        minWidth: '200px',
-        boxSizing: 'content-box',
-        [theme.breakpoints.up('md')]: {
-            boxSizing: 'border-box',
-        },
-
-    },
-    footerMenuItem: {
-        margin: '5px 0',
-        fontSize: 20,
-    },
-    footerSocial: {
-
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        padding: 0,
-        flexDirection: 'row',
-        margin: 'auto',
-        [theme.breakpoints.up('md')]: {
-            padding: '96px',
-            margin: 0,
-        },
-    },
-    socialBtn: {
-        width: '40px',
-        textAlign: 'center',
-        margin: '15px',
-    },
-    footerMenuGroup: {
-        height: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        // minHeight: '200px',
-        // [theme.breakpoints.up('md')]: {
-        //     justifyContent: 'flex-start',
-        // },
-    },
-    // paper: {
-    //     display: 'flex',
-
-    //     [theme.breakpoints.down('sm')]: {
-    //         flexWrap: 'wrap',
-    //     },
-    // }
 });
 
 function scroll() {
@@ -229,14 +175,16 @@ function Intro(props) {
                         <p className={classes.bodyLabel}>A Reliable Young, Agile, Flexible Company</p>
                         <p className={classes.bodyText}>committed to complementing E-commerce & other business partners’ efforts for delighting their customers by offering a reliable, reasonably flexible, high-quality import and courier services.</p>
                         <div className={classes.buttonGroup}>
-                            <Button
-                                variant="contained"
-                                style={{ backgroundColor: "#88C601" }}
-                                className={classes.button}
-                                onClick={scroll()}
-                            >
-                                How It Works
+                            <a href={window.location.origin + '/#howItWork'} style={{ textDecoration: 'none' }}>
+                                <Button
+                                    variant="contained"
+                                    style={{ backgroundColor: "#88C601" }}
+                                    className={classes.button}
+                                    onClick={scroll()}
+                                >
+                                    How It Works
                             </Button>
+                            </a>
                             <Link style={{ textDecoration: 'none' }} to='/presign'>
                                 <Button
                                     variant="contained"
@@ -314,45 +262,15 @@ function Intro(props) {
                     <Button
                         variant="contained"
                         style={{ backgroundColor: "#88C601",width : 'auto'}}
-                        className={classes.button}
-                        
+                        className={classes.button}                        
                     >
                         Become Harpygle Partner
                     </Button>
                 </Link>
             </div>
-            <Grid container spacing={0} className={classes.footer}>
-                <Grid item sm={6} >
-                    <Grid container spacing={0} className={classes.footerMenuGroup} >
-                        <Grid item sm={6} className={classes.footerMenu}>
-                            <p className={classes.footerMenuItem}>Terms &  Conditions</p>
-                            <p className={classes.footerMenuItem}>How it works</p>
-                            <p className={classes.footerMenuItem}>About us</p>
-                        </Grid>
-                        <Grid item sm={6} className={classes.footerMenu}>
-                            <p className={classes.footerMenuItem}>Contact us</p>
-                            <p className={classes.footerMenuItem}>FAQ</p>
-                            <p className={classes.footerMenuItem}>Blog</p>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item md={6} className={classes.footerSocial}>
-                    <div className={classes.socialBtn}>
-                        <img src={window.location.origin + '/pictures/icons/pinterest.png'} alt='pinterest'></img>
-                    </div>
-                    <div className={classes.socialBtn}>
-                        <img src={window.location.origin + '/pictures/icons/linkedin-in.png'} alt='linkedin'></img>
-                    </div>
-                    <div className={classes.socialBtn}>
-                        <img src={window.location.origin + '/pictures/icons/twitter.png'} alt='twitter'></img>
-                    </div>
-                    <div className={classes.socialBtn}>
-                        <img src={window.location.origin + '/pictures/icons/facebook-f.png'} alt='fb'></img>
-                    </div>
-                </Grid>
-            </Grid>
-
+            <Footer/>
         </div>
+        
     );
 }
 

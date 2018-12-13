@@ -13,7 +13,10 @@ import PartnerFinalSignup from './partner/PartnerFinalSignup';
 
 //partner
 import ForgotPassword from './ForgotPassword';
-
+import TermsAndConditions from './TermsAndConditions';
+import ContactUs from './ContactUs';
+import Blog from './Blog';
+import FAQ from './FAQ';
 
 function NonAuth() {
     return (
@@ -28,6 +31,10 @@ function NonAuth() {
                 <Route exact path='/partner/presignup' render={() => <PartnerPreSignUp/>} />
                 <Route exact path='/partner/finalsignup' render={() => <PartnerFinalSignup/>} />
 
+                <Route exact path='/termsandconditions' render={() => <TermsAndConditions/>} />
+                <Route exact path='/contactus' render={() => <ContactUs/>} />
+                <Route exact path='/faq' render={() => <FAQ/>} />
+                <Route exact path='/blog' render={() => <Blog/>} />
                 <Route path='/' render={() => <Intro />} />
                 
             </Switch>
