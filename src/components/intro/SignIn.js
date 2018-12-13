@@ -314,6 +314,7 @@ export default withStyles(style)(connect(
     dispath => ({
         onLogin: (loginData) => {
             dispath({ type: 'LOGIN_USER', payload: loginData });
+            console.log(this.role);            
             getData({ url: `business/get/${loginData.user.id}` }).then(response => {
                 let userData = {};
                 userData.name = response.data.name;
