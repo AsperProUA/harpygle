@@ -101,6 +101,10 @@ class SignIn extends Component {
                     value: 'Couriers',
                     label: 'Courier'
                 },
+                {
+                    value: 'partners',
+                    label: 'Partner'
+                },
             ],
             isValid: false,
             isChecked: false,
@@ -181,7 +185,36 @@ class SignIn extends Component {
                         // save app state with user date in reducer
 
                         this.props.onLogin(appState);
-                    } else alert("Login Failed!");
+                    } 
+                    else if ('supplier logged in successfully' === json.data.msg) {
+                        let userData = {
+                            id: json.data.supplierID,
+                            token: json.data.accessToken,
+                            expireAt: json.data.expires_at,
+                            role: role.value,
+                            email: email.value,
+                        };
+                        let appState = {
+                            isLoggedIn: true,
+                            user: userData
+                        };
+                        this.props.onLogin(appState);
+                    }
+                    else if ('partner logged in successfully' === json.data.msg) {
+                        let userData = {
+                            id: json.data.partnerID,
+                            token: json.data.accessToken,
+                            expireAt: json.data.expires_at,
+                            role: role.value,
+                            email: email.value,
+                        };
+                        let appState = {
+                            isLoggedIn: true,
+                            user: userData
+                        };
+                        this.props.onLogin(appState);
+                    }
+                    else alert("Login Failed!");
 
                 })
                 .catch(error => {
