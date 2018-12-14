@@ -100,10 +100,10 @@ class SheduleANewOrder extends Component {
             },
             snackVariant: '',
             pickupTime: {
-                value: '',
+                value: new Date().toLocaleTimeString(),
             },
             pickupDate: {
-                value: '',
+                value: new Date().toLocaleDateString(),
             },
             fullName: {
                 value: '',

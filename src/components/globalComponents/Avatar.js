@@ -45,6 +45,8 @@ function Avatar(props) {
     );
 }
 
+
+
 const StyledAvatar = withStyles(styles)(connect(
     state => ({
         avatar: state.loginData.user.avatar,

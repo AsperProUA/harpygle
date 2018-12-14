@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import getData from '../../services/getData';
 
+import UserInfo from '../globalComponents/UserInfo';
+
 
 const styles = theme => ({
     paper: {
@@ -34,7 +36,7 @@ const styles = theme => ({
     },
     text: {
         fontSize: 24,
-        
+
     },
     icon1: {
         backgroundImage: "url('pictures/icons/business/Group 374.png')",
@@ -54,43 +56,16 @@ const styles = theme => ({
         padding: '80px 0',
         textAlign: 'center',
     },
-    user: {
-        display: 'flex',
-        justifyContent: 'flex-start',
-        padding: 5,
-        alignItems: 'center',
-        marginBottom: 40,
-    },
-    avatar: {
-        display: 'inline-block',
-        width: 60,
-        height: 60,
-        textAlign: 'center',
-        verticalAlign: 'middle',
-        backgroundColor: theme.palette.grey[300],
-        borderRadius: '50%',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-    },
-    defaultAvatar: {
-        backgroundImage: `url(${defaultAvatar})`,
-    },
-    name: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        margin: '0 20px',
-        color: '#636363'
-    },
     city: {
         fontSize: 18,
         color: '#979797',
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
-
+        fontWeight: 400,
     },
     orders: {
-        textAlign:'center',
+        textAlign: 'center',
     },
     orderLabel: {
         fontSize: 20,
@@ -100,18 +75,19 @@ const styles = theme => ({
     ordersType: {
         fontSize: 12,
         color: '#979797',
-        margin:'25px auto',
+        margin: '15px auto',
+        fontWeight: 400,
     },
     ordersCount: {
         fontSize: 30,
         color: '#979797',
         fontWeight: 'bold',
-        margin:'25px auto',
+        margin: '25px auto',
     },
     hrLight: {
         border: '0.5px solid #E9E9E9',
-        margin: '25px auto',
-        width: '80%'
+        margin: '20px auto',
+        width: '80%',
     }
 })
 
@@ -184,14 +160,7 @@ class Analytics extends Component {
                 </Grid>
                 <Grid item lg={3} md={6} sm={6} xs={12}>
                     <Paper className={classes.paper}>
-                        <div className={classes.user}>
-                            {
-                                user.avatar ?
-                                    <div className={classes.avatar} style={{ backgroundImage: `url(${user.avatar})` }} /> :
-                                    <div className={[classes.avatar, classes.defaultAvatar].join(' ')} />
-                            }
-                            <span className={classes.name}>{user.name}</span>
-                        </div>
+                        <UserInfo/>
                         <div>
                             <hr className={classes.hrLight} />
                             <div className={classes.city}>

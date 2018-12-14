@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Table, TableRow, TableHead, TableCell, TableBody, TextField } from '@material-ui/core';
-import Avatar from '../globalComponents/Avatar';
 import { connect } from 'react-redux'
+import getData from '../../services/getData';
+
+import UserInfo from '../globalComponents/UserInfo';
 
 const fakeProducts = [
     {
@@ -70,7 +72,7 @@ const styles = theme => ({
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
-
+        fontWeight: 400,
     },
     orders: {
         textAlign: 'center',
@@ -83,7 +85,8 @@ const styles = theme => ({
     ordersType: {
         fontSize: 12,
         color: '#979797',
-        margin: '25px auto',
+        margin: '15px auto',
+        fontWeight: 400,
     },
     ordersCount: {
         fontSize: 30,
@@ -93,7 +96,7 @@ const styles = theme => ({
     },
     hrLight: {
         border: '0.5px solid #E9E9E9',
-        margin: '25px auto',
+        margin: '20px auto',
         width: '80%'
     },
     iconMap: {
@@ -123,7 +126,6 @@ class Inventory extends Component {
         this.state = {
             products: fakeProducts,
             user: {
-                city: 'Kharkiv',
                 completedOrders: 13,
                 inProgressOrders: 2,
             },
@@ -143,7 +145,7 @@ class Inventory extends Component {
     }
 
     componentDidMount() {
-        // fetch products & set state;
+        getData({url: `inventory/${this.props.user.id}`})
     }
 
     render() {
@@ -154,16 +156,11 @@ class Inventory extends Component {
             <Grid container spacing={0} >
                 <Grid item sm={4} xs={12} md={4} lg={3} className={classes.userBadge}>
                     <Paper className={classes.paper}>
-                        <div className={classes.user}>
-                            <Avatar
-                                size={60}
-                            />
-                            <span className={classes.name}>{user.name}</span>
-                        </div>
+                        <UserInfo/>
                         <div>
                             <hr className={classes.hrLight} />
                             <div className={classes.city}>
-                                <span className={[classes.icon, classes.iconMap].join(' ')}></span><span style={{ marginLeft: 15 }}>{this.state.user.city}</span>
+                                <span className={[classes.icon, classes.iconMap].join(' ')}></span><span style={{ marginLeft: 15 }}>{user.city}</span>
                             </div>
                             <hr className={classes.hrLight} />
                             <div className={classes.orders}>
