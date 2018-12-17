@@ -13,10 +13,12 @@ import BusinessProfile from './businessOwners/Profile';
 import PartnerProfile from './partnerOwners/Profile';
 import Products from './products';
 import BusinessEarnings from './businessOwners/Earning';
+import PartnerEarnings from './partnerOwners/Earning'
 import BusinessAnalytics from './businessOwners/Analytics';
 import BusinessSuppliers from './businessOwners/Suppliers';
 import BusinessOrders from './businessOwners/Orders';
 import BusinessDelivery from './businessOwners/Delivery';
+import PartnerRequest from './partnerOwners/Request';
 
 const styles = theme => ({
   root: {
@@ -108,6 +110,7 @@ class MainFrame extends Component {
                   switch (role) {
                     case 'BOwners': return <BusinessEarnings />;
                     case 'suppliers': return <div>supplierProfile</div>
+                    case 'partners': return <PartnerEarnings />
                   }
                 }} />
               <Route
@@ -140,6 +143,13 @@ class MainFrame extends Component {
                   switch (role) {
                     case 'BOwners': return <BusinessDelivery />;
                     case 'suppliers': return <div>supplierProfile</div>
+                  }
+                }} />
+              <Route
+                exact path='/request'
+                render={() => {
+                  switch (role) {
+                    case 'partners': return <PartnerRequest />
                   }
                 }} />
               <Route

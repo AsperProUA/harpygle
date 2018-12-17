@@ -14,58 +14,58 @@ import getData from '../../services/getData';
 import Header from './Header';
 
 const style = theme => ({
-    root: {
-        maxWidth: 465,
-        textAlign: 'center',
-        margin: 'auto',
-        backgroundColor: theme.palette.common.white,
-        fontSize: 14,
-        fontWeight: 'lighter',
-        color: '#707070',
-        '& h1': {
-            fontSize: 36,
+        root: {
+            maxWidth: 465,
+            textAlign: 'center',
+            margin: 'auto',
+            backgroundColor: theme.palette.common.white,
+            fontSize: 14,
             fontWeight: 'lighter',
             color: '#707070',
-            margin: '30px auto',
-            marginBottom: 5,
+            '& h1': {
+                fontSize: 36,
+                fontWeight: 'lighter',
+                color: '#707070',
+                margin: '30px auto',
+                marginBottom: 5,
+            },
+            [theme.breakpoints.down('sm')]: {
+                paddingTop: 0,
+            },
         },
-        [theme.breakpoints.down('sm')]: {
-            paddingTop: 0,
+        input: {
+            border: '1px solid #D0D0D0',
+            borderRadius: '10px',
+            padding: '10px 20px',
         },
-    },
-    input: {
-        border: '1px solid #D0D0D0',
-        borderRadius: '10px',
-        padding: '10px 20px',
-    },
-    label: {
-        textAlign: 'left',
-        margin: '10px',
-        color: '#979797',
-        fontSize: 18,
-        fontWeight: 'bold',
-        width: 'auto',
-    },
-    btn: {
-        backgroundColor: '#88C601',
-        color: theme.palette.common.white,
-        marginBottom: 50,
-        width: 250,
-        '&:hover': {
-            backgroundColor: '#7BB203',
-        }
-    },
-    error: {
-        fontSize: 12,
-        color: theme.palette.error.main,
-        fontWeight: 300
-    },
-    forgot: {
-        '& a': {
-            textDecoration: 'none',
-            color: '#25AAE1',
+        label: {
+            textAlign: 'left',
+            margin: '10px',
+            color: '#979797',
+            fontSize: 18,
+            fontWeight: 'bold',
+            width: 'auto',
         },
-    },
+        btn: {
+            backgroundColor: '#88C601',
+            color: theme.palette.common.white,
+            marginBottom: 50,
+            width: 250,
+            '&:hover': {
+                backgroundColor: '#7BB203',
+            }
+        },
+        error: {
+            fontSize: 12,
+            color: theme.palette.error.main,
+            fontWeight: 300
+        },
+        forgot: {
+            '& a': {
+                textDecoration: 'none',
+                color: '#25AAE1',
+            },
+        },
 });
 
 class SignIn extends Component {

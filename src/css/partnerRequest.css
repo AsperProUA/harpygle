@@ -1,0 +1,60 @@
+.headText {
+    font-size: 16px;
+    padding-left: 10px;
+    font-weight: 500;
+}
+
+.blackFont {
+    color: #000;
+}
+
+.nav {
+    width: 100%;
+    padding: 20px 10px;
+    box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+}
+
+.nav-item {
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+.nav-item > img {
+    width: 20px;
+    height: 20px;
+}
+
+.itemImageDiv {
+    display: inline-block;
+    border: 1px solid gainsboro;
+    padding: 10px 30px;
+    position: relative;
+    max-height: 100px;
+}
+
+.crossFont {
+    font-size: 30px;
+    font-weight: 700;
+    color: gainsboro;
+}
+
+.qtyFont {
+    font-size: 44px;
+    font-weight: 600;
+}
+
+.qtyPosition {
+    position: absolute;
+    bottom: -15px;
+    right: -25px;
+}
+
+.itemDescriptionFont {
+    color: #aba6a6;
+    padding-left: 40px;
+}
+
+.btnRowBackground {
+    padding: 15px;
+    background-color: #f9f9f9;
+}
