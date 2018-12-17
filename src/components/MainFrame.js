@@ -10,6 +10,7 @@ import AppBar from './AppBar';
 import BusinessMenu from './businessOwners/Menu';
 import PartnerMenu from './partnerOwners/Menu';
 import BusinessProfile from './businessOwners/Profile';
+import PartnerProfile from './partnerOwners/Profile';
 import Products from './products';
 import BusinessEarnings from './businessOwners/Earning';
 import BusinessAnalytics from './businessOwners/Analytics';
@@ -99,7 +100,8 @@ class MainFrame extends Component {
                 render={() => {
                   switch (role) {
                     case 'BOwners': return <BusinessProfile />;
-                    case 'suppliers': return <div>supplierProfile</div>
+                    case 'suppliers': return <div>supplierProfile</div>;
+                    case 'partners' : return <PartnerProfile />
                   }
                 }} />
               <Route
