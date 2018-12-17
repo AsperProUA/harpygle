@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import RateToStar from '../globalComponents/RateToStars';
 
 const styles = theme => ({
     paper: {
@@ -141,15 +142,15 @@ class Analytics extends Component {
                 driverPic:"#"
             },
             {
-                driverSno: 3,
+                driverSno: 2,
                 driverName: "Naren",
-                driverRating: 5,
+                driverRating: 3.5,
                 driverPic:"#"
             },
             {
                 driverSno: 3,
                 driverName: "Thapa",
-                driverRating: 5,
+                driverRating: 4,
                 driverPic:"#"
             }
         ]
@@ -171,7 +172,7 @@ class Analytics extends Component {
                                     <td className={classes.th10}>{v.driverSno}</td>
                                     <td className={classes.th10}><div className={classes.avatar}></div></td>
                                     <td className={classes.th70}>{v.driverName}</td>
-                                    <td className={classes.th30}>{v.driverRating}</td>
+                                    <td className={classes.th30}><RateToStar rate = {v.driverRating}/></td>
                                 </tr>
                             );
                         })}
