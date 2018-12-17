@@ -12,6 +12,7 @@ import AvailableCouriers from './deliveryTabs/AvailableCouriers';
 import SheduleANewOrder from './deliveryTabs/SheduleANewOrder';
 import PendingOrders from './deliveryTabs/PendingOrders';
 import InProgress from './deliveryTabs/InProgress';
+import ReplacedOrders from './deliveryTabs/ReplacedOrders';
 
 const styles = theme => ({
     root: {
@@ -74,7 +75,7 @@ class Delivery extends Component {
         super(props);
 
         this.state = {
-            currentTab: 2,
+            currentTab: 3,
         }
     }
 
@@ -139,6 +140,7 @@ class Delivery extends Component {
                 {currentTab == 0 && <AvailableCouriers />}
                 {currentTab == 1 && <PendingOrders />}
                 {currentTab == 2 && <InProgress/>}
+                {currentTab == 3 && <ReplacedOrders />}
                 {currentTab == -1 && <SheduleANewOrder/>}
             </div>
         );

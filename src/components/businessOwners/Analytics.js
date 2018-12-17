@@ -20,6 +20,7 @@ const styles = theme => ({
         padding: 16,
         paddingTop: 50,
         margin: 0,
+        width: '100%',
     },
     label: {
         display: 'flex',

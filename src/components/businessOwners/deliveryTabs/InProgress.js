@@ -7,7 +7,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepConnector from '@material-ui/core/StepConnector';
-import StepIcon from '@material-ui/core/StepIcon';
+import classNames from '@material-ui/core/node_modules/classnames';
 
 import RateToStars from '../../globalComponents/RateToStars';
 import UserInfo from '../../globalComponents/UserInfo';
@@ -24,7 +24,7 @@ const fakeOrders = [
         deliveryAddress: '85 Bd de La Liberté Benjdia, 20000 Casablanca',
         date: '23 November, 10:00 AM',
         courier: {
-            name: 'Mohamed',
+            name: 'Fatima',
             img: 'http://pngimg.com/uploads/face/face_PNG5651.png',
             rate: 4,
         },
@@ -32,7 +32,7 @@ const fakeOrders = [
         completed: false,
     },
     {
-        id: 1,
+        id: 2,
         photo: 'http://pngimg.com/uploads/smartphone/smartphone_PNG8523.png',
         name: 'HTC ONE  blue',
         description: 'Qualcomm® Snapdragon™ 810, ROM: 32GB / RAM: 3GB, 4G LTE,',
@@ -42,7 +42,7 @@ const fakeOrders = [
         deliveryAddress: '85 Bd de La Liberté Benjdia, 20000 Casablanca',
         date: '23 November, 10:00 AM',
         courier: {
-            name: 'Mohamed',
+            name: 'Oleh',
             img: '',
             rate: 4,
         },
@@ -50,7 +50,7 @@ const fakeOrders = [
         completed: true,
     },
     {
-        id: 1,
+        id: 3,
         photo: 'http://pngimg.com/uploads/smartphone/smartphone_PNG8523.png',
         name: 'HTC ONE  blue',
         description: 'Qualcomm® Snapdragon™ 810, ROM: 32GB / RAM: 3GB, 4G LTE,',
@@ -60,7 +60,7 @@ const fakeOrders = [
         deliveryAddress: '85 Bd de La Liberté Benjdia, 20000 Casablanca',
         date: '23 November, 10:00 AM',
         courier: {
-            name: 'Mohamed',
+            name: 'Igor',
             img: '',
             rate: 4,
         },
@@ -68,7 +68,7 @@ const fakeOrders = [
         completed: false,
     },
     {
-        id: 1,
+        id: 4,
         photo: 'http://pngimg.com/uploads/smartphone/smartphone_PNG8523.png',
         name: 'HTC ONE  blue',
         description: 'Qualcomm® Snapdragon™ 810, ROM: 32GB / RAM: 3GB, 4G LTE,',
@@ -119,10 +119,43 @@ const styles = theme => ({
         borderTopWidth: 4,
         zIndex: 0
     },
-    iconCintainer: {
-        zIndex:10,
+    iconActive: {
+        backgroundColor: "#88C601!important",
     },
+    iconRoot: {
+        position: 'relative',
+        top: -4,
+        zIndex: 25,
+        width: 29,
+        height: 29,
+        border:'3px solid white',
+        color: 'white',
+        borderRadius: '50%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#CECECE',
+        boxShadow: '0px 1px 6px rgba(0,0,0,0.3)',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    // iconContainer: {
+    //     position: 'relative',
+    //     '&:before': {
+    //         content: "' '",
+    //         zIndex: 24,
+    //         position: 'absolute',
+    //         width: 35,
+    //         height: 35,
+    //         top: -6,
+    //         left: -6,
+    //         backgroundColor: 'white',
+    //         borderRadius: '50%',
+    //         border: '1px solid rgba(0,0,0,0.5)'
+    //     }
+    // },
     photo: {
+        border:'1px solid #CECECE',
         width: 100,
         height: 100,
         padding: 5,
@@ -173,6 +206,7 @@ const styles = theme => ({
     icon: {
         width: 32,
         height: 32,
+        verticalAlign: 'middle',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         padding: 1,
@@ -226,7 +260,7 @@ const styles = theme => ({
     button: {
         display: 'flex',
         justifyContent: 'flex-end',
-        alignItems:'center',
+        alignItems: 'center',
         padding: 20,
     }
 })
@@ -237,6 +271,19 @@ const steps = [
     'Delivered',
     'Paid',
 ]
+
+function renderCustomIcon(props) {
+    console.log(props)
+    const { classes, icon ,active, completed } = props;
+    console.log()
+    return (<span
+        className={classNames(classes.iconRoot, {
+            [classes.iconActive]: active||completed,
+        })}
+    >{icon}</span>)
+}
+
+const CustomIcon = withStyles(styles)(renderCustomIcon);
 
 class InProgress extends Component {
     constructor(props) {
@@ -283,7 +330,12 @@ class InProgress extends Component {
                         {steps.map((label, i) => {
                             return (
                                 <Step key={label}>
-                                    <StepLabel classes={{iconContainer: classes.iconCintainer}}>{label}</StepLabel>
+                                    <StepLabel 
+                                        StepIconComponent={CustomIcon}
+                                        classes={{
+                                            iconContainer: classes.iconContainer,
+                                        }}
+                                    >{label}</StepLabel>
                                 </Step>
                             );
                         })}
@@ -304,10 +356,10 @@ class InProgress extends Component {
                     </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={5} className={classes.button}>
-                        {order.completed?(
-                            <Button style={{backgroundColor: '#88C601', color: 'white',}}> ATTACH DEPOSIT RECEIPT</Button>
-                        ):(
-                            <Button style={{backgroundColor: '#25AAE1', color: 'white',}}>CHANGE STATUS</Button>
+                    {order.completed ? (
+                        <Button style={{ backgroundColor: '#88C601', color: 'white', }}> ATTACH DEPOSIT RECEIPT</Button>
+                    ) : (
+                            <Button style={{ backgroundColor: '#25AAE1', color: 'white', }}>CHANGE STATUS</Button>
                         )}
                 </Grid>
             </Grid>
@@ -354,7 +406,7 @@ class InProgress extends Component {
                 </Grid>
                 <Grid item xs={12} sm={12} md={8} lg={9} style={{ border: 'none', boxShadow: 'none' }}>
                     {orders.map(order => {
-                        return <Paper className={classes.orderItem}>{this.renderOrders(order)}</Paper>;
+                        return <Paper key={order.id} className={classes.orderItem}>{this.renderOrders(order)}</Paper>;
                     })}
                 </Grid>
             </Grid>

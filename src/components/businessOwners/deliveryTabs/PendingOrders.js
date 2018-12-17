@@ -8,7 +8,7 @@ import UserInfo from '../../globalComponents/UserInfo';
 
 const fakeOrders = [
     {
-        id: 1,
+        id: 2,
         photo: 'http://pngimg.com/uploads/smartphone/smartphone_PNG8523.png',
         name: 'HTC ONE  blue',
         description: 'Qualcomm® Snapdragon™ 810, ROM: 32GB / RAM: 3GB, 4G LTE,',
@@ -30,7 +30,7 @@ const fakeOrders = [
         date: '23 November, 10:00 AM',
     },
     {
-        id: 1,
+        id: 3,
         photo: 'http://pngimg.com/uploads/smartphone/smartphone_PNG8523.png',
         name: 'HTC ONE  blue',
         description: 'Qualcomm® Snapdragon™ 810, ROM: 32GB / RAM: 3GB, 4G LTE,',
@@ -41,7 +41,7 @@ const fakeOrders = [
         date: '23 November, 10:00 AM',
     },
     {
-        id: 1,
+        id: 4,
         photo: 'http://pngimg.com/uploads/smartphone/smartphone_PNG8523.png',
         name: 'HTC ONE  blue',
         description: 'Qualcomm® Snapdragon™ 810, ROM: 32GB / RAM: 3GB, 4G LTE,',
@@ -282,7 +282,7 @@ class PendingOrders extends Component {
                 </Grid>
                 <Grid item xs={12} sm={12} md={7} lg={8} style={{ border: 'none', boxShadow: 'none' }}>
                     {orders.map(order => {
-                        return <Paper className={classes.orderItem}>{this.renderOrders(order)}</Paper>;
+                        return <Paper key={order.id} className={classes.orderItem}>{this.renderOrders(order)}</Paper>;
                     })}
                 </Grid>
             </Grid>

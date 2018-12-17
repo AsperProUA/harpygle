@@ -164,7 +164,7 @@ class MainAppBar extends React.Component {
     anchorEl: null,
     mobileMoreAnchorEl: null,
     mobileOpen: false,
-    online: false,
+    online: true,
   };
 
   renderMainMenu = () => {
