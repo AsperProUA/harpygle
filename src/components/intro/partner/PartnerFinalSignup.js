@@ -108,6 +108,7 @@ class PartnerFinalSignUp extends Component {
                 value: '',
                 isValid: true,
             },
+            states : [],
             developTeam: 'yes',
             ownerFullTime: 'yes',
             operateBusiness: 'yes',
@@ -117,6 +118,22 @@ class PartnerFinalSignUp extends Component {
             sended: false,
         }
         this.getPartnerData();
+        this.getAllStates();
+    }
+
+    getAllStates = () =>{
+        axios.get(`${apiPath}getAllStates`, {
+        }).then((response) => {
+            if (response.status == 201) {
+                this.setState({
+                    states: response.data
+                });
+                //this.setState()
+                console.log(this.roles)                
+            }
+        }).catch((error) => {
+            
+        });
     }
 
     getPartnerData = () =>{
@@ -331,14 +348,30 @@ class PartnerFinalSignUp extends Component {
                                 />
                             </div>
                             <div className="div30 d-inline mr-1">
-                                <TextField
+                                {/* <TextField
                                     error={isChecked && !isValid && state.errMsg && !state.isValid}
                                     label="State"
                                     value={state.value}
                                     onInput={(event) => { this.handleInput('state', event.target.value) }}
                                     helperText={isChecked && !isValid && !state.isValid && state.errMsg}
                                     variant="outlined"
-                                />
+                                /> */}
+                                <TextField
+                                select
+                                error={isChecked && !isValid && state.errMsg && !state.isValid}
+                                label="State"
+                                value={state.value}
+                                onChange={(event) => { this.handleInput('state', event.target.value) }}                                
+                                helperText={isChecked && !isValid && !state.isValid && state.errMsg}
+                                margin="normal"
+                                variant="outlined"
+                            >
+                                {/* {states.map(option => (
+                                    <MenuItem key={option.id} value={option.id}>
+                                        {option.name}
+                                    </MenuItem>
+                                ))} */}
+                        </TextField>
                             </div>
                             <div className="div30 d-inline mr-1">
                                 <TextField
