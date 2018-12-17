@@ -125,3 +125,31 @@
 .jss6{
   width: 100% !important;
 }
+.justify{
+  text-align: justify;
+}
+.MuiAppBar-colorPrimary-260{
+  color: black !important;
+  background-color: white !important;
+}
+.textClass{
+  font-size: 15px !important;
+}
+@media only screen and (min-width : 768px) and (max-width : 1024px) {
+  .response>.width25 { width: 33% !important;}
+  .div40 {width:auto;}
+  p { text-align: justify !important;}
+  .response>.div60 { width:78% !important;}
+}
+
+@media only screen and (min-width : 320px) and (max-width : 480px) {
+  .response>.width25 { width: 60% !important;}
+  .div40 {width:auto;}
+  .response>.div60 { width:103% !important;}
+  p { text-align: justify !important;}
+  .imgTool {display: block !important; width: 25% !important; margin-left: auto !important; margin-right: auto !important;}
+}
+
+/* @media only screen and (min-width : 1224px) {
+  .top { padding-left: 21% !important; width: auto;}
+} */
