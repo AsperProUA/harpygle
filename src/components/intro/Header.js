@@ -18,9 +18,7 @@ function Header(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
-            <Link to='/'>
-                <img height={90} width='auto' src={'/logo.png'} alt='Logo'></img>
-            </Link>
+            <img height={90} src='../Logo.png' alt='Logo'></img>
         </div>
     );
 }

@@ -7,6 +7,7 @@ import Hidden from '@material-ui/core/Hidden';
 
 import AppBar from './AppBar';
 import BusinessMenu from './businessOwners/Menu';
+import PartnerMenu from './partnerOwners/Menu';
 import BusinessProfile from './businessOwners/Profile';
 import Products from './products';
 import BusinessEarnings from './businessOwners/Earning';
@@ -67,7 +68,8 @@ class MainFrame extends Component {
   renderMenu = () => {
     switch (this.props.role) {
       case 'BOwners': return <BusinessMenu />;
-      case 'suppliers': return <div>supplierMenu</div>
+      case 'suppliers': return <div>supplierMenu</div>;
+      case 'partners': return <PartnerMenu/>;
 
     }
   }

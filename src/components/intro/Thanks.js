@@ -22,7 +22,7 @@ function Thanks(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
-        <Header/>
+        
             <h2>
                 Thank you!
             </h2>

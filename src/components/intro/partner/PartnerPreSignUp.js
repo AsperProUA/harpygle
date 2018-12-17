@@ -5,11 +5,12 @@ import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import apiPath from '../../services/apiPath';
-import Header from './Header';
-import Thanks from './Thanks';
+import apiPath from '../../../services/apiPath';
+import Header from '../Header';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+
+import Thanks from '../Thanks';
 
 const style = theme => ({
     root: {
@@ -42,7 +43,7 @@ const style = theme => ({
     },
 });
 
-class OwnerSignUp extends Component {
+class PartnerPreSignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -104,20 +105,23 @@ class OwnerSignUp extends Component {
         });
     }
 
-    handleSign = (e) => {
-        console.log('signing');
+    handleSigUp = (e) => {        
+        //browserHistory.push('/partner');
         e.preventDefault();
         this.setState({ isChecked: true });
         this.validateForm();
         if (this.state.isValid) {
             const { email, password } = this.state;
-            axios.post(`${window.myOwnProps.apiPath}supplier/create`, {
+            axios.post(`${apiPath}partner/precreate`, {
                 email: email.value,
                 password: password.value,
             }).then((response) => {
                 if (response.status == 201) {
                     console.log(response);
-                    this.setState({ sended: true });
+                    let partnerId = response['data']['partnerID'];
+                    console.log(this.props);
+                    window.location.href = '/partner/finalsignup?partner='+partnerId
+                    //this.setState({ sended: true });
                 }
             }).catch((error) => {
                 if (error.response.data.error) {
@@ -132,7 +136,6 @@ class OwnerSignUp extends Component {
                     console.log(this.state);
                 }
             });
-
         }
     }
 
@@ -150,12 +153,13 @@ class OwnerSignUp extends Component {
                 <Thanks />
             </div>
         );
+        console.log(this.props)
         return (
             <div>
                 <Header />
-                <form className={classes.root} onSubmit={this.handleSign}>
+                <form className={classes.root} onSubmit={this.handleSigUp}>
                     <h1>SIGN UP</h1>
-                    as supplier
+                    as partner
                     <FormGroup>
                         <TextField
                             error={isChecked && !isValid && email.errMsg && !email.isValid}
@@ -183,8 +187,8 @@ class OwnerSignUp extends Component {
     }
 }
 
-OwnerSignUp.propTypes = {
+PartnerPreSignUp.propTypes = {
     classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(style)(OwnerSignUp);
+export default withStyles(style)(PartnerPreSignUp);

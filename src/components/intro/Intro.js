@@ -257,8 +257,20 @@ function Intro(props) {
                 <p className={classes.aboutLabel}>ABOUT US</p>
                 <p className={classes.aboutText}>Harpygle was born as a startup in 2018 due to the increasing need of such services in the market. E-commerce was vastly growing globally and this growth was being witnessed in Morocco despite having a slower rate. With this in mind, Harpygle decided to become more of a partner to its clients rather than a service provider by solving its importing and delivery problems, being the most chronic problems of E-commerce.</p>
             </div>
+            <div className={classes.buttonGroup} class="text-center">
+                <Link style={{textDecoration:'none'}} to='/partner'>
+                    <Button
+                        variant="contained"
+                        style={{ backgroundColor: "#88C601",width : 'auto'}}
+                        className={classes.button}                        
+                    >
+                        Become Harpygle Partner
+                    </Button>
+                </Link>
+            </div>
             <Footer/>
         </div>
+        
     );
 }
 

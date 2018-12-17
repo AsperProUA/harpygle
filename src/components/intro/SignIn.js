@@ -101,6 +101,10 @@ class SignIn extends Component {
                     value: 'Couriers',
                     label: 'Courier'
                 },
+                {
+                    value: 'partners',
+                    label: 'Partner'
+                },
             ],
             isValid: false,
             isChecked: false,
@@ -182,7 +186,36 @@ class SignIn extends Component {
 
                         this.props.onLogin(appState);
                         window.location.href = window.location.origin + '/profile';
-                    } else alert("Login Failed!");
+                    } 
+                    else if ('supplier logged in successfully' === json.data.msg) {
+                        let userData = {
+                            id: json.data.supplierID,
+                            token: json.data.accessToken,
+                            expireAt: json.data.expires_at,
+                            role: role.value,
+                            email: email.value,
+                        };
+                        let appState = {
+                            isLoggedIn: true,
+                            user: userData
+                        };
+                        this.props.onLogin(appState);
+                    }
+                    else if ('partner logged in successfully' === json.data.msg) {
+                        let userData = {
+                            id: json.data.partnerID,
+                            token: json.data.accessToken,
+                            expireAt: json.data.expires_at,
+                            role: role.value,
+                            email: email.value,
+                        };
+                        let appState = {
+                            isLoggedIn: true,
+                            user: userData
+                        };
+                        this.props.onLogin(appState);
+                    }
+                    else alert("Login Failed!");
 
                 })
                 .catch(error => {
@@ -282,6 +315,7 @@ export default withStyles(style)(connect(
     dispath => ({
         onLogin: (loginData) => {
             dispath({ type: 'LOGIN_USER', payload: loginData });
+            console.log(this.role);            
             getData({ url: `business/get/${loginData.user.id}` }).then(response => {
                 let userData = {};
                 userData.name = response.data.name;
