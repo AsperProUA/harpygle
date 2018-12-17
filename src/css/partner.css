@@ -125,7 +125,16 @@
 .jss6{
   width: 100% !important;
 }
-
+.justify{
+  text-align: justify;
+}
+.MuiAppBar-colorPrimary-260{
+  color: black !important;
+  background-color: white !important;
+}
+.textClass{
+  font-size: 15px !important;
+}
 @media only screen and (min-width : 768px) and (max-width : 1024px) {
   .response>.width25 { width: 33% !important;}
   .div40 {width:auto;}
