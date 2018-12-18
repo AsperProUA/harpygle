@@ -12,6 +12,7 @@ import CheckIcon from '@material-ui/icons/CheckCircle';
 import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import Snackbar from '@material-ui/core/Snackbar';
 import getData from '../../services/getData';
 import logOut from '../../services/logOut';
 
@@ -172,9 +173,15 @@ class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            snackbarOpen: false,
+            snackbarMessage: '',
             user: {
                 id: '',
                 avatar: {
+                    updated: false,
+                    value: null,
+                },
+                idFile: {
                     updated: false,
                     value: null,
                 },
@@ -265,7 +272,7 @@ class Profile extends Component {
         console.log(body);
         axios.put(`${apiPath}partner/update/${id}`, body, {
             headers: { 'Content-Type': 'application/json' },
-        }).then(console.log);
+        }).then(this.handleOpenSnackbar());
     }
 
     handleFile = (e) => {
@@ -286,6 +293,26 @@ class Profile extends Component {
                     });
                 }
             }
+        }
+    }
+
+    handleIdNumberFile = (e) => {
+        e.preventDefault && e.preventDefault();
+        var idFile, canvas, i;
+        var selectedFile = 'files' in e.target ? e.target.files : 'dataTransfer' in e ? e.dataTransfer.files : [];
+        if (selectedFile.length > 0) {
+            var fileToLoad = selectedFile[0];
+            var fileReader = new FileReader();
+            var base64;
+            fileReader.onload = function (fileLoadedEvent) {
+                base64 = fileLoadedEvent.target.result;
+                this.setState(currentState => {
+                    currentState.user.idFile.value = base64;
+                    currentState.user.idFile.updated = true;
+                    return currentState;
+                });
+            };
+            fileReader.readAsDataURL(fileToLoad);
         }
     }
 
@@ -327,10 +354,20 @@ class Profile extends Component {
         }).then(logOut);
     }
 
+    handleOpenSnackbar =  () => {
+        this.setState({ snackbarOpen: true, snackbarMessage:'Updated Successfully!' });
+    };
+
+    handleCloseSnackbar = () => {
+        this.setState({ snackbarOpen: false });
+    };
+
     render() {
         
         const { classes } = this.props;
-        const { securityQuestionID, securityAns, email, currentPassword, newPassword, isChecked, isValid, avatar ,ShopifyURL } = this.state.user;
+        const { securityQuestionID, securityAns, email, currentPassword, newPassword,
+             isChecked, isValid, avatar } = this.state.user;
+        const { snackbarOpen, snackbarMessage } = this.state;
         const { handleInput } = this;
         return (
 
@@ -344,10 +381,12 @@ class Profile extends Component {
                     <p className={classes.removeImgText}><ClearIcon /> REMOVE IMAGE</p>
                     <div className={classes.accountId}>
                         <p className={classes.removeImgText}><CheckIcon /><span className={classes.secondaryText}>Your Account Is Verified</span></p>
-                        <Button style={{ width: 261 }} >Update Your ID Number</Button>
+                        <Button className={classes.fileUpload} style={{ width: 261 }} >Update Your ID Number
+                            <input type='file' onChange={(event) => { this.handleIdNumberFile(event) }} />
+                        </Button>
                     </div>
                     <div className={classes.accountId} style={{ paddingBottom: 0 }}>
-                        <Button onClick={this.handleDelete} style={{ backgroundColor: 'inherit', color: '#979797', fontSize: 14, margin: 0, textTransform: 'none' }}>Delete account</Button>
+                        <Button  onClick={this.handleDelete} style={{ backgroundColor: 'inherit', color: '#979797', fontSize: 14, margin: 0, textTransform: 'none' }}>Delete account</Button>
                     </div>
                 </Grid>
                 <Grid item md={6} sm={12} xs={12}>
@@ -411,6 +450,12 @@ class Profile extends Component {
                         <Button className={classes.submitBtn} type='submit'>Submit</Button>
                     </form>
                 </Grid>
+                <Snackbar
+                    anchorOrigin={{ vertical:'top', horizontal:'right' }}
+                    open={snackbarOpen}
+                    onClose={this.handleCloseSnackbar}
+                    message={snackbarMessage}
+                />
             </Grid>
         );
     }
