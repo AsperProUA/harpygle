@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import apiPath from '../../../services/apiPath';
 import Header from '../Header';
+import { Link } from 'react-router-dom';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import Thanks from '../Thanks';
@@ -35,11 +36,17 @@ const style = theme => ({
     btn: {
         backgroundColor: '#88C601',
         color: theme.palette.common.white,
-        marginBottom: 50,
+        marginBottom: 10,
         width: 250,
         '&:hover': {
             backgroundColor: '#7BB203',
         }
+    },
+    forgot: {
+        '& a': {
+            textDecoration: 'none',
+            color: '#25AAE1',
+        },
     },
 });
 
@@ -160,8 +167,8 @@ class PartnerPreSignUp extends Component {
                 <form className={classes.root} onSubmit={this.handleSigUp}>
                     <h1>SIGN UP</h1>
                     as partner
-                    <FormGroup>
-                        <TextField
+                    <FormGroup >
+                        <TextField className="mt-3"
                             error={isChecked && !isValid && email.errMsg && !email.isValid}
                             label="Email"
                             value={email.value}
@@ -169,7 +176,7 @@ class PartnerPreSignUp extends Component {
                             helperText={isChecked && !isValid && !email.isValid && email.errMsg}
                             variant="outlined"
                         />
-                        <TextField
+                        <TextField className="mt-3"
                             error={isChecked && !isValid && password.errMsg && !password.isValid}
                             label="Password"
                             value={password.value}
@@ -181,6 +188,9 @@ class PartnerPreSignUp extends Component {
                         />
                     </FormGroup>
                     <Button className={classes.btn} type='submit'>Sign Up</Button>
+                    <div className={classes.forgot}>
+                        <Link to='/signin'>If you already have an account.</Link>
+                    </div>
                 </form>
             </div>
         );

@@ -19,7 +19,9 @@ import BusinessOrders from './businessOwners/Orders';
 import BusinessDelivery from './businessOwners/Delivery';
 import PartnerRequest from './partnerOwners/Request';
 import PartnerTab from './partnerOwners/Tabs';
+import PartnerTeam from './partnerOwners/Team';
 import PartnerChat from './partnerOwners/Chat'
+
 
 import BusinessInventory from './businessOwners/Inventory';
 
@@ -163,6 +165,13 @@ class MainFrame extends Component {
                 render={() => {
                   switch (role) {
                     case 'partners': return <PartnerRequest />
+                  }
+                }} />
+              <Route
+                exact path='/team'
+                render={() => {
+                  switch (role) {
+                    case 'partners': return <PartnerTeam />;
                   }
                 }} />
               <Route

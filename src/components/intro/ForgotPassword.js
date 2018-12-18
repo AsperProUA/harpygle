@@ -52,24 +52,87 @@ class ForgotPassword extends Component {
                 value: '',
                 errMsg: '',
             },
+            role: {
+                value: '',
+                isValid: false,
+                errMsg: 'please select role'
+            },
+            roles: [
+                {
+                    value: 'BOwners',
+                    label: 'Business owner'
+                },
+                {
+                    value: 'suppliers',
+                    label: 'Supplier'
+                },
+                {
+                    value: 'Couriers',
+                    label: 'Courier'
+                },
+                {
+                    value: 'partners',
+                    label: 'Partner'
+                },
+            ],
             submited: false,
             restored: false,
+            isValid: false,
+            isChecked: false,
         };
     }
 
-    handleInput = (value) => {
+    handleInput = (field, value) => {
         this.setState((currentState) => {
-            currentState.email.value = value;
+            currentState[field].value = value;
+            return currentState;
+        });
+        this.validateField(field, value);
+        this.validateForm();
+    }
+
+    validateForm = () => {
+        this.setState(currentState => {
+            currentState.isValid = (currentState.email.isValid && currentState.role.isValid);
+            return currentState;
+        });
+    }
+
+    validateField = (field, value) => {
+        let valid = false;
+        let errMsg = undefined;
+        switch (field) {
+            case 'email':
+                valid = !!value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+                errMsg = 'invalid email';
+                console.log(valid);
+                break;
+            case 'password':
+                valid = !!value.match(/\s*([\w]{6,})\s*/);
+                
+                break;
+            case 'role':
+                valid = !!value;
+                break
+        }
+        this.setState((currentState) => {
+            currentState[field].isValid = valid;
+            errMsg && (currentState[field].errMsg = errMsg);
             return currentState;
         });
     }
 
     handleSign = (e) => {
-        const { email } = this.state;
         e.preventDefault();
-        axios.post(apiPath + "restore", {
-            email: email.value,
-        })
+        const { email,role } = this.state;
+        this.setState({ isChecked: true });
+        this.validateForm();
+        if (this.state.isValid) {
+            e.preventDefault();
+            axios.post(apiPath + "sendMail", {
+                email: email.value,
+                role: role.value,
+            })
             .then(response => {
                 return response;
             })
@@ -94,12 +157,12 @@ class ForgotPassword extends Component {
                     }
                 }
             });
-
+        }
     }
 
 
     render() {
-        const { email } = this.state;
+        const { email, password, isChecked, isValid, roles, role } = this.state;
         const { classes } = this.props;
         return (
             <div>
@@ -108,15 +171,31 @@ class ForgotPassword extends Component {
                     <h1>RESTORE PASSWORD</h1>
                     <FormGroup>
                         <TextField
-                            error={!!email.errMsg}
+                           error={isChecked && !isValid && email.errMsg && !email.isValid}
                             label="Email"
                             value={email.value}
-                            onInput={(event) => { this.handleInput(event.target.value) }}
+                            onInput={(event) => { this.handleInput('email', event.target.value) }}
                             helperText={email.errMsg}
                             variant="outlined"
                             margin="normal"
                         />
                     </FormGroup>
+                    <TextField
+                            error={isChecked && !isValid && role.errMsg && !role.isValid}
+                            select
+                            label="Role"
+                            value={role.value}
+                            onChange={(event) => { this.handleInput('role', event.target.value) }}                            
+                            helperText={isChecked && !isValid && !role.isValid && role.errMsg}
+                            margin="normal"
+                            variant="outlined"
+                        >
+                            {roles.map(option => (
+                                <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
+                        </TextField>
                     <Button type='submit' className={classes.btn} >Sign Up</Button>
                 </form>
             </div>

@@ -98,7 +98,7 @@ class SignIn extends Component {
                     label: 'Supplier'
                 },
                 {
-                    value: 'Couriers',
+                    value: 'couriers',
                     label: 'Courier'
                 },
                 {
@@ -132,7 +132,6 @@ class SignIn extends Component {
     }
 
     validateField = (field, value) => {
-        console.log(value)
         let valid = false;
         let errMsg = undefined;
         switch (field) {
