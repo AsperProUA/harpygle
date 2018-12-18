@@ -82,7 +82,7 @@ function ListItemComposition(props) {
           </MenuItem>
         </Link>
         <Divider />
-        <Link to='inventory'>
+        <Link to='team'>
           <MenuItem className={classes.menuItem}>
             <ListItemIcon className={classes.icon}>
               <SvgIcon viewBox='0 0 27 27' className={classes.svgIcon}>
