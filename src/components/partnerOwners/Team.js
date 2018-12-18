@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     paper: {
-        boxShadow: '0 3px 6px rgba(0,0,0,0.16)',
+        boxShadow: 'none',
         borderRadius: 0,
     },
     root: {
@@ -20,6 +20,7 @@ const styles = theme => ({
         paddingRight: 16,
         paddingBottom: 16,
         margin: 0,
+        width: '100% !important'
     },
     label: {
         display: 'flex',
@@ -215,7 +216,7 @@ class Team extends Component {
                 <Grid item lg={10} md={10} sm={10} xs={12}>
                     <Paper className={classes.paper}>
                         <hr />
-                        <h4><img src={require('../../assets/icon/people.png')} /> Your Team Members 
+                        <h4><img width={50} src={require('../../assets/icon/people.png')} /> Your Team Members 
                             <Button
                                 aria-owns={anchorEl ? 'simple-menu' : undefined}
                                 aria-haspopup="true"
@@ -230,7 +231,6 @@ class Team extends Component {
                                 onClose={this.handleClose}
                             >
                                 { menuitems.map(function(v){
-                                    debugger
                                     return (
                                         <MenuItem>{v.name}</MenuItem>
                                     );

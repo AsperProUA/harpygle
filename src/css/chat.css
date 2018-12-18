@@ -1,0 +1,28 @@
+.chatList {
+    border-right: 1px solid gainsboro;
+    min-height: calc(100vh - 84px);
+    overflow-y: auto;
+    background-color: #f9f9f9;
+}
+
+.recievedMessage {
+    background-color: #66d441;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.sentMessage {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+.messageWidth {
+    max-width: calc(100% - 40px) !important;
+}
+
+.textComposerArea {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
