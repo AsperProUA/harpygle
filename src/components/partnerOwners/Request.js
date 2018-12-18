@@ -215,7 +215,7 @@ class Request extends Component {
             var checkIcon = '';
         }
         return (
-            <div className="row my-4 justify-content-center">
+            <div key={order.id} className="row my-4 justify-content-center">
                 <div className="col-lg-7 col-11 d-flex">
                     <span className="itemImageDiv">
                         <img src={require("../../assets/icon/item_XL_27456702_66740328.png")} />

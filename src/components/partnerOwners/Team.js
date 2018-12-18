@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import RateToStar from '../globalComponents/RateToStars';
 import Icon from '@material-ui/core/Icon';
 import Menu from '@material-ui/core/Menu';
@@ -222,7 +223,7 @@ class Team extends Component {
                                 aria-haspopup="true"
                                 onClick={this.handleClick}
                             >
-                                <img class='cusor' src={require('../../assets/icon/listing.png')}/>
+                                <img className='cusor' src={require('../../assets/icon/listing.png')}/>
                             </Button>
                             <Menu
                                 id="simple-menu"
@@ -232,28 +233,30 @@ class Team extends Component {
                             >
                                 { menuitems.map(function(v){
                                     return (
-                                        <MenuItem>{v.name}</MenuItem>
+                                        <MenuItem key={v.name}>{v.name}</MenuItem>
                                     );
                                 })
                                     
                                 }
                                 
                             </Menu> 
-                            <img class='right' src={require('../../assets/icon/groupAdd.png')}></img>
+                            <img className='right' src={require('../../assets/icon/groupAdd.png')}></img>
 
                             </h4>
                         <table className={classes.table}>
-                        { data.map(function(v){ 
-                            return(                      
-                                <tr class="tableRow">
-                                    <td class="cell"><div className={[classes.avatar, classes.defaultAvatar].join(' ')}></div></td>
-                                    <td className={classes.th60}><span>{v.driverName}</span><span class="teamName"><RateToStar rate = {v.driverRating}/></span></td>
-                                    <td className={classes.th30}><span class="teamName"><img class='imgTool' src={require('../../assets/icon/chatIcon.png')} /> Chat With {v.driverName}</span></td>
-                                    <td className={classes.th30}><Icon>delete</Icon><span class="teamName" id={v.driverSno}> Remove</span></td>
+                            <tbody>
+                            { data.map(function(v){ 
+                                return(                      
+                                    <tr key={v.driverSno} className="tableRow">
+                                        <td className="cell"><div className={[classes.avatar, classes.defaultAvatar].join(' ')}></div></td>
+                                        <td className={classes.th60}><span>{v.driverName}</span><span className="teamName"><RateToStar rate = {v.driverRating}/></span></td>
+                                        <td className={classes.th30}><span className="teamName"><Link to='chat'><img className='imgTool' src={require('../../assets/icon/chatIcon.png')} /></Link> Chat With {v.driverName}</span></td>
+                                        <td className={classes.th30}><Icon>delete</Icon><span className="teamName" id={v.driverSno}> Remove</span></td>
 
-                                </tr>
-                            );
-                        })}
+                                    </tr>
+                                );
+                            })}
+                            </tbody>
                         </table>
                     </Paper>
                 </Grid>
