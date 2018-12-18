@@ -10,10 +10,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import apiPath from '../../services/apiPath';
 import getData from '../../services/getData';
 import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import green from '@material-ui/core/colors/green';
 import Footer from './Footer';
 import CustomizedSnackbar from '../globalComponents/CustomizedSnackbar';
 
