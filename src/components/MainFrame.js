@@ -103,10 +103,7 @@ class MainFrame extends Component {
                   switch (role) {
                     case 'BOwners': return <BusinessProfile />;
                     case 'suppliers': return <div>supplierProfile</div>;
-<<<<<<< HEAD
                     case 'partners' : return <PartnerProfile />
-=======
->>>>>>> 0adf500096e109386ecf2fbc884700361195abd2
                   }
                 }} />
               <Route
@@ -114,12 +111,8 @@ class MainFrame extends Component {
                 render={() => {
                   switch (role) {
                     case 'BOwners': return <BusinessEarnings />;
-<<<<<<< HEAD
                     case 'suppliers': return <div>supplierProfile</div>
                     case 'partners': return <PartnerEarnings />
-=======
-                    case 'suppliers': return <div>supplierProfile</div>;
->>>>>>> 0adf500096e109386ecf2fbc884700361195abd2
                   }
                 }} />
               <Route
@@ -128,10 +121,7 @@ class MainFrame extends Component {
                   switch (role) {
                     case 'BOwners': return <BusinessAnalytics />;
                     case 'suppliers': return <div>supplierProfile</div>;
-<<<<<<< HEAD
                     case 'partners': return <PartnerTab />;
-=======
->>>>>>> 0adf500096e109386ecf2fbc884700361195abd2
                   }
                 }} />
               <Route
