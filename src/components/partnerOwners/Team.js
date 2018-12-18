@@ -8,6 +8,7 @@ import RateToStar from '../globalComponents/RateToStars';
 import Icon from '@material-ui/core/Icon';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     paper: {
@@ -140,58 +141,109 @@ class Team extends Component {
     constructor(props) {
         super(props);
         /// ////////////////  Fake Data  ////////////////////////////
-        this.state = [
-            {
-                driverSno: 1.,
-                driverName: "Mohammed",
-                driverRating: 5,
-                driverPic:"#"
-            },
-            {
-                driverSno: 2,
-                driverName: "Naren",
-                driverRating: 3.5,
-                driverPic:"#"
-            },
-            {
-                driverSno: 3,
-                driverName: "Thapa",
-                driverRating: 4,
-                driverPic:"#"
-            },
-            {
-                driverSno: 4,
-                driverName: "Mohit",
-                driverRating: 2.5,
-                driverPic:"#"
-            },
-            {
-                driverSno: 5,
-                driverName: "Jatin",
-                driverRating: 1.5,
-                driverPic:"#"
-            }
-        ]
+        this.state = {
+            anchorEl : null,
+            menuitems :[
+                {
+                    name: 'city'
+                },
+                {
+                    name: 'name'
+                },
+                {
+                    name: 'value'
+                },
+                {
+                    name: 'location'
+                }
+            ] ,
+            data : [
+                {
+                    driverSno: 1.,
+                    driverName: "Mohammed",
+                    driverRating: 5,
+                    driverPic:"#"
+                },
+                {
+                    driverSno: 2,
+                    driverName: "Naren",
+                    driverRating: 3.5,
+                    driverPic:"#"
+                },
+                {
+                    driverSno: 3,
+                    driverName: "Thapa",
+                    driverRating: 4,
+                    driverPic:"#"
+                },
+                {
+                    driverSno: 4,
+                    driverName: "Mohit",
+                    driverRating: 2.5,
+                    driverPic:"#"
+                },
+                {
+                    driverSno: 5,
+                    driverName: "Jatin",
+                    driverRating: 1.5,
+                    driverPic:"#"
+                }
+            ]
+        }
+        
         ///////////////////////////////////////////////////////////////
     }
     listByCategory() {
         console.log('hello');
 
     }
+    handleClick = event => {
+        this.setState({ anchorEl: event.currentTarget });
+    };
+    
+      handleClose = () => {
+        this.setState({ anchorEl: null });
+    };
     
 
     render() {
         const { classes, user } = this.props;
-        const { driverSno, driverName, driverRating, driverPic } = this.state;
+        const { anchorEl, menuitems, data } = this.state;
 
         return (
             <Grid container spacing={16} className={classes.root}>
                 <Grid item lg={10} md={10} sm={10} xs={12}>
                     <Paper className={classes.paper}>
                         <hr />
-                        <h4><img src={require('../../assets/icon/people.png')} /> Your Team Members <img class='cusor' onClick={() => this.listByCategory()} src={require('../../assets/icon/listing.png')}/><img class='right' src={require('../../assets/icon/groupAdd.png')}></img></h4>
+                        <h4><img src={require('../../assets/icon/people.png')} /> Your Team Members 
+                            <Button
+                                aria-owns={anchorEl ? 'simple-menu' : undefined}
+                                aria-haspopup="true"
+                                onClick={this.handleClick}
+                            >
+                                <img class='cusor' src={require('../../assets/icon/listing.png')}/>
+                            </Button>
+                            <Menu
+                                id="simple-menu"
+                                anchorEl={anchorEl}
+                                open={Boolean(anchorEl)}
+                                onClose={this.handleClose}
+                            >
+                                { menuitems.map(function(v){
+                                    debugger
+                                    return (
+                                        <MenuItem>{v.name}</MenuItem>
+                                    );
+                                })
+                                    
+                                }
+                                
+                            </Menu> 
+                            <img class='right' src={require('../../assets/icon/groupAdd.png')}></img>
+
+                            </h4>
                         <table className={classes.table}>
-                        { this.state.map(function(v){ 
+                        { data.map(function(v){ 
                             return(                      
                                 <tr class="tableRow">
                                     <td class="cell"><div className={[classes.avatar, classes.defaultAvatar].join(' ')}></div></td>
