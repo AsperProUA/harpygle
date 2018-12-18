@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import CheckIcon from '@material-ui/icons/CheckCircle';
 import getData from '../../services/getData';
 import '../../css/bootstrap.css';
 import '../../css/partnerRequest.css';
@@ -27,6 +28,7 @@ const fakeOrders = [
         completedOrders: '201 Completed Orders',
         rate: 4,
         avatar: '../../assets/icon/item_XL_27456702_66740328.png',
+        isAssigned: false
     },
     {
         id: 2,
@@ -39,6 +41,7 @@ const fakeOrders = [
         completedOrders: '201 Completed Orders',
         rate: 4,
         avatar: '../../assets/icon/item_XL_27456702_66740328.png',
+        isAssigned: true
     },
     {
         id: 3,
@@ -51,6 +54,7 @@ const fakeOrders = [
         completedOrders: '201 Completed Orders',
         rate: 4,
         avatar: '../../assets/icon/item_XL_27456702_66740328.png',
+        isAssigned: false
     },
 ];
 
@@ -169,7 +173,14 @@ const styles = theme => ({
         textAlign: 'center',
         marginBottom: 10,
         fontSize: 14,
-    }
+    },
+    removeImgText: {
+        color: '#88C601',
+        alignItems: 'center',
+        fontSize: 18,
+        fontWeight: 'bold',
+        '& svg': { marginRight: 10 },
+    },
 });
 class Request extends Component {
     constructor(props) {
@@ -178,15 +189,31 @@ class Request extends Component {
             orders: fakeOrders,
             couriers: fakeCouriers,
             page: 1,
+            isAssigned: false,
         }
-
+        this.changePagetoSecond = this.changePagetoSecond.bind(this);
+        this.changePagetoFirst = this.changePagetoFirst.bind(this);
     }
     changePagetoSecond() {
-        debugger;
+        this.setState({
+            page: 2,
+        })
+    }
+
+    changePagetoFirst() {
+        this.setState({
+            page: 1,
+        })
     }
 
     renderOrders = (order) => {
         const { classes } = this.props;
+        if(order.isAssigned) {
+            var checkIcon = <span className={classes.removeImgText}><CheckIcon /></span>;
+        }
+        else {
+            var checkIcon = '';
+        }
         return (
             <div className="row my-4 justify-content-center">
                 <div className="col-lg-7 col-11 d-flex">
@@ -215,7 +242,10 @@ class Request extends Component {
                     </div>
                 </div>
                 <div className="col-11 btnRowBackground">
-                    <span><Button className={classes.assignButton} onClick={this.changePagetoSecond()}>Assign</Button></span>
+                    <span>
+                        <Button className={classes.assignButton} onClick={()=>this.changePagetoSecond()}>Assign</Button>
+                        {checkIcon}
+                    </span>
                     <span className="float-right"><Button className={classes.hideButton}>Hide</Button></span>
                 </div>
             </div>
@@ -247,7 +277,7 @@ class Request extends Component {
                             </div>
                         </div>
                         <CardActions style={{ textAlign: 'center' }}>
-                            <Button className={classes.cardButton}>Select {courier.name}</Button>
+                            <Button className={classes.cardButton} onClick={() => this.changePagetoFirst()}>Select {courier.name}</Button>
                         </CardActions>
                     </CardContent>
                 </Card>
