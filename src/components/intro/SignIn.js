@@ -98,7 +98,7 @@ class SignIn extends Component {
                     label: 'Supplier'
                 },
                 {
-                    value: 'Couriers',
+                    value: 'couriers',
                     label: 'Courier'
                 },
                 {
@@ -132,7 +132,6 @@ class SignIn extends Component {
     }
 
     validateField = (field, value) => {
-        console.log(value)
         let valid = false;
         let errMsg = undefined;
         switch (field) {
@@ -185,6 +184,7 @@ class SignIn extends Component {
                         // save app state with user date in reducer
 
                         this.props.onLogin(appState);
+                        window.location.href = window.location.origin + '/profile';
                     } 
                     else if ('supplier logged in successfully' === json.data.msg) {
                         let userData = {

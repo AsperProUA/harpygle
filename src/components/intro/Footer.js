@@ -78,10 +78,10 @@ function Footer(props) {
             </Grid>
             <Grid item md={6} className={classes.footerSocial}>
                 <div className={classes.socialBtn}>
-                    <a href='https://instagram.com/harpygle'><img src={window.location.origin + '/pictures/intro/Group 354.png'} alt='instagram'></img></a>
+                    <a href='https://instagram.com/harpygle'><img src={window.location.origin + '/pictures/intro/Group354.png'} alt='instagram'></img></a>
                 </div>
                 <div className={classes.socialBtn}>
-                    <a href='https://facebook.com/harpygle'><img src={window.location.origin + '/pictures/intro/Group 353.png'} alt='fb'></img></a>
+                    <a href='https://facebook.com/harpygle'><img src={window.location.origin + '/pictures/intro/Group353.png'} alt='fb'></img></a>
                 </div>
             </Grid>
         </Grid>

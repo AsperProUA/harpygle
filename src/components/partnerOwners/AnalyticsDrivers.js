@@ -162,13 +162,13 @@ class Analytics extends Component {
 
         return (
             <Grid container spacing={16} className={classes.root}>
-                <Grid item lg={9} md={8} sm={8} xs={12}>
+                <Grid item lg={12} md={12} sm={12} xs={12}>
                     <Paper className={classes.paper}>
                         <hr />
                         <table className={classes.table}>
                         { this.state.map(function(v,i){ 
                             return(                      
-                                <tr>
+                                <tr style={{height:85}}>
                                     <td className={classes.th10}>{v.driverSno}</td>
                                     <td className={classes.th10}><div className={classes.avatar}></div></td>
                                     <td className={classes.th70}>{v.driverName}</td>

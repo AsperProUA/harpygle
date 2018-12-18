@@ -17,10 +17,11 @@ export default function loginData(state = initialState || emptyState, action) {
         return state = newState;
     } else if('USER_DATA' == action.type){
         let newState = {... state}
-        newState.user.name = action.payload.name;
-        newState.user.avatar = action.payload.avatar;
-        newState.user.city = action.payload.city;
+        action.payload.name && (newState.user.name = action.payload.name);
+        action.payload.avatar && (newState.user.avatar = action.payload.avatar);
+        action.payload.city && (newState.user.city = action.payload.city);
         localStorage["appState"] = JSON.stringify(newState);
+        return newState;
     } else if('LOGOUT_USER' == action.type){
         localStorage["appState"] = JSON.stringify(emptyState);
         return emptyState;

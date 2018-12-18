@@ -236,6 +236,10 @@ class Profile extends Component {
                     user.avatar.value = pictureUrl;
                     return currentState;
                 });
+
+                this.props.onUpdate({
+                    avatar: pictureUrl,
+                });
             });
 
     }
@@ -342,18 +346,12 @@ class Profile extends Component {
                         <p className={classes.removeImgText}><CheckIcon /><span className={classes.secondaryText}>Your Account Is Verified</span></p>
                         <Button style={{ width: 261 }} >Update Your ID Number</Button>
                     </div>
-
-                    <div className={classes.url}>
-                        <div className={classes.shopify}><span><img src='/pictures/icons/preview.png'></img> Shopify URL </span><span>Edit</span></div>
-                        {ShopifyURL}
-                    </div>
                     <div className={classes.accountId} style={{ paddingBottom: 0 }}>
                         <Button onClick={this.handleDelete} style={{ backgroundColor: 'inherit', color: '#979797', fontSize: 14, margin: 0, textTransform: 'none' }}>Delete account</Button>
                     </div>
                 </Grid>
                 <Grid item md={6} sm={12} xs={12}>
                     <form style={{textAlign:'center'}} onSubmit={(event) => this.updatePartner(event)}>
-                        <h2>{email.value}</h2>
                         <FormGroup className={classes.formGroup}>
                             <TextField
                                 error={isChecked && !isValid && email.errMsg && !email.isValid}
@@ -429,6 +427,9 @@ export default withStyles(style)(connect(
     dispath => ({
         onLogin: (userData) => {
             dispath({ type: 'LOGIN_USER', payload: userData });
+        },
+        onUpdate: (updData) => {
+            dispath({ type: 'USER_DATA', payload: updData });
         }
     }),
 )(Profile));

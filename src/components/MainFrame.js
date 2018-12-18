@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Hidden from '@material-ui/core/Hidden';
@@ -21,7 +20,10 @@ import BusinessDelivery from './businessOwners/Delivery';
 import PartnerRequest from './partnerOwners/Request';
 import PartnerTab from './partnerOwners/Tabs';
 import PartnerTeam from './partnerOwners/Team';
+import PartnerChat from './partnerOwners/Chat'
 
+
+import BusinessInventory from './businessOwners/Inventory';
 
 const styles = theme => ({
   root: {
@@ -130,7 +132,7 @@ class MainFrame extends Component {
                 render={() => {
                   switch (role) {
                     case 'BOwners': return <BusinessSuppliers />;
-                    case 'suppliers': return <div>supplierProfile</div>
+                    case 'suppliers': return <div>supplierProfile</div>;
                   }
                 }} />
               <Route
@@ -138,7 +140,7 @@ class MainFrame extends Component {
                 render={() => {
                   switch (role) {
                     case 'BOwners': return <BusinessOrders />;
-                    case 'suppliers': return <div>supplierProfile</div>
+                    case 'suppliers': return <div>supplierProfile</div>;
                   }
                 }} />
               <Route
@@ -146,9 +148,18 @@ class MainFrame extends Component {
                 render={() => {
                   switch (role) {
                     case 'BOwners': return <BusinessDelivery />;
-                    case 'suppliers': return <div>supplierProfile</div>
+                    case 'suppliers': return <div>supplierProfile</div>;
                   }
                 }} />
+                <Route
+                  exact path='/inventory'
+                  render={() => {
+                    switch(role) {
+                      case 'BOwners': return <BusinessInventory />;
+                      case 'suppliers': return <div>supplierProfile</div>;
+                    }
+                  }}
+                />
               <Route
                 exact path='/request'
                 render={() => {
@@ -166,6 +177,10 @@ class MainFrame extends Component {
               <Route
                 exact path='/products'
                 render={() => <Products />}
+              />
+              <Route
+                exact path='/chat'
+                render={() => <PartnerChat />}
               />
             </Switch>
           </Grid>

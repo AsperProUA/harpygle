@@ -108,7 +108,8 @@ class PartnerFinalSignUp extends Component {
                 value: '',
                 isValid: true,
             },
-            states : [],
+            country_states : [],
+            country_city : [],
             developTeam: 'yes',
             ownerFullTime: 'yes',
             operateBusiness: 'yes',
@@ -119,6 +120,7 @@ class PartnerFinalSignUp extends Component {
         }
         this.getPartnerData();
         this.getAllStates();
+        this.getAllCities();
     }
 
     getAllStates = () =>{
@@ -126,10 +128,23 @@ class PartnerFinalSignUp extends Component {
         }).then((response) => {
             if (response.status == 201) {
                 this.setState({
-                    states: response.data
+                    country_states: response.data
                 });
-                //this.setState()
-                console.log(this.roles)                
+                //this.setState()            
+            }
+        }).catch((error) => {
+            
+        });
+    }
+
+    getAllCities = () =>{
+        axios.get(`${apiPath}getAllCities`, {
+        }).then((response) => {
+            if (response.status == 201) {
+                this.setState({
+                    country_city: response.data
+                });
+                //this.setState()           
             }
         }).catch((error) => {
             
@@ -144,7 +159,6 @@ class PartnerFinalSignUp extends Component {
             partnerID: partnerId
         }).then((response) => {
             if (response.status == 201) {
-                console.log(response);
                 this.setState(currentState => {
 
                     currentState.email.value = response.data.data;
@@ -222,7 +236,6 @@ class PartnerFinalSignUp extends Component {
         e.preventDefault();
         this.setState({ isChecked: true });
         //this.validateForm();
-        console.log(this.state);
             const { firstname,lastname,email,phone,address,city,state,zipcode,location,location1,location2,
             developTeam,ownerFullTime,operateBusiness,liquidAssets } = this.state;
             axios.post(`${apiPath}partner/updatePartner`, {
@@ -272,7 +285,7 @@ class PartnerFinalSignUp extends Component {
         } = this.state;
         if (this.state.sended) return (
             <div>
-                <Header />
+                {/* <Header /> */}
                 <Thanks />
             </div>
         );
@@ -356,7 +369,7 @@ class PartnerFinalSignUp extends Component {
                                     helperText={isChecked && !isValid && !state.isValid && state.errMsg}
                                     variant="outlined"
                                 /> */}
-                                <TextField
+                                <TextField className="my-0"
                                 select
                                 error={isChecked && !isValid && state.errMsg && !state.isValid}
                                 label="State"
@@ -366,11 +379,11 @@ class PartnerFinalSignUp extends Component {
                                 margin="normal"
                                 variant="outlined"
                             >
-                                {/* {states.map(option => (
+                                {this.state.country_states.map(option => (
                                     <MenuItem key={option.id} value={option.id}>
                                         {option.name}
                                     </MenuItem>
-                                ))} */}
+                                ))}
                         </TextField>
                             </div>
                             <div className="div30 d-inline mr-1">
@@ -393,15 +406,15 @@ class PartnerFinalSignUp extends Component {
                                 margin="normal"
                                 variant="outlined"
                             >
-                                <MenuItem key="das" value="A">
-                                    A
+                                <MenuItem key="das" value="Anywhere">
+                                    Anywhere
                                 </MenuItem>
-                                <MenuItem key="das" value="B">
-                                    B
-                                </MenuItem>
-                                <MenuItem key="das" value="C">
-                                    C
-                                </MenuItem>
+                                {this.state.country_city.map(option => (
+                                    <MenuItem key={option.id} value={option.id}>
+                                        {option.name}
+                                    </MenuItem>
+                                ))}
+                                
                             </TextField>
                             <TextField
                                 
@@ -413,15 +426,14 @@ class PartnerFinalSignUp extends Component {
                                 margin="normal"
                                 variant="outlined"
                             >
-                                <MenuItem key="das" value="A">
-                                    A
+                                <MenuItem key="das" value="Anywhere">
+                                    Anywhere
                                 </MenuItem>
-                                <MenuItem key="das" value="B">
-                                    B
-                                </MenuItem>
-                                <MenuItem key="das" value="C">
-                                    C
-                                </MenuItem>
+                                {this.state.country_city.map(option => (
+                                    <MenuItem key={option.id} value={option.id}>
+                                        {option.name}
+                                    </MenuItem>
+                                ))}
                             </TextField>
                             <TextField
                                 
@@ -433,15 +445,14 @@ class PartnerFinalSignUp extends Component {
                                 margin="normal"
                                 variant="outlined"
                             >
-                                <MenuItem key="das" value="A">
-                                    A
+                                <MenuItem key="das" value="Anywhere">
+                                    Anywhere
                                 </MenuItem>
-                                <MenuItem key="das" value="B">
-                                    B
-                                </MenuItem>
-                                <MenuItem key="das" value="C">
-                                    C
-                                </MenuItem>
+                                {this.state.country_city.map(option => (
+                                    <MenuItem key={option.id} value={option.id}>
+                                        {option.name}
+                                    </MenuItem>
+                                ))}
                             </TextField>
                         </div>
                         <div class="div100 text-left">
@@ -560,7 +571,7 @@ class PartnerFinalSignUp extends Component {
                         Start delivering
                         </p>
                     </div>
-                    <div class="div100 text-left">
+                    <div class="div100 text-center">
                         <Button className={classes.btn} type='submit'>Submit</Button>
                     </div>
                 </form>
