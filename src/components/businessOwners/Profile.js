@@ -1,7 +1,7 @@
 import axios from 'axios';
 import apiPath from '../../services/apiPath';
 import React, { Component } from 'react';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -130,26 +130,37 @@ class Profile extends Component {
                     isValid: false,
                     errMsg: 'invalid email',
                 },
-                password: {
+                currentPassword: {
                     value: '',
                     isValid: false,
-                    errMsg: 'password is too short',
+                    // errMsg: 'password is too short',
                 },
-                passwordRepeat: {
+                newPassword: {
                     value: '',
                     isValid: false,
-                    errMsg: 'passwords are not equal',
+                    // errMsg: 'passwords are not equal',
                 },
-                name: { value: '', },
-                city: { value: '', },
-                phoneNum: { value: '', },
-                pickupAddress: { value: '', },
-                ShopifyURL: 'https://egypt.souq.com/',
+                ShopifyURL: {
+                    value: '',
+                },
+                securityQuestion: {
+                    value: '',
+                },
+                securityAnswer: {
+                    value: '',
+                },
+                verificationID: {
+                    value: '',
+                    updated: false,
+                },
 
             },
             isValid: false,
             isChecked: false,
         }
+    }
+
+    componentDidMount() {
         this.fetchOwner();
     }
 
@@ -157,17 +168,19 @@ class Profile extends Component {
         getData({ url: `business/get/${this.props.loginData.user.id}` })
             .then(response => {
 
-                const { ownerID, name, city, phoneNum, email, pickupAddress, pictureUrl } = response.data;
+                const { ownerID, email, pictureUrl, ShopifyURL } = response.data;
                 this.setState(currentState => {
                     const { user } = currentState;
                     user.id = ownerID;
-                    user.name.value = name;
-                    user.city.value = city;
-                    user.phoneNum.value = phoneNum;
                     user.email.value = email;
-                    user.pickupAddress.value = pickupAddress;
+                    user.email.value = email;
                     user.avatar.value = pictureUrl;
+                    user.ShopifyURL.value = ShopifyURL;
                     return currentState;
+                });
+
+                this.props.onUpdate({
+                    avatar: pictureUrl,
                 });
             });
 
@@ -184,18 +197,19 @@ class Profile extends Component {
 
     updateOwner = (e) => {
         e && e.preventDefault();
-        const { id, name, city, phoneNum, pickupAddress, avatar, password } = this.state.user;
-        let body = {
-            name: name.value,
-            city: city.value,
-            phoneNum: phoneNum.value,
-            pickupAddress: pickupAddress.value,
-        };
+        const { id, email, avatar, currentPassword, newPassword, securityQuestion, securityAnswer, verificationID, ShopifyURL } = this.state.user;
+        let body = {};
+        email.value && (body.email = email.value);
         avatar.updated && (body.picture = avatar.value);
-        password.value && (body.password = password.value);
+        currentPassword.value && (body.currentPassword = currentPassword.value);
+        newPassword.value && (body.newPassword = newPassword.value);
+        securityQuestion.value && (body.securityQuestion = securityQuestion.value);
+        securityAnswer.value && (body.securityAnswer = securityAnswer.value);
+        verificationID.updated && (body.verificationID = verificationID.value);
+        ShopifyURL.value && (body.ShopifyURL = ShopifyURL.value);
         axios.put(`${apiPath}business/update/${id}`, body, {
             headers: { 'Content-Type': 'application/json' },
-        }).then(console.log);
+        }).then(this.fetchOwner);
     }
 
     handleFile = (e) => {
@@ -258,9 +272,9 @@ class Profile extends Component {
     }
 
     render() {
-        
+
         const { classes } = this.props;
-        const { name, city, pickupAddress, phoneNum, email, password, passwordRepeat, isChecked, isValid, avatar ,ShopifyURL } = this.state.user;
+        const { email, securityQuestion, securityAnswer, currentPassword, newPassword, avatar, verificationID, ShopifyURL, isChecked, isValid } = this.state.user;
         const { handleInput } = this;
         return (
 
@@ -279,69 +293,59 @@ class Profile extends Component {
 
                     <div className={classes.url}>
                         <div className={classes.shopify}><span><img src='/pictures/icons/preview.png'></img> Shopify URL </span><span>Edit</span></div>
-                        {ShopifyURL}
+                        {ShopifyURL.value}
                     </div>
                     <div className={classes.accountId} style={{ paddingBottom: 0 }}>
                         <Button onClick={this.handleDelete} style={{ backgroundColor: 'inherit', color: '#979797', fontSize: 14, margin: 0, textTransform: 'none' }}>Delete account</Button>
                     </div>
                 </Grid>
                 <Grid item md={6} sm={12} xs={12}>
-                    <form style={{textAlign:'center'}} onSubmit={(event) => this.updateOwner(event)}>
+                    <form style={{ textAlign: 'center' }} onSubmit={(event) => this.updateOwner(event)}>
                         <h2>{email.value}</h2>
                         <FormGroup className={classes.formGroup}>
                             <TextField
-                                error={isChecked && !isValid && name.errMsg && !name.isValid}
-                                label="Full Name"
-                                value={name.value}
-                                onInput={(event) => { handleInput('name', event.target.value) }}
-                                helperText={isChecked && !isValid && !name.isValid && name.errMsg}
+                                error={isChecked && !isValid && email.errMsg && !email.isValid}
+                                label="Email"
+                                value={email.value}
+                                onInput={(event) => { handleInput('email', event.target.value) }}
+                                helperText={isChecked && !isValid && !email.isValid && email.errMsg}
                                 margin="normal"
                                 variant="outlined"
                             />
                             <TextField
-                                error={isChecked && !isValid && city.errMsg && !city.isValid}
-                                label="City"
-                                value={city.value}
-                                onInput={(event) => { handleInput('city', event.target.value) }}
-                                helperText={isChecked && !isValid && !city.isValid && city.errMsg}
+                                // error={isChecked && !isValid && securityQuestion.errMsg && !securityQuestion.isValid}
+                                label="Security Question"
+                                value={securityQuestion.value}
+                                onInput={(event) => { handleInput('securityQuestion', event.target.value) }}
+                                helperText={isChecked && !isValid && !securityQuestion.isValid && securityQuestion.errMsg}
                                 margin="normal"
                                 variant="outlined"
                             />
                             <TextField
-                                error={isChecked && !isValid && phoneNum.errMsg && !phoneNum.isValid}
-                                label="Phone Number"
-                                value={phoneNum.value}
-                                type='number'
-                                onInput={(event) => { handleInput('phoneNum', event.target.value) }}
-                                helperText={isChecked && !isValid && !phoneNum.isValid && phoneNum.errMsg}
+                                error={isChecked && !isValid && securityAnswer.errMsg && !securityAnswer.isValid}
+                                label="Security Answer"
+                                value={securityAnswer.value}
+                                onInput={(event) => { handleInput('securityAnswer', event.target.value) }}
+                                helperText={isChecked && !isValid && !securityAnswer.isValid && securityAnswer.errMsg}
                                 margin="normal"
                                 variant="outlined"
                             />
                             <TextField
-                                error={isChecked && !isValid && pickupAddress.errMsg && !pickupAddress.isValid}
-                                label="Pickup Address"
-                                value={pickupAddress.value}
-                                onInput={(event) => { handleInput('pickupAddress', event.target.value) }}
-                                helperText={isChecked && !isValid && !pickupAddress.isValid && pickupAddress.errMsg}
-                                margin="normal"
-                                variant="outlined"
-                            />
-                            <TextField
-                                error={isChecked && !isValid && password.errMsg && !password.isValid}
-                                label="Password"
-                                value={password.value}
-                                onInput={(event) => { handleInput('password', event.target.value) }}
-                                helperText={isChecked && !isValid && !password.isValid && password.errMsg}
+                                error={isChecked && !isValid && currentPassword.errMsg && !currentPassword.isValid}
+                                label="Current Password"
+                                value={currentPassword.value}
+                                onInput={(event) => { handleInput('currentPassword', event.target.value) }}
+                                helperText={isChecked && !isValid && !currentPassword.isValid && currentPassword.errMsg}
                                 type='password'
                                 margin="normal"
                                 variant="outlined"
                             />
                             <TextField
-                                error={isChecked && !isValid && passwordRepeat.errMsg && !passwordRepeat.isValid}
-                                label="Repeat password"
-                                value={passwordRepeat.value}
-                                onInput={(event) => { handleInput('passwordRepeat', event.target.value) }}
-                                helperText={isChecked && !isValid && !passwordRepeat.isValid && passwordRepeat.errMsg}
+                                error={isChecked && !isValid && newPassword.errMsg && !newPassword.isValid}
+                                label="New Password"
+                                value={newPassword.value}
+                                onInput={(event) => { handleInput('newPassword', event.target.value) }}
+                                helperText={isChecked && !isValid && !newPassword.isValid && newPassword.errMsg}
                                 type='password'
                                 margin="normal"
                                 variant="outlined"
@@ -364,8 +368,8 @@ export default withStyles(style)(connect(
         loginData: state.loginData,
     }),
     dispath => ({
-        onLogin: (userData) => {
-            dispath({ type: 'LOGIN_USER', payload: userData });
+        onUpdate: (updData) => {
+            dispath({ type: 'USER_DATA', payload: updData });
         }
     }),
 )(Profile));

@@ -51,6 +51,9 @@ const styles = theme => ({
         height: 303,
         textAlign: 'center',
         verticalAlign: 'middle',
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
     },
     between: {
         display: 'flex',
@@ -170,15 +173,16 @@ class Suppliers extends Component {
 
         this.state = {
             value: 0,
-            productList: fakeProducts,
+            productList: [],
             categoryList: fakeCategories,
         }
         getData({ url: 'api/categories/' }).then(data => {
             this.setState({ categoryList: data.categories });
         });
 
-        getData({ url: 'business/suppliers/' /* + &selects*/ }).then(data => {
-            this.setState({ productList: data.productList });
+        getData({ url: 'supplier/products'}).then(response => {
+            console.log(response);
+            this.setState({ productList: response.data });
         });
     }
 
@@ -190,10 +194,10 @@ class Suppliers extends Component {
     renderProduct = (product) => {
         const { classes } = this.props;
         return (
-            <Grid key={product.id} item xs={12} sm={6} md={6} lg={3} >
+            <Grid key={product.productID} item xs={12} sm={6} md={6} lg={3} >
                 <Paper className={classes.item} >
-                    <div className={classes.img}>
-                        <img src={product.img}></img>
+                    <div className={classes.img} style={{backgroundImage:`url(${product.imgUrls[0]})`}}>
+                        {/* <img src={product.imgUrls[0]}></img> */}
                     </div>
                     <p >{product.name}</p>
                     <p >{product.description}</p>
@@ -202,7 +206,7 @@ class Suppliers extends Component {
                     <p className={classes.between}><span>Item Price</span>
                         {product.sale && (<span>
                             <span style={{ textDecoration: 'line-through' }}>
-                                {product.naturalPrice} MAD
+                                {product.price} MAD
                             </span>
                             <span style={{ color: '#FCB629', marginLeft: 20 }}>
                                 <span style={{ fontSize: 24, fontWeight: 'bold' }}>
@@ -211,9 +215,9 @@ class Suppliers extends Component {
                                 MAD
                             </span>
                         </span>)}
-                        {!product.sale && (<span>{product.naturalPrice} MAD</span>)}
+                        {!product.sale && (<span>{product.price} MAD</span>)}
                     </p>
-                    <p className={classes.between}><span>Min Qty. Per Oder</span><span style={{ fontWeight: 'bold' }}>{product.quantityPerOrder}</span></p>
+                    <p className={classes.between}><span>Min Qty. Per Oder</span><span style={{ fontWeight: 'bold' }}>{product.minQuantity}</span></p>
                     <div className={classes.conect}>
                         <Button className={classes.contactBtn}>CONTACT PLEASE</Button>
                         <Message />

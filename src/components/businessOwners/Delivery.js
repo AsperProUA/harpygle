@@ -9,6 +9,10 @@ import getData from '../../services/getData';
 import AddIcon from '@material-ui/icons/Add';
 
 import AvailableCouriers from './deliveryTabs/AvailableCouriers';
+import SheduleANewOrder from './deliveryTabs/SheduleANewOrder';
+import PendingOrders from './deliveryTabs/PendingOrders';
+import InProgress from './deliveryTabs/InProgress';
+import ReplacedOrders from './deliveryTabs/ReplacedOrders';
 
 const styles = theme => ({
     root: {
@@ -62,6 +66,7 @@ const styles = theme => ({
     },
     btnShedule: {
         verticalAlign: 'top',
+        
     },
 });
 
@@ -70,7 +75,7 @@ class Delivery extends Component {
         super(props);
 
         this.state = {
-            currentTab: 0,
+            currentTab: 3,
         }
     }
 
@@ -130,9 +135,13 @@ class Delivery extends Component {
                             }} />
                         </Tabs>
                     </div>
-                    <Button className={[classes.btnShedule, classes.btn].join(' ')}> <AddIcon />SCHEDULE A NEW ORDER</Button>
+                    <Button onClick={()=>this.changeCategory(null, -1)} className={[classes.btnShedule, classes.btn].join(' ')}> <AddIcon />SCHEDULE A NEW ORDER</Button>
                 </div>
                 {currentTab == 0 && <AvailableCouriers />}
+                {currentTab == 1 && <PendingOrders />}
+                {currentTab == 2 && <InProgress/>}
+                {currentTab == 3 && <ReplacedOrders />}
+                {currentTab == -1 && <SheduleANewOrder/>}
             </div>
         );
     }
