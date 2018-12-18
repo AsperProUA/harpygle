@@ -3,21 +3,18 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Divider, Button } from '@material-ui/core';
 import { connect } from 'react-redux'
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import StepConnector from '@material-ui/core/StepConnector';
+import classNames from '@material-ui/core/node_modules/classnames';
 
+import RateToStars from '../../globalComponents/RateToStars';
 import UserInfo from '../../globalComponents/UserInfo';
+import RateCourier from './RateCourier';
+
 
 const fakeOrders = [
-    {
-        id: 2,
-        photo: 'http://pngimg.com/uploads/smartphone/smartphone_PNG8523.png',
-        name: 'HTC ONE  blue',
-        description: 'Qualcomm® Snapdragon™ 810, ROM: 32GB / RAM: 3GB, 4G LTE,',
-        itemPrice: 80,
-        fees: 40,
-        quantity: 1,
-        deliveryAddress: '85 Bd de La Liberté Benjdia, 20000 Casablanca',
-        date: '23 November, 10:00 AM',
-    },
     {
         id: 1,
         photo: 'http://pngimg.com/uploads/smartphone/smartphone_PNG8523.png',
@@ -25,9 +22,38 @@ const fakeOrders = [
         description: 'Qualcomm® Snapdragon™ 810, ROM: 32GB / RAM: 3GB, 4G LTE,',
         itemPrice: 80,
         fees: 40,
+        quantity: 1,
+        deliveryAddress: '85 Bd de La Liberté Benjdia, 20000 Casablanca',
+        sendAddress: '83/85 Bd de La Liberté Benjdia, 20000 Casablanca',
+        date: '23 November, 10:00 AM',
+        courier: {
+            id: 'harpygle-courier-6dhzga7rgjps7mukm',
+            name: 'Fatima',
+            img: 'http://pngimg.com/uploads/face/face_PNG5651.png',
+            rate: 4,
+        },
+        stage: 1,
+        completed: false,
+    },
+    {
+        id: 2,
+        photo: 'http://pngimg.com/uploads/smartphone/smartphone_PNG8523.png',
+        name: 'HTC ONE  blue',
+        description: 'Qualcomm® Snapdragon™ 810, ROM: 32GB / RAM: 3GB, 4G LTE,',
+        itemPrice: 80,
+        fees: 40,
         quantity: 4,
         deliveryAddress: '85 Bd de La Liberté Benjdia, 20000 Casablanca',
+        sendAddress: '83/85 Bd de La Liberté Benjdia, 20000 Casablanca',
         date: '23 November, 10:00 AM',
+        courier: {
+            name: 'Oleh',
+            img: '',
+            rate: 4,
+            id: 4
+        },
+        stage: 3,
+        completed: true,
     },
     {
         id: 3,
@@ -38,7 +64,16 @@ const fakeOrders = [
         fees: 40,
         quantity: 2,
         deliveryAddress: '85 Bd de La Liberté Benjdia, 20000 Casablanca',
+        sendAddress: '83/85 Bd de La Liberté Benjdia, 20000 Casablanca',
         date: '23 November, 10:00 AM',
+        courier: {
+            name: 'Igor',
+            img: '',
+            rate: 4,
+            id: 8
+        },
+        stage: 1,
+        completed: false,
     },
     {
         id: 4,
@@ -49,7 +84,16 @@ const fakeOrders = [
         fees: 40,
         quantity: 7,
         deliveryAddress: '85 Bd de La Liberté Benjdia, 20000 Casablanca',
+        sendAddress: '83/85 Bd de La Liberté Benjdia, 20000 Casablanca',
         date: '23 November, 10:00 AM',
+        courier: {
+            name: 'Mohamed',
+            img: '',
+            rate: 4,
+            id: 7
+        },
+        stage: 2,
+        completed: false,
     },
 ];
 
@@ -62,7 +106,24 @@ const styles = theme => ({
             order: 5,
         },
     },
+    avatar: {
+        display: 'inline-block',
+        textAlign: 'center',
+        verticalAlign: 'middle',
+        backgroundColor: theme.palette.grey[300],
+        borderRadius: '50%',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        position: 'relative',
+        marginRight: 10,
+        width: 60,
+        height: 60,
+    },
+    courier: {
+        display: 'flex',
+    },
     photo: {
+        border: '1px solid #CECECE',
         width: 100,
         height: 100,
         padding: 5,
@@ -70,7 +131,6 @@ const styles = theme => ({
         flexShrink: 0,
         position: 'relative',
         marginRight: 50,
-        border: '1px solid #CECECE',
         '& img': {
             maxWidth: '100%',
             maxHeight: '100%',
@@ -114,6 +174,7 @@ const styles = theme => ({
     icon: {
         width: 32,
         height: 32,
+        verticalAlign: 'middle',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         padding: 1,
@@ -164,19 +225,53 @@ const styles = theme => ({
     x: {
         fontSize: 30,
         color: '#CECECE',
-    }
+    },
+    courier: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        padding: 20,
+    },
+    addressLabel: {
+        display: 'inline-block',
+        fontWeight: 'bold',
+        width: 65,
+    },
+    address: {
+        display: 'inline-block',
+    },
+    defaultAvatar: {
+        backgroundImage: `url(${defaultAvatar})`,
+    },
+    aboutCourier: {
+        display: 'inline-block',
+        marginLeft: 8,
+        verticalAlign: 'middle',
+        fontSize: 20,
+    },
+    btn: {
+        height: 42,
+        margin: 'auto',
+        backgroundColor: '#88C601',
+        color: theme.palette.common.white,
+        alignSelf: 'center',
+        '&:hover': { backgroundColor: '#7BB203' },
+        [theme.breakpoints.down('xs')]: {
+            width: '100%',
+        }
+    },
 })
 
-class PendingOrders extends Component {
+const defaultAvatar = '/pictures/fakeData/poy_benbernanke.png';
+
+class CompletedOrders extends Component {
     constructor(props) {
         super(props);
         this.state = {
             orders: fakeOrders,
-            user: {
-                city: 'Kharkiv',
-                completedOrders: 13,
-                inProgressOrders: 2,
-            },
+            openRate: false,
+            ratedCourier: null,
         }
     }
 
@@ -184,8 +279,16 @@ class PendingOrders extends Component {
         // fetch products & set state;
     }
 
+    openRate = (courier) => {
+        this.setState({ openRate: true, ratedCourier: courier });
+    }
+
+    closeRate = () => {
+        this.setState({ openRate: false });
+    }
+
     renderOrders = (order) => {
-        const { classes } = this.props
+        const { classes } = this.props;
         return (
             <Grid container key={order.id}>
                 <Grid item xs={12} sm={12} md={4} lg={3} xl={2} className={classes.productInfo}>
@@ -198,43 +301,29 @@ class PendingOrders extends Component {
                     <div>
                         <p>{order.name}</p>
                         <p>{order.description}</p>
+                        <div className={classes.address}>
+                            <span className={classes.addressLabel}>From</span>{order.sendAddress}
+                            <br />
+                            <span className={classes.addressLabel}>To</span>{order.deliveryAddress}
+                        </div>
                     </div>
                 </Grid>
-                <Grid item xs={12} sm={12} md={4} lg={3} xl={3} className={classes.priceBox}>
-                    <div className={classes.price}>
-                        <span>Items Price</span>
-                        <span style={{ fontWeight: 'bold', fontSize: 18 }}>
-                            {order.itemPrice}
-                            <span style={{ fontSize: 12 }}> MAD</span>
-                        </span>
+                <Grid item xs={12} sm={12} md={4} lg={3} xl={3} className={classes.courier}>
+                    <div >
+                        {
+                            order.courier.img ?
+                                <div className={classes.avatar} style={{ backgroundImage: `url(${order.courier.img})` }} /> :
+                                <div className={[classes.avatar, classes.defaultAvatar].join(' ')} />
+                        }
+                        <div className={classes.aboutCourier}>
+                            <span>Order By</span><br />
+                            <span style={{ margin: '5px 0', fontWeight: "bold" }}>{order.courier.name}</span>
+                            <RateToStars rate={order.courier.rate} />
+                        </div>
                     </div>
-                    <div className={classes.price}>
-                        <span>Harpygle Fees </span>
-                        <span style={{ fontWeight: 'bold', fontSize: 18 }}>
-                            {order.fees}
-                            <span style={{ fontSize: 12 }}> MAD</span>
-                        </span>
-                    </div>
-                    <div>
-                        <span>Total Order </span>
-                        <span style={{ fontWeight: 'bold', fontSize: 18 }}>
-                            {(order.itemPrice + order.fees) * order.quantity}
-                            <span style={{ fontSize: 12 }}> MAD</span>
-                        </span>
-                    </div>
+                    <Button onClick={() => this.openRate(order.courier)} className={classes.btn}>Rate this courier</Button>
                 </Grid>
-                <Grid item xs={12}>
-                    <Divider />
-                </Grid>
-                <Grid item xs={12} sm={12} md={7} className={classes.deliveryInfo}>
-                    <p style={{ fontWeight: 'bold' }}>To</p>
-                    <p>{order.deliveryAddress}</p>
-                </Grid>
-                <Grid item xs={12} sm={12} md={5} className={classes.deliveryInfo}>
-                    <p style={{ fontWeight: 'bold' }}>Due</p>
-                    <p>{order.date}</p>
-                </Grid>
-            </Grid>
+            </Grid >
         );
     }
 
@@ -243,40 +332,32 @@ class PendingOrders extends Component {
         const { classes } = this.props;
         return (
             <Grid container spacing={0} >
-                <Grid item sm={12} xs={12} md={5} lg={4} className={classes.userBadge}>
+                <Grid item sm={12} xs={12} md={4} lg={3} className={classes.userBadge}>
                     <Paper className={classes.paper}>
                         <UserInfo />
                         <div>
                             <hr className={classes.hrLight} />
                             <div className={classes.city}>
-                                <span className={[classes.icon, classes.iconMap].join(' ')}></span><span style={{ marginLeft: 15 }}>{this.state.user.city}</span>
+                                <span className={[classes.icon, classes.iconMap].join(' ')}></span><span style={{ marginLeft: 15 }}>{this.props.user.city}</span>
                             </div>
                             <hr className={classes.hrLight} />
                             <div className={classes.orders}>
                                 <p className={classes.orderLabel}>MY ORDERS</p>
                                 <Grid container>
-                                    <Grid item xs={4}>
+                                    <Grid item xs={6}>
                                         <div className={classes.ordersType}>
-                                            Paid Orders
+                                            Completed Orders
                                         </div>
                                         <div className={classes.ordersCount}>
-                                            {this.state.user.completedOrders}
+                                            {this.props.user.completedOrders}
                                         </div>
                                     </Grid>
-                                    <Grid item xs={4}>
+                                    <Grid item xs={6}>
                                         <div className={classes.ordersType}>
-                                            Pending Orders
+                                            In Progress
                                         </div>
                                         <div className={classes.ordersCount}>
-                                            {this.state.user.inProgressOrders}
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <div className={classes.ordersType}>
-                                            Delivered Orders
-                                        </div>
-                                        <div className={classes.ordersCount}>
-                                            {this.state.user.inProgressOrders}
+                                            {this.props.user.inProgressOrders}
                                         </div>
                                     </Grid>
                                 </Grid>
@@ -284,17 +365,23 @@ class PendingOrders extends Component {
                         </div>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} sm={12} md={7} lg={8} style={{ border: 'none', boxShadow: 'none' }}>
+                <Grid item xs={12} sm={12} md={8} lg={9} style={{ border: 'none', boxShadow: 'none' }}>
                     {orders.map(order => {
                         return <Paper key={order.id} className={classes.orderItem}>{this.renderOrders(order)}</Paper>;
                     })}
                 </Grid>
+                <RateCourier
+                    open={this.state.openRate}
+                    close={this.closeRate}
+                    courier={this.state.ratedCourier}
+                    owner={this.props.user.id}
+                />
             </Grid>
         );
     }
 }
 
-PendingOrders.propTypes = {
+CompletedOrders.propTypes = {
     classes: PropTypes.object.isRequired,
 }
 
@@ -302,4 +389,4 @@ export default withStyles(styles)(connect(
     state => ({
         user: state.loginData.user,
     })
-)(PendingOrders));
+)(CompletedOrders));

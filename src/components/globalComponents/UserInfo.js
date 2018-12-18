@@ -47,7 +47,7 @@ function Verfied(props) {
                 {
                     user.verified &&
                     <span className={classes.verified}>
-                        <span className={classes.icon}></span><span style={{ marginLeft: 15 }}>Verfied</span>
+                        {user.verificationIDUrl && (<span><span className={classes.icon}></span><span style={{ marginLeft: 15 }}>Verfied</span></span>)}
                     </span>
                 }
 

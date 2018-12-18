@@ -3,7 +3,6 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import getData from '../../services/getData';
 import AddIcon from '@material-ui/icons/Add';
@@ -13,6 +12,8 @@ import SheduleANewOrder from './deliveryTabs/SheduleANewOrder';
 import PendingOrders from './deliveryTabs/PendingOrders';
 import InProgress from './deliveryTabs/InProgress';
 import ReplacedOrders from './deliveryTabs/ReplacedOrders';
+import CompletedOrders from './deliveryTabs/CompletedOrders';
+import CancelledOrders from './deliveryTabs/CancelledOrders';
 
 const styles = theme => ({
     root: {
@@ -21,9 +22,14 @@ const styles = theme => ({
     },
     tabRoot: {
         maxWidth: '100vw',
-
+        width: '100vw',
         [theme.breakpoints.up('md')]: {
             maxWidth: 'calc(100vw - 240px)',
+            width: 'calc(100vw - 240px)',
+        },
+        [theme.breakpoints.up('lg')]: {
+            maxWidth: 'calc(100vw - 240px - 280px)',
+            width: 'calc(100vw - 240px - 280px)',
         },
         display: 'inline-block',
     },
@@ -37,21 +43,6 @@ const styles = theme => ({
     container:{
         width: '100%',
     },
-    // categoryRoot: {
-    //     color: '#979797',
-    //     fontSize: '20px!important',
-    //     fontWeight: 400,
-    //     textTransform: 'none',
-    //     opacity: '1',
-    // },
-    // categoryLabel: {
-    //     margin: '0px -11px',
-    // },
-    // ctegorySelected: {
-    //     color: '#000',
-    //     fontWeight: 'bold!important',
-    //     fontSize: 20,
-    // },
     indicator: {
         backgroundColor: 'rgba(0,0,0,0)',
     },
@@ -63,6 +54,9 @@ const styles = theme => ({
         color: theme.palette.common.white,
         alignSelf: 'center',
         '&:hover': { backgroundColor: '#7BB203' },
+        [theme.breakpoints.down('xs')]:{
+            width: '100%',
+        }
     },
     btnShedule: {
         verticalAlign: 'top',
@@ -75,7 +69,7 @@ class Delivery extends Component {
         super(props);
 
         this.state = {
-            currentTab: 3,
+            currentTab: 4,
         }
     }
 
@@ -141,6 +135,8 @@ class Delivery extends Component {
                 {currentTab == 1 && <PendingOrders />}
                 {currentTab == 2 && <InProgress/>}
                 {currentTab == 3 && <ReplacedOrders />}
+                {currentTab == 4 && <CompletedOrders />}
+                {currentTab == 5 && <CancelledOrders />}
                 {currentTab == -1 && <SheduleANewOrder/>}
             </div>
         );
