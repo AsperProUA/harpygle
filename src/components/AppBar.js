@@ -22,6 +22,7 @@ import Button from '@material-ui/core/Button';
 import Avatar from './globalComponents/Avatar';
 
 import BusinessMenu from './businessOwners/Menu';
+import PartnerMenu from './partnerOwners/Menu';
 import logOut from '../services/logOut';
 const styles = theme => ({
   root: {
@@ -170,7 +171,8 @@ class MainAppBar extends React.Component {
   renderMainMenu = () => {
     switch (this.props.role) {
       case 'BOwners': return <BusinessMenu hide={this.handleDrawerToggle} />;
-      case 'suppliers': return <div>supplierMenu</div>
+      case 'suppliers': return <div>supplierMenu</div>;
+      case 'partners': return <PartnerMenu />;
 
     }
   }

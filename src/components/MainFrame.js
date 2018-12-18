@@ -19,6 +19,7 @@ import BusinessOrders from './businessOwners/Orders';
 import BusinessDelivery from './businessOwners/Delivery';
 import PartnerRequest from './partnerOwners/Request';
 import PartnerTab from './partnerOwners/Tabs';
+import PartnerChat from './partnerOwners/Chat'
 
 import BusinessInventory from './businessOwners/Inventory';
 
@@ -167,6 +168,10 @@ class MainFrame extends Component {
               <Route
                 exact path='/products'
                 render={() => <Products />}
+              />
+              <Route
+                exact path='/chat'
+                render={() => <PartnerChat />}
               />
             </Switch>
           </Grid>

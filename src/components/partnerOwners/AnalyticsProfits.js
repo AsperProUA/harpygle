@@ -125,6 +125,10 @@ class Analytics extends Component {
             totalProfit: 1388.00,
             completedOrders: 13,
             inProgressOrders: 2,
+            user: {
+                name: 'Mohammad Samy',
+                city: 'Casabalanca, Morroco'
+            }
         }
         ////////////////////////////////////////////////////////////////
         // need remake when backend will be ready
@@ -143,8 +147,8 @@ class Analytics extends Component {
     }
 
     render() {
-        const { classes, user } = this.props;
-        const { totalSales, totalCost, totalProfit, completedOrders, inProgressOrders } = this.state;
+        const { classes } = this.props;
+        const { totalSales, totalCost, totalProfit, completedOrders, inProgressOrders, user } = this.state;
 
         return (
             <Grid container spacing={16} className={classes.root}>
