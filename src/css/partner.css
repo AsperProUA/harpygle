@@ -91,7 +91,7 @@
     text-align: left;
   }
   .d-inline{
-    display: inline-block;;
+    display: inline-block !important;
   }
   .div-grid{
      padding-top: 2%;
@@ -135,6 +135,7 @@
 .textClass{
   font-size: 15px !important;
 }
+
 @media only screen and (min-width : 768px) and (max-width : 1024px) {
   .response>.width25 { width: 33% !important;}
   .div40 {width:auto;}

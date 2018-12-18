@@ -3,7 +3,6 @@ import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import Intro from './Intro';
-import PreSignUp from './PreSignUp';
 import OwnerSignUp from './OwnerSignUp';
 import SupplierSignUp from './SupplierSignUp';
 import SignIn from './SignIn';
@@ -21,8 +20,7 @@ import FAQ from './FAQ';
 function NonAuth() {
     return (
         <BrowserRouter>
-            <Switch>
-                <Route exact path='/presign' render={() => <PreSignUp/>} />
+            <Switch>                
                 <Route exact path='/owner/signup' render={() => <OwnerSignUp/>} />
                 <Route exact path='/supplier/signup' render={() => <SupplierSignUp/>} />
                 <Route exact path='/signin' render={() => <SignIn/>} />
