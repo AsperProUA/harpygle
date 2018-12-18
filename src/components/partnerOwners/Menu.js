@@ -65,7 +65,7 @@ function ListItemComposition(props) {
         </Link>
       </div>
       <MenuList className={classes.menu}>
-        <Link to='delivery'>
+        <Link to='request'>
           <MenuItem className={classes.menuItem}>
             <ListItemIcon className={classes.icon}>
               <SvgIcon viewBox='0 0 27 27' className={classes.svgIcon}>

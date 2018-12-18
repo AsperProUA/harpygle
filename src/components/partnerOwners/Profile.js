@@ -11,6 +11,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import CheckIcon from '@material-ui/icons/CheckCircle';
 import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 import getData from '../../services/getData';
 import logOut from '../../services/logOut';
 
@@ -111,6 +112,58 @@ const style = theme => ({
             cursor: 'pointer',
         }
     },
+    root: {
+        maxWidth: 465,
+        textAlign: 'center',
+        margin: 'auto',
+        backgroundColor: theme.palette.common.white,
+        fontSize: 14,
+        fontWeight: 'lighter',
+        color: '#707070',
+        '& h1': {
+            fontSize: 36,
+            fontWeight: 'lighter',
+            color: '#707070',
+            margin: '30px auto',
+            marginBottom: 5,
+        },
+        [theme.breakpoints.down('sm')]: {
+            paddingTop: 0,
+        },
+    },
+    input: {
+        border: '1px solid #D0D0D0',
+        borderRadius: '10px',
+        padding: '10px 20px',
+    },
+    label: {
+        textAlign: 'left',
+        margin: '10px',
+        color: '#979797',
+        fontSize: 18,
+        fontWeight: 'bold',
+        width: 'auto',
+    },
+    btn: {
+        backgroundColor: '#88C601',
+        color: theme.palette.common.white,
+        marginBottom: 50,
+        width: 250,
+        '&:hover': {
+            backgroundColor: '#7BB203',
+        }
+    },
+    error: {
+        fontSize: 12,
+        color: theme.palette.error.main,
+        fontWeight: 300
+    },
+    forgot: {
+        '& a': {
+            textDecoration: 'none',
+            color: '#25AAE1',
+        },
+    },
 });
 
 const defaultAvatar = 'pictures/poy_benbernanke.png';
@@ -140,13 +193,31 @@ class Profile extends Component {
                     isValid: false,
                     errMsg: 'password is too short',
                 },
-                securityQuestionID: { value: '', },
+                securityQuestionID: {
+                    value: '',
+                    isValid: false,
+                    errMsg: 'please select Security Question'
+                },
                 securityAns: { value: '', },
                 ShopifyURL: 'https://egypt.souq.com/',
-
             },
             isValid: false,
             isChecked: false,
+
+            securityQuestions: [
+                {
+                    value: '0',
+                    label: "What is your mother's maiden name?"
+                },
+                {
+                    value: '1',
+                    label: 'What is the name of your favourite childhood pet?'
+                },
+                {
+                    value: '2',
+                    label: 'What is the last name of the teacher who gave you your first failing grade?'
+                },
+            ],
         }
         this.fetchPartner();
     }
@@ -295,13 +366,20 @@ class Profile extends Component {
                             />
                             <TextField
                                 error={isChecked && !isValid && securityQuestionID.errMsg && !securityQuestionID.isValid}
+                                select
                                 label="Security Question"
                                 value={securityQuestionID.value}
-                                onInput={(event) => { handleInput('securityQuestionID', event.target.value) }}
+                                onChange={(event) => { this.handleInput('securityQuestionID', event.target.value) }}
                                 helperText={isChecked && !isValid && !securityQuestionID.isValid && securityQuestionID.errMsg}
                                 margin="normal"
                                 variant="outlined"
-                            />
+                            >
+                                {this.state.securityQuestions.map(option => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
                             <TextField
                                 error={isChecked && !isValid && securityAns.errMsg && !securityAns.isValid}
                                 label="Security Answer"

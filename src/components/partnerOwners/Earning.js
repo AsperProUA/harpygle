@@ -63,18 +63,18 @@ class Earnings extends Component {
     constructor(props) {
         super(props);
 
-        
+
 
         this.state = {
             totalEarnings: 200,
             swiftCode: 'AAAA BB CC DDD',
             accountNumber: '0123456789',
         }
-        
+
 
         ////////////////////////////////////////////////////////////////
         // need remake when backend will be ready
-        getData({url: 'business/earnings' /* + id*/}).then(data => {
+        getData({ url: 'business/earnings' /* + id*/ }).then(data => {
             this.setState(currentState => {
                 data.totalEarnings && (currentState.totalEarnings = data.totalEarnings);
                 data.swiftCode && (currentState.swiftCode = data.swiftCode);
@@ -94,7 +94,7 @@ class Earnings extends Component {
         return (
             <div className={classes.root}>
                 <p className={classes.label}>You earnings</p>
-                <div style={{boxShadow: '0 3px 6px rgba(0,0,0,0.16)', padding: 10}}>
+                <div style={{ boxShadow: '0 3px 6px rgba(0,0,0,0.16)', padding:10 }}>
                     <p style={{ fontSize: 18 }}>Your Total Earnign</p>
                     <p style={{ fontSize: 40, margin: '0 auto', fontWeight: 'bold' }}>{totalEarnings} <span style={{ fontSize: 24 }}> MAD</span></p>
                     <div>
