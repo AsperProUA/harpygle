@@ -140,7 +140,7 @@ class SignIn extends Component {
                 errMsg = 'invalid email';
                 break;
             case 'password':
-                valid = !!value.match(/\s*([\w]{6,})\s*/);
+                valid = !!value.match(/(?=^.{8,}$)^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/);
                 console.log(valid);
                 break;
             case 'role':

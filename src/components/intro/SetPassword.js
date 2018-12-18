@@ -9,9 +9,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import apiPath from '../../services/apiPath';
-import Thanks from './ThanksForgotPassword'
 
 import Header from './Header';
+import Thanks from './ThanksPasswordChange';
 
 const styles = theme => ({
     root: {
@@ -45,44 +45,24 @@ const styles = theme => ({
 
 });
 
-class ForgotPassword extends Component {
+class SetPassword extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            email: {
-                value: '',
-                errMsg: '',
-                isValid: false,
-            },
-            role: {
+        this.state = {            
+            password: {
                 value: '',
                 isValid: false,
-                errMsg: 'please select role'
+                errMsg: 'Password should contain lowercase and uppercase characters and digits. It must be at least 8 characters long.',
             },
-            roles: [
-                {
-                    value: 'BOwners',
-                    label: 'Business owner'
-                },
-                {
-                    value: 'suppliers',
-                    label: 'Supplier'
-                },
-                {
-                    value: 'Couriers',
-                    label: 'Courier'
-                },
-                {
-                    value: 'partners',
-                    label: 'Partner'
-                },
-            ],
-            submited: false,
-            restored: false,
+            repeatPassword: {
+                value: '',
+                isValid: false,
+                errMsg: 'passwords are not equal',
+            },
             isValid: false,
             isChecked: false,
             sended: false,
-        };
+        }
     }
 
     handleInput = (field, value) => {
@@ -96,7 +76,7 @@ class ForgotPassword extends Component {
 
     validateForm = () => {
         this.setState(currentState => {
-            currentState.isValid = (currentState.email.isValid && currentState.role.isValid);
+            currentState.isValid = (currentState.password.isValid && currentState.repeatPassword.isValid);
             return currentState;
         });
     }
@@ -108,15 +88,13 @@ class ForgotPassword extends Component {
             case 'email':
                 valid = !!value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
                 errMsg = 'invalid email';
-                console.log(valid);
                 break;
             case 'password':
-                valid = !!value.match(/\s*([\w]{6,})\s*/);
-                
+                valid = !!value.match(/(?=^.{8,}$)^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/);
                 break;
-            case 'role':
-                valid = !!value;
-                break
+            case 'repeatPassword':
+                valid = (value == this.state.password.value);
+                break;
         }
         this.setState((currentState) => {
             currentState[field].isValid = valid;
@@ -127,21 +105,25 @@ class ForgotPassword extends Component {
 
     handleSign = (e) => {
         e.preventDefault();
-        const { email,role } = this.state;
+        const { password } = this.state;
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var link = url.searchParams.get("link");
+        console.log(link)
+        //return false;
         this.setState({ isChecked: true });
         this.validateForm();
         if (this.state.isValid) {
             e.preventDefault();
-            axios.post(apiPath + "forgotPassword", {
-                email: email.value,
-                role: role.value,
+            axios.post(apiPath + "SetPassword", {
+                password: password.value,
+                link: link,
             })
             .then(response => {
                 return response;
             })
             .then(json => {
-                if ('Message Sent' === json.data.msg) {
-
+                if ('updated' === json.data.msg) {
                     this.setState({ sended: true });
 
                 } else alert("restore failed");
@@ -163,11 +145,13 @@ class ForgotPassword extends Component {
         }
     }
 
+
     render() {
-        const { email, password, isChecked, isValid, roles, role } = this.state;
+        const { password, repeatPassword, isChecked, isValid } = this.state;
         const { classes } = this.props;
         if (this.state.sended) return (
-            <div>                
+            <div>
+                
                 <Thanks />
             </div>
         );
@@ -175,37 +159,33 @@ class ForgotPassword extends Component {
             <div>
                 <Header />
                 <form className={classes.root} onSubmit={this.handleSign}>
-                    <h1>RESTORE PASSWORD</h1>
+                    <h1>SET PASSWORD</h1>
                     <FormGroup>
                     <div class="w-100">
-                        <TextField className="w-100"
-                           error={isChecked && !isValid && email.errMsg && !email.isValid}
-                            label="Email"
-                            value={email.value}
-                            onInput={(event) => { this.handleInput('email', event.target.value) }}
-                            helperText={email.errMsg}
-                            variant="outlined"
+                        <TextField
+                            error={isChecked && !isValid && password.errMsg && !password.isValid}
+                            label="Password"
+                            value={password.value}
+                            onInput={(event) => { this.handleInput('password', event.target.value) }}
+                            helperText={isChecked && !isValid && !password.isValid && password.errMsg}
+                            type='password'
                             margin="normal"
+                            variant="outlined"
                         />
                     </div>
                     <div class="w-100">
-                        <TextField className="w-100"
-                            error={isChecked && !isValid && role.errMsg && !role.isValid}
-                            select
-                            label="Role"
-                            value={role.value}
-                            onChange={(event) => { this.handleInput('role', event.target.value) }}                            
-                            helperText={isChecked && !isValid && !role.isValid && role.errMsg}
+                        <TextField
+                            error={isChecked && !isValid && repeatPassword.errMsg && !repeatPassword.isValid}
+                            label="Repeat password"
+                            value={repeatPassword.value}
+                            onInput={(event) => { this.handleInput('repeatPassword', event.target.value) }}
+                            helperText={isChecked && !isValid && !repeatPassword.isValid && repeatPassword.errMsg}
+                            type='password'
                             margin="normal"
                             variant="outlined"
-                        >
-                            {roles.map(option => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                    </div>                        
+                        />
+                    </div>
+                        
                     </FormGroup>
                     
                     <Button type='submit' className={classes.btn} >Submit</Button>
@@ -215,8 +195,8 @@ class ForgotPassword extends Component {
     }
 }
 
-ForgotPassword.propTypes = {
+SetPassword.propTypes = {
     classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(ForgotPassword);
+export default withStyles(styles)(SetPassword);

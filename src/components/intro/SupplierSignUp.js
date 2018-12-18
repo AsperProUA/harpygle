@@ -111,7 +111,7 @@ class OwnerSignUp extends Component {
         this.validateForm();
         if (this.state.isValid) {
             const { email, password } = this.state;
-            axios.post(`${window.myOwnProps.apiPath}supplier/create`, {
+            axios.post(`${apiPath}supplier/create`, {
                 email: email.value,
                 password: password.value,
             }).then((response) => {
