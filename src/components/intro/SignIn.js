@@ -140,7 +140,7 @@ class SignIn extends Component {
                 break;
             case 'password':
                 valid = !!value.match(/\s*([\w]{6,})\s*/);
-                console.log(valid);
+                errMsg = 'password is too short';
                 break;
             case 'role':
                 valid = !!value;
@@ -198,10 +198,11 @@ class SignIn extends Component {
                             user: userData
                         };
                         this.props.onLogin(appState);
+                        window.location.href = window.location.origin + '/profile';
                     }
                     else if('couriers logged in successfully' == json.data.msg){
                         let userData = {
-                            id: json.data.supplierID,
+                            id: json.data.courierID,
                             token: json.data.accessToken,
                             expireAt: json.data.expires_at,
                             role: role.value,
@@ -212,6 +213,7 @@ class SignIn extends Component {
                             user: userData
                         };
                         this.props.onLogin(appState);
+                        window.location.href = window.location.origin + '/profile';
                     }
                     else if ('partner logged in successfully' === json.data.msg) {
                         let userData = {
@@ -234,7 +236,6 @@ class SignIn extends Component {
                     if (error.response) {
 
                         const msg = error.response.data.msg;
-                        console.log(msg)
                         if ('No user found in this email' === msg) {
                             this.setState(currentState => {
                                 currentState.email.isValid = false;
@@ -326,14 +327,19 @@ export default withStyles(style)(connect(
     }),
     dispath => ({
         onLogin: (loginData) => {
-            dispath({ type: 'LOGIN_USER', payload: loginData });            
-            getData({ url: `business/get/${loginData.user.id}` }).then(response => {
-                // let userData = {};
-                // userData.name = response.data.name;
-                // userData.avatar = response.data.pictureUrl;
-                // userData.city = response.data.city;
-                response.data.avatar = response.data.pictureUrl;
-                dispath({ type: 'USER_DATA', payload: response.data });
+            dispath({ type: 'LOGIN_USER', payload: loginData });
+            let role = loginData.user.role;
+            switch (role) {
+                case 'BOwners':
+                    role = 'business';
+                    break;
+            }
+            getData({ url: `${role}/get${(loginData.user.role === 'courier')?'byid':''}/${loginData.user.id}` }).then(response => {
+                let userData = response.data;
+                if(loginData.user.role === 'courier') userData = response.data.response;
+
+                userData.avatar = userData.pictureUrl;
+                dispath({ type: 'USER_DATA', payload: userData});
             });
         }
     }),

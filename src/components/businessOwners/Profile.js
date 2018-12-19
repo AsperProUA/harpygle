@@ -121,7 +121,12 @@ class Profile extends Component {
         this.state = {
             user: {
                 id: '',
+                isVerified: false,
                 avatar: {
+                    updated: false,
+                    value: this.props.loginData.user.avatar,
+                },
+                verificationID: {
                     updated: false,
                     value: null,
                 },
@@ -130,6 +135,10 @@ class Profile extends Component {
                     isValid: false,
                     errMsg: 'invalid email',
                 },
+                name: { value: '', },
+                city: { value: '', },
+                phoneNum: { value: '', },
+                pickupAddress: { value: '', },
                 currentPassword: {
                     value: '',
                     isValid: false,
@@ -168,20 +177,22 @@ class Profile extends Component {
         getData({ url: `business/get/${this.props.loginData.user.id}` })
             .then(response => {
 
-                const { ownerID, email, pictureUrl, ShopifyURL } = response.data;
+                const { ownerID, email, pictureUrl, ShopifyURL, name, city, phoneNum, pickupAddress } = response.data;
                 this.setState(currentState => {
                     const { user } = currentState;
                     user.id = ownerID;
                     user.email.value = email;
-                    user.email.value = email;
-                    user.avatar.value = pictureUrl;
+                    user.name.value = name;
+                    user.city.value = city;
+                    user.phoneNum.value = phoneNum;
+                    user.pickupAddress.value = pickupAddress;
+                    // user.avatar.value = pictureUrl;
                     user.ShopifyURL.value = ShopifyURL;
+                    user.isVerified = response.data.isVerified;
                     return currentState;
                 });
-
-                this.props.onUpdate({
-                    avatar: pictureUrl,
-                });
+                // response.data.avatar = response.data.pictureUrl;
+                this.props.onUpdate(response.data);
             });
 
     }
@@ -197,7 +208,22 @@ class Profile extends Component {
 
     updateOwner = (e) => {
         e && e.preventDefault();
-        const { id, email, avatar, currentPassword, newPassword, securityQuestion, securityAnswer, verificationID, ShopifyURL } = this.state.user;
+        const {
+            id,
+            email,
+            name,
+            city,
+            phoneNum,
+            pickupAddress,
+            avatar,
+            currentPassword,
+            newPassword,
+            securityQuestion,
+            securityAnswer,
+            verificationID,
+            ShopifyURL
+        } = this.state.user;
+
         let body = {};
         email.value && (body.email = email.value);
         avatar.updated && (body.picture = avatar.value);
@@ -207,6 +233,12 @@ class Profile extends Component {
         securityAnswer.value && (body.securityAnswer = securityAnswer.value);
         verificationID.updated && (body.verificationID = verificationID.value);
         ShopifyURL.value && (body.ShopifyURL = ShopifyURL.value);
+        name.value && (body.name = name.value);
+        city.value && (body.city = city.value);
+        phoneNum.value && (body.phoneNum = phoneNum.value);
+        pickupAddress.value && (body.pickupAddress = pickupAddress.value);
+
+        this.props.onUpdate({avatar:avatar.value});
         axios.put(`${apiPath}business/update/${id}`, body, {
             headers: { 'Content-Type': 'application/json' },
         }).then(this.fetchOwner);
@@ -226,6 +258,31 @@ class Profile extends Component {
                     this.setState(currentState => {
                         currentState.user.avatar.value = mybase64resized;
                         currentState.user.avatar.updated = true;
+                        return currentState;
+                    });
+                }
+            }
+        }
+    }
+
+    handleIdNumber = (e) => {
+        e.preventDefault && e.preventDefault();
+        var image, canvas, i;
+        var images = 'files' in e.target ? e.target.files : 'dataTransfer' in e ? e.dataTransfer.files : [];
+        if (images && images.length) {
+            for (i in images) {
+                if (typeof images[i] != 'object') continue;
+                image = new Image();
+                image.src = this.createObjectURL(images[i]);
+                image.onload = (e) => {
+                    var canvas = document.createElement("canvas");
+                    canvas.width = e.target.width;
+                    canvas.height = e.target.height;
+                    console.log(canvas.width, canvas.height);
+                    canvas.getContext("2d").drawImage(e.target, 0, 0);
+                    this.setState(currentState => {
+                        currentState.user.verificationID.value = canvas.toDataURL('image/jpg')
+                        currentState.user.verificationID.updated = true;
                         return currentState;
                     });
                 }
@@ -274,7 +331,23 @@ class Profile extends Component {
     render() {
 
         const { classes } = this.props;
-        const { email, securityQuestion, securityAnswer, currentPassword, newPassword, avatar, verificationIDUrl, ShopifyURL, isChecked, isValid } = this.state.user;
+        const {
+            email,
+            city,
+            name,
+            phoneNum,
+            pickupAddress,
+            securityQuestion,
+            securityAnswer,
+            currentPassword,
+            newPassword,
+            avatar,
+            isVerified,
+            ShopifyURL,
+            isChecked,
+            isValid
+        } = this.state.user;
+
         const { handleInput } = this;
         return (
 
@@ -287,8 +360,11 @@ class Profile extends Component {
                     </Button>
                     <p className={classes.removeImgText}><ClearIcon /> REMOVE IMAGE</p>
                     <div className={classes.accountId}>
-                        {verificationIDUrl && <p className={classes.removeImgText}><CheckIcon /><span className={classes.secondaryText}>Your Account Is Verified</span></p>}
-                        <Button style={{ width: 261 }} >Update Your ID Number</Button>
+                        {isVerified && <p className={classes.removeImgText}><CheckIcon /><span className={classes.secondaryText}>Your Account Is Verified</span></p>}
+                        <Button className={classes.fileUpload} style={{ textTransform: 'none' }}>
+                            Update Your ID Number
+                        <input type='file' onChange={(event) => { this.handleIdNumber(event) }} />
+                        </Button>
                     </div>
 
                     <div className={classes.url}>
@@ -309,6 +385,43 @@ class Profile extends Component {
                                 value={email.value}
                                 onInput={(event) => { handleInput('email', event.target.value) }}
                                 helperText={isChecked && !isValid && !email.isValid && email.errMsg}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                            <TextField
+                                error={isChecked && !isValid && name.errMsg && !name.isValid}
+                                label="Full Name"
+                                value={name.value}
+                                onInput={(event) => { this.handleInput('name', event.target.value) }}
+                                helperText={isChecked && !isValid && !name.isValid && name.errMsg}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                            <TextField
+                                error={isChecked && !isValid && city.errMsg && !city.isValid}
+                                label="City"
+                                value={city.value}
+                                onInput={(event) => { this.handleInput('city', event.target.value) }}
+                                helperText={isChecked && !isValid && !city.isValid && city.errMsg}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                            <TextField
+                                error={isChecked && !isValid && phoneNum.errMsg && !phoneNum.isValid}
+                                label="Phone Number"
+                                value={phoneNum.value}
+                                type='number'
+                                onInput={(event) => { this.handleInput('phoneNum', event.target.value) }}
+                                helperText={isChecked && !isValid && !phoneNum.isValid && phoneNum.errMsg}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                            <TextField
+                                error={isChecked && !isValid && pickupAddress.errMsg && !pickupAddress.isValid}
+                                label="Pickup Address"
+                                value={pickupAddress.value}
+                                onInput={(event) => { this.handleInput('pickupAddress', event.target.value) }}
+                                helperText={isChecked && !isValid && !pickupAddress.isValid && pickupAddress.errMsg}
                                 margin="normal"
                                 variant="outlined"
                             />

@@ -69,7 +69,7 @@ class Delivery extends Component {
         super(props);
 
         this.state = {
-            currentTab: 4,
+            currentTab: 0,
         }
     }
 

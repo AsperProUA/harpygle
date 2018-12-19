@@ -15,6 +15,8 @@ const styles = theme => ({
         borderRadius: 0,
         color: '#636363',
         fontWeight: 'bold',
+        maxWidth: 300,
+        margin: 'auto',
     },
     root: {
         padding: 16,
@@ -26,6 +28,7 @@ const styles = theme => ({
         display: 'flex',
         padding: 8,
         justifyContent: 'space-between',
+        margin: '0 20px',
     },
     icon: {
         width: 32,
@@ -109,7 +112,7 @@ class Analytics extends Component {
     ////////////////////////////////////////////////////////////////
     // need remake when backend will be ready
     componentDidMount() {
-        getData({ url: 'business/analytics/' /* + id*/ }).then(data => {
+        getData({ url: 'courier/sales/' /* + id*/ }).then(data => {
             this.setState(currentState => {
                 const { totalSales, totalCost, totalProfit, completedOrders, inProgressOrders } = data;
                 totalSales && (currentState.totalSales = totalSales);
@@ -125,11 +128,11 @@ class Analytics extends Component {
 
     render() {
         const { classes, user } = this.props;
-        const { totalSales, totalCost, totalProfit, completedOrders, inProgressOrders } = this.state;
+        const { totalSales, completedOrders, inProgressOrders } = this.state;
 
         return (
             <Grid container spacing={16} className={classes.root}>
-                <Grid item lg={3} md={6} sm={6} xs={12}>
+                <Grid item lg={9} md={6} sm={6} xs={12}>
                     <Paper className={classes.paper}>
                         <div className={classes.label}>
                             <span className={classes.text}>Total Sales</span><span className={[classes.icon, classes.icon1].join(' ')} ></span>
@@ -137,28 +140,6 @@ class Analytics extends Component {
                         <hr />
                         <div className={classes.data}>
                             ${totalSales}
-                        </div>
-                    </Paper>
-                </Grid>
-                <Grid item lg={3} md={6} sm={6} xs={12}>
-                    <Paper className={classes.paper}>
-                        <div className={classes.label}>
-                            <span className={classes.text}>Total Cost</span><span className={[classes.icon, classes.icon2].join(' ')} ></span>
-                        </div>
-                        <hr />
-                        <div className={classes.data}>
-                            ${totalCost}
-                        </div>
-                    </Paper>
-                </Grid>
-                <Grid item lg={3} md={6} sm={6} xs={12}>
-                    <Paper className={classes.paper}>
-                        <div className={classes.label}>
-                            <span className={classes.text}>Total Profit</span><span className={[classes.icon, classes.icon3].join(' ')} ></span>
-                        </div>
-                        <hr />
-                        <div className={classes.data}>
-                            ${totalProfit}
                         </div>
                     </Paper>
                 </Grid>
