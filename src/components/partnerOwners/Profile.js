@@ -15,6 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Snackbar from '@material-ui/core/Snackbar';
 import getData from '../../services/getData';
 import logOut from '../../services/logOut';
+import { isNumber } from 'util';
 
 const style = theme => ({
     avatar: {
@@ -181,10 +182,7 @@ class Profile extends Component {
                     updated: false,
                     value: null,
                 },
-                idFile: {
-                    updated: false,
-                    value: null,
-                },
+                idFile: [],
                 email: {
                     value: '',
                     isValid: false,
@@ -262,13 +260,14 @@ class Profile extends Component {
 
     updatePartner = (e) => {
         e && e.preventDefault();
-        const { id, securityQuestionID, securityAns, avatar, newPassword } = this.state.user;
+        const { id, securityQuestionID, securityAns, avatar, newPassword, idFile } = this.state.user;
         let body = {
             securityQuestionID: securityQuestionID.value,
             securityAns: securityAns.value,
         };
         avatar.updated && (body.picture = avatar.value);
         newPassword.value && (body.password = newPassword.value);
+        body.verificationID = idFile;
         console.log(body);
         axios.put(`${apiPath}partner/update/${id}`, body, {
             headers: { 'Content-Type': 'application/json' },
@@ -298,21 +297,28 @@ class Profile extends Component {
 
     handleIdNumberFile = (e) => {
         e.preventDefault && e.preventDefault();
-        var idFile, canvas, i;
-        var selectedFile = 'files' in e.target ? e.target.files : 'dataTransfer' in e ? e.dataTransfer.files : [];
-        if (selectedFile.length > 0) {
-            var fileToLoad = selectedFile[0];
-            var fileReader = new FileReader();
-            var base64;
-            fileReader.onload = function (fileLoadedEvent) {
-                base64 = fileLoadedEvent.target.result;
-                this.setState(currentState => {
-                    currentState.user.idFile.value = base64;
-                    currentState.user.idFile.updated = true;
-                    return currentState;
-                });
-            };
-            fileReader.readAsDataURL(fileToLoad);
+        var image, canvas, i;
+        var images = 'files' in e.target ? e.target.files : 'dataTransfer' in e ? e.dataTransfer.files : [];
+        if (images && images.length) {
+            for (i in images) {
+                if(!isNaN(Number(i))){
+                    var count = Number(i);
+                }                
+                if (typeof images[i] != 'object') continue;
+                image = new Image();
+                image.src = this.createObjectURL(images[i]);
+                image.onload = (e) => {
+                    var mybase64resized = this.resizeCrop(e.target, e.target.width, e.target.height).toDataURL('image/jpg');
+                    this.setState(currentState => {
+                        var obj = {
+                            value : mybase64resized,
+                            name: images[count].name,
+                        }
+                        currentState.user.idFile.push(obj);
+                        return currentState;
+                    });
+                }
+            }
         }
     }
 
@@ -362,11 +368,19 @@ class Profile extends Component {
         this.setState({ snackbarOpen: false });
     };
 
+    renderFiles = (file) => {
+        return (
+           <div>
+               {file.name}
+            </div>
+        );
+    }
+
     render() {
         
         const { classes } = this.props;
         const { securityQuestionID, securityAns, email, currentPassword, newPassword,
-             isChecked, isValid, avatar } = this.state.user;
+             isChecked, isValid, avatar, idFile } = this.state.user;
         const { snackbarOpen, snackbarMessage } = this.state;
         const { handleInput } = this;
         return (
@@ -381,8 +395,11 @@ class Profile extends Component {
                     <p className={classes.removeImgText}><ClearIcon /> REMOVE IMAGE</p>
                     <div className={classes.accountId}>
                         <p className={classes.removeImgText}><CheckIcon /><span className={classes.secondaryText}>Your Account Is Verified</span></p>
+                        {idFile.map(file => {
+                            return this.renderFiles(file);
+                        })}
                         <Button className={classes.fileUpload} style={{ width: 261 }} >Update Your ID Number
-                            <input type='file' onChange={(event) => { this.handleIdNumberFile(event) }} />
+                            <input type='file' multiple onChange={(event) => { this.handleIdNumberFile(event) }} />
                         </Button>
                     </div>
                     <div className={classes.accountId} style={{ paddingBottom: 0 }}>
