@@ -64,6 +64,11 @@ class PartnerPreSignUp extends Component {
                 isValid: false,
                 errMsg: 'password is too short',
             },
+            repeatPassword: {
+                value: '',
+                isValid: false,
+                errMsg: 'passwords are not equal',
+            },
 
             isValid: false,
             isChecked: false,
@@ -86,7 +91,7 @@ class PartnerPreSignUp extends Component {
 
     validateForm = () => {
         this.setState(currentState => {
-            currentState.isValid = (currentState.email.isValid && currentState.password.isValid);
+            currentState.isValid = (currentState.email.isValid && currentState.password.isValid && currentState.repeatPassword.isValid);
             return currentState;
         });
     }
@@ -102,7 +107,8 @@ class PartnerPreSignUp extends Component {
             case 'password':
                 valid = !!value.match(/(?=^.{8,}$)^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/);
                 break;
-            default:
+            case 'repeatPassword':
+                valid = (value == this.state.password.value);
                 break;
         }
         this.setState((currentState) => {
@@ -152,7 +158,8 @@ class PartnerPreSignUp extends Component {
             email,
             password,
             isChecked,
-            isValid
+            isValid,
+            repeatPassword
         } = this.state;
         if (this.state.sended) return (
             <div>
@@ -182,6 +189,16 @@ class PartnerPreSignUp extends Component {
                             value={password.value}
                             onInput={(event) => { this.handleInput('password', event.target.value) }}
                             helperText={isChecked && !isValid && !password.isValid && password.errMsg}
+                            type='password'
+                            margin="normal"
+                            variant="outlined"
+                        />
+                        <TextField className="mt-3"
+                            error={isChecked && !isValid && repeatPassword.errMsg && !repeatPassword.isValid}
+                            label="Repeat Password"
+                            value={repeatPassword.value}
+                            onInput={(event) => { this.handleInput('repeatPassword', event.target.value) }}
+                            helperText={isChecked && !isValid && !repeatPassword.isValid && repeatPassword.errMsg}
                             type='password'
                             margin="normal"
                             variant="outlined"
