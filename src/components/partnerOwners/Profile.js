@@ -15,6 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Snackbar from '@material-ui/core/Snackbar';
 import getData from '../../services/getData';
 import logOut from '../../services/logOut';
+import '../../css/partnerProfile.css';
 import { isNumber } from 'util';
 
 const style = theme => ({
@@ -298,21 +299,25 @@ class Profile extends Component {
     handleIdNumberFile = (e) => {
         e.preventDefault && e.preventDefault();
         var image, canvas, i;
+        var count = -1;
         var images = 'files' in e.target ? e.target.files : 'dataTransfer' in e ? e.dataTransfer.files : [];
+        if(this.state.user.idFile.length + images.length > 2){
+            alert('You can upload 2 images only');
+            return
+        }
         if (images && images.length) {
-            for (i in images) {
-                if(!isNaN(Number(i))){
-                    var count = Number(i);
-                }                
+            for (i in images) {                               
                 if (typeof images[i] != 'object') continue;
                 image = new Image();
                 image.src = this.createObjectURL(images[i]);
                 image.onload = (e) => {
+                    count++;
                     var mybase64resized = this.resizeCrop(e.target, e.target.width, e.target.height).toDataURL('image/jpg');
                     this.setState(currentState => {
                         var obj = {
                             value : mybase64resized,
                             name: images[count].name,
+                            indexKey: count
                         }
                         currentState.user.idFile.push(obj);
                         return currentState;
@@ -353,7 +358,7 @@ class Profile extends Component {
         return URL.createObjectURL(i);
     }
 
-    handleDelete = () => {
+    handleDelete = (e, indexKey) => {
         const { id } = this.state.user;
         axios.put(`${apiPath}partner/update/${id}`, { isDeletedAcc: true }, {
             headers: { 'Content-Type': 'application/json' },
@@ -368,10 +373,21 @@ class Profile extends Component {
         this.setState({ snackbarOpen: false });
     };
 
+    deleteFile(e, indexKey) {
+        var fileArray = this.state.user.idFile;
+        fileArray.splice(indexKey, 1);
+        this.setState(currentState => {
+            const { user } = currentState;
+            user.idFile = fileArray;
+            return currentState;
+        });
+    }
+
     renderFiles = (file) => {
         return (
-           <div>
-               {file.name}
+            <div className="fileDisplay" key={file.indexKey}>
+                <span className="float-left">{file.name}</span>
+                <span className="float-right" onClick={(e) => this.deleteFile(e, file.indexKey)}><b>X</b></span>
             </div>
         );
     }
