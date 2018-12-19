@@ -9,11 +9,16 @@ let initialState;
 localStorage['appState'] && (initialState = JSON.parse(localStorage['appState']));
 
 export default function loginData(state = initialState || emptyState, action) {
+    
     if ('LOGIN_USER' == action.type){
         let newState = {... state}
         newState.isLoggedIn = action.payload.isLoggedIn;
         newState.user = action.payload.user;
         localStorage["appState"] = JSON.stringify(newState);
+        //this.props.history.push('/welcome')
+        if (action.payload.user.role === "partners"){
+            window.location.href = window.location.origin + '/welcome';
+        }        
         return state = newState;
     } else if('USER_DATA' == action.type){
         let newState = {... state}

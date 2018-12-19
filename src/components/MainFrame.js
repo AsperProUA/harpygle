@@ -23,6 +23,7 @@ import PartnerRequest from './partnerOwners/Request';
 import PartnerTab from './partnerOwners/Tabs';
 import PartnerTeam from './partnerOwners/Team';
 import PartnerChat from './partnerOwners/Chat'
+import Welcome from './globalComponents/Welcome'
 
 
 import BusinessInventory from './businessOwners/Inventory';
@@ -185,6 +186,10 @@ class MainFrame extends Component {
               <Route
                 exact path='/chat'
                 render={() => <PartnerChat />}
+              />
+              <Route
+                exact path='/welcome'
+                render={() => <Welcome />}
               />
             </Switch>
           </Grid>
