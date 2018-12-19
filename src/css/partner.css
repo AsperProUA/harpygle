@@ -242,6 +242,9 @@
 .cusor{
   cursor: pointer;
 }
+p{
+  text-align: justify;
+}
 @media only screen and (min-width : 768px) and (max-width : 1024px) {
   .response>.pwidth25 { width: 33% !important; height: 300px;}
   .pdiv50 {width:auto;}

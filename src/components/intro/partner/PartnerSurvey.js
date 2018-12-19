@@ -146,7 +146,7 @@ class partner extends Component {
                     </div>
                 </div>
                 <div class="prow pmt-2 pp-2 pbox-border">
-                    <div class="pdiv60 pm-auto ptext-center">
+                    <div class="pdiv80 pm-auto ptext-center">
                         <img src="./pictures/partner/user.png"></img>
                         <h6 class="pmt-3">Are you a true team leader ?</h6>
                         <p class="pmt-3">The hardest oart of being a successful owner is hiring, training and managing a high performance team. Owing a package delivery business takes strong leadership along with a lot of grit and hard work as you lead your team to deliver thousands of packages to happy customers every day. if that's your expertise, bring your leadership skills, and we will provice you with all of the technology and operational support you'll need</p>
