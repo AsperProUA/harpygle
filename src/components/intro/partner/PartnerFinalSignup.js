@@ -219,7 +219,20 @@ class PartnerFinalSignUp extends Component {
         debugger;
         let valid = true;
         let errMsg = undefined;
-        
+        switch (field) {
+            case 'phone':
+                    valid = /^\d*\.?\d*$/.test(value);
+                    if(!valid) {
+                        var val = value.split('');
+                        val.pop();
+                        val = val.join('');
+                        this.setState((currentState) => {
+                            currentState[field].value = val;
+                            return currentState;
+                        });
+                    }
+                break
+        }        
         this.setState((currentState) => {
             currentState[field].isValid = valid;
             return currentState;
