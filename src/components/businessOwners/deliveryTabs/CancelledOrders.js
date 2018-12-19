@@ -97,10 +97,10 @@ const styles = theme => ({
         width: '80%'
     },
     iconReplace: {
-        backgroundImage: 'url("pictures/icons/business/exchange-alt.png")'
+        backgroundImage: 'url("pictures/icons/business/undo-alt.png")'
     },
-    iconShopify:{
-        backgroundImage:'url("/pictures/icons/preview.png")'
+    iconShopify: {
+        backgroundImage: 'url("/pictures/icons/preview.png")'
     },
     iconMap: {
         backgroundImage: 'url("pictures/icons/business/map-marker-alt.png")'
@@ -122,13 +122,13 @@ const styles = theme => ({
     paper: {
         padding: 15,
     },
-    orderItem:{
+    orderItem: {
         margin: 10,
+        padding: 25,
     },
     item: {
         lineHeight: '1.5em',
         color: '#979797',
-        padding: 25,
     },
     button: {
         backgroundColor: '#25AAE1',
@@ -158,7 +158,7 @@ const styles = theme => ({
     }
 })
 
-class ReplacedOrders extends Component {
+class CancelledOrders extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -178,54 +178,55 @@ class ReplacedOrders extends Component {
         const { classes, user } = this.props;
         console.log(orders);
         return (
-            <Grid container spacing={0} style={{marginTop: 20}}>
+            <Grid container spacing={0} style={{ marginTop: 20 }}>
                 <Grid item sm={4} xs={12} md={4} lg={3} className={classes.userBadge}>
                     <Paper className={classes.paper}>
                         <UserInfo />
                         <div>
                             <hr className={classes.hrLight} />
                             <div className={classes.shopifyUrl}>
-                                <div className={classes.shopify}><span><span className={[classes.icon, classes.iconShopify].join(' ')}/> Shopify URL </span></div>
+                                <div className={classes.shopify}><span><span className={[classes.icon, classes.iconShopify].join(' ')} /> Shopify URL </span></div>
                                 {this.state.user.ShopifyURL}
                             </div>
                         </div>
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm={8} md={8} lg={9} style={{ border: 'none', boxShadow: 'none' }}>
-                    
-                        {orders.map(order => {
-                            return (
-                                <Paper key={order.id}  className={classes.orderItem}>
-                                    <Grid container className={classes.item} >
+                    {orders.map(order => {
+                        return (
+                            <Paper key={order.id} className={classes.paper} className={classes.orderItem}>
+                                <Grid container className={classes.item} >
 
-                                        <Grid item xs={12} sm={12} md={4} lg={3} xl={2} className={classes.data}><div className={classes.photo}>
+                                    <Grid item xs={12} sm={12} md={4} lg={3} xl={2} className={classes.data}><div className={classes.photo}>
 
-                                            <img src={order.photo}></img>
-                                            <div className={classes.quantity}><span className={classes.x}>X</span>{order.quantity}</div>
-                                        </div>
-                                        </Grid>
-                                        <Grid item xs={12} sm={12} md={4} lg={6} xl={8} >
-                                            {order.name}
-                                            <br />
-                                            {order.description}
-                                            <br />
+                                        <img src={order.photo}></img>
+                                        <div className={classes.quantity}><span className={classes.x}>X</span>{order.quantity}</div>
+                                    </div>
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} md={4} lg={6} xl={8} >
+                                        {order.name}
+                                        <br />
+                                        {order.description}
+                                        <br />
+                                        <div>
                                             <span className={[classes.icon, classes.iconMap].join(' ')}></span>
                                             <span >{order.deliveryAddress}</span>
-                                        </Grid>
-                                        <Grid item xs={12} sm={12} md={4} lg={3} xl={2} item className={classes.td}>
-                                            <Button className={classes.button}><span className={[classes.icon, classes.iconReplace].join(' ')}></span>REPLACE CLIENT</Button>
-                                        </Grid>
+                                        </div>
                                     </Grid>
-                                </Paper>
-                            );
-                        })}
+                                    <Grid item xs={12} sm={12} md={4} lg={3} xl={2} item className={classes.td}>
+                                        <Button className={classes.button}><span className={[classes.icon, classes.iconReplace].join(' ')}></span>REPLACE CUSTOMER</Button>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        );
+                    })}
                 </Grid>
             </Grid>
         );
     }
 }
 
-ReplacedOrders.propTypes = {
+CancelledOrders.propTypes = {
     classes: PropTypes.object.isRequired,
 }
 
@@ -233,4 +234,4 @@ export default withStyles(styles)(connect(
     state => ({
         user: state.loginData.user,
     })
-)(ReplacedOrders));
+)(CancelledOrders));

@@ -71,7 +71,6 @@ const style = theme => ({
 class SignIn extends Component {
     constructor(props) {
         super(props);
-        console.log(props)
         this.state = {
             email: {
                 value: '',
@@ -98,7 +97,7 @@ class SignIn extends Component {
                     label: 'Supplier'
                 },
                 {
-                    value: 'couriers',
+                    value: 'courier',
                     label: 'Courier'
                 },
                 {
@@ -187,6 +186,20 @@ class SignIn extends Component {
                         window.location.href = window.location.origin + '/profile';
                     } 
                     else if ('supplier logged in successfully' === json.data.msg) {
+                        let userData = {
+                            id: json.data.supplierID,
+                            token: json.data.accessToken,
+                            expireAt: json.data.expires_at,
+                            role: role.value,
+                            email: email.value,
+                        };
+                        let appState = {
+                            isLoggedIn: true,
+                            user: userData
+                        };
+                        this.props.onLogin(appState);
+                    }
+                    else if('couriers logged in successfully' == json.data.msg){
                         let userData = {
                             id: json.data.supplierID,
                             token: json.data.accessToken,
@@ -313,14 +326,14 @@ export default withStyles(style)(connect(
     }),
     dispath => ({
         onLogin: (loginData) => {
-            dispath({ type: 'LOGIN_USER', payload: loginData });
-            console.log(this.role);            
+            dispath({ type: 'LOGIN_USER', payload: loginData });            
             getData({ url: `business/get/${loginData.user.id}` }).then(response => {
-                let userData = {};
-                userData.name = response.data.name;
-                userData.avatar = response.data.pictureUrl;
-                userData.city = response.data.city;
-                dispath({ type: 'USER_DATA', payload: userData });
+                // let userData = {};
+                // userData.name = response.data.name;
+                // userData.avatar = response.data.pictureUrl;
+                // userData.city = response.data.city;
+                response.data.avatar = response.data.pictureUrl;
+                dispath({ type: 'USER_DATA', payload: response.data });
             });
         }
     }),

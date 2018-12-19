@@ -128,7 +128,7 @@ const styles = theme => ({
         zIndex: 25,
         width: 29,
         height: 29,
-        border:'3px solid white',
+        border: '3px solid white',
         color: 'white',
         borderRadius: '50%',
         display: 'flex',
@@ -155,7 +155,7 @@ const styles = theme => ({
     //     }
     // },
     photo: {
-        border:'1px solid #CECECE',
+        border: '1px solid #CECECE',
         width: 100,
         height: 100,
         padding: 5,
@@ -222,12 +222,13 @@ const styles = theme => ({
         color: '#979797',
         fontSize: 18,
         padding: 25,
+        lineHeight: '1.5em',
         '& p': {
             margin: 0,
         },
     },
     priceBox: {
-        padding: 25,
+        padding: '25px 0',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -250,7 +251,7 @@ const styles = theme => ({
         color: '#636363',
         fontSize: 50,
         fontWeight: 'bold',
-        top: 60,
+        top: 80,
         left: 85,
     },
     x: {
@@ -262,6 +263,11 @@ const styles = theme => ({
         justifyContent: 'flex-end',
         alignItems: 'center',
         padding: 20,
+    },
+    fullMobile: {
+        [theme.breakpoints.down('xs')]:{
+            width: '100%'
+        }
     }
 })
 
@@ -273,12 +279,10 @@ const steps = [
 ]
 
 function renderCustomIcon(props) {
-    console.log(props)
-    const { classes, icon ,active, completed } = props;
-    console.log()
+    const { classes, icon, active, completed } = props;
     return (<span
         className={classNames(classes.iconRoot, {
-            [classes.iconActive]: active||completed,
+            [classes.iconActive]: active || completed,
         })}
     >{icon}</span>)
 }
@@ -330,7 +334,7 @@ class InProgress extends Component {
                         {steps.map((label, i) => {
                             return (
                                 <Step key={label}>
-                                    <StepLabel 
+                                    <StepLabel
                                         StepIconComponent={CustomIcon}
                                         classes={{
                                             iconContainer: classes.iconContainer,
@@ -344,22 +348,24 @@ class InProgress extends Component {
                 <Grid item xs={12}>
                     <Divider />
                 </Grid>
-                <Grid item xs={12} sm={12} md={7} className={classes.productInfo}>
+                <Grid item xs={12} sm={12} md={4} lg={3} xl={2} className={classes.productInfo}>
                     <div className={classes.photo}>
                         <img src={order.photo}></img>
                         <div className={classes.quantity}><span className={classes.x}>X</span>{order.quantity}</div>
                     </div>
+                </Grid>
+                <Grid item xs={12} sm={12} md={4} lg={6} xl={7} className={classes.productInfo}>
                     <div>
                         <p>{order.name}</p>
                         <p>{order.description}</p>
                         <p><span className={[classes.icon, classes.iconMap].join(' ')}></span>{order.deliveryAddress}</p>
                     </div>
                 </Grid>
-                <Grid item xs={12} sm={12} md={5} className={classes.button}>
+                <Grid item xs={12} sm={12} md={4} lg={3} xl={3} className={classes.button}>
                     {order.completed ? (
-                        <Button style={{ backgroundColor: '#88C601', color: 'white', }}> ATTACH DEPOSIT RECEIPT</Button>
+                        <Button className={classes.fullMobile} style={{ backgroundColor: '#88C601', color: 'white', }}> ATTACH DEPOSIT RECEIPT</Button>
                     ) : (
-                            <Button style={{ backgroundColor: '#25AAE1', color: 'white', }}>CHANGE STATUS</Button>
+                            <Button className={classes.fullMobile} style={{ backgroundColor: '#25AAE1', color: 'white', }}>CHANGE STATUS</Button>
                         )}
                 </Grid>
             </Grid>

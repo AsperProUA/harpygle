@@ -23,6 +23,7 @@ import Avatar from './globalComponents/Avatar';
 
 import BusinessMenu from './businessOwners/Menu';
 import PartnerMenu from './partnerOwners/Menu';
+import CourierMenu from './Couriers/Menu'
 import logOut from '../services/logOut';
 const styles = theme => ({
   root: {
@@ -158,6 +159,9 @@ const styles = theme => ({
   mobileAvatarItem: {
     height: 60,
   },
+  menuPaper: {
+    top: 85,
+  }
 });
 
 class MainAppBar extends React.Component {
@@ -171,8 +175,9 @@ class MainAppBar extends React.Component {
   renderMainMenu = () => {
     switch (this.props.role) {
       case 'BOwners': return <BusinessMenu hide={this.handleDrawerToggle} />;
-      case 'suppliers': return <div>supplierMenu</div>;
       case 'partners': return <PartnerMenu />;
+      case 'suppliers': return <div>supplierMenu</div>
+      case 'supplier': return <CourierMenu hide={this.handleDrawerToggle}/>;
 
     }
   }
@@ -210,6 +215,11 @@ class MainAppBar extends React.Component {
 
     const renderMenu = (
       <Menu
+        PaperProps={{
+          style: {
+            marginTop:65
+          },
+        }}
         anchorEl={anchorEl}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -257,7 +267,7 @@ class MainAppBar extends React.Component {
         open={isMobileMenuOpen}
         onClose={this.handleMobileMenuClose}
       >
-        <MenuItem>
+        <MenuItem >
           <IconButton >
             {/* <Badge badgeContent={11} color="secondary"> */}
             <NotificationsIcon />
