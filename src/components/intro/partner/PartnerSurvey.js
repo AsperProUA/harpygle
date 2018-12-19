@@ -116,101 +116,101 @@ class partner extends Component {
         return (
             <div className={classes.root}>
                 <Header />
-                <div class="content-box">
-                <div class="row">
-                    <div class="div40 m-auto">
-                        <div class="div100 text-center mt-3">
-                            <h2><b>Start your own business and earn with Hapygle</b></h2>
+                <div class="pcontent-box">
+                <div class="prow">
+                    <div class="pdiv50 pm-auto">
+                        <div class="pdiv100 ptext-center pmt-3">
+                            <h4><b>Start your own business and earn with Hapygle</b></h4>
                         </div>				
-                        <div class="div100 mt-2">
-                            <div class="row response top">
-                                <div class="div60 d-inline">
-                                    <h4>Successful owners can expect</h4>                                    
-                                    <p class="m-2">1. Startup cost as low as 25,000 MAD</p>
-                                    <p class="m-2">2. Annual revenue potential 3M-7.5M MAD</p>
-                                    <p class="m-2">3. Annual Profit potential 750K-2.5M MAD</p>
+                        <div class="pdiv100 pmt-2">
+                            <div class="prow response top">
+                                <div class="pdiv60 d-inline">
+                                    <h6>Successful owners can expect</h6>                                    
+                                    <p class="pm-2">1. Startup cost as low as 25,000 MAD</p>
+                                    <p class="pm-2">2. Annual revenue potential 3M-7.5M MAD</p>
+                                    <p class="pm-2">3. Annual Profit potential 750K-2.5M MAD</p>
                                     
                                 </div>		
-                                <div class="div40 d-inline imgTool text-right">
-                                    <img src="./pictures/partner/image.png"></img>
+                                <div class="pdiv40 d-inline imgTool ptext-right">
+                                    <img style={{ verticalAlign:'super' }} src="./pictures/partner/image.png"></img>
                                 </div>				
                             </div>					
                         </div>
                     </div>
                 </div>
-                <div class="row  mt-2 p-2 box-border">
-                    <div class="div80 m-auto text-center">
+                <div class="prow  pmt-2 pp-2 pbox-border">
+                    <div class="pdiv80 pm-auto ptext-center">
                         <img src="./pictures/partner/hand.png"></img>
-                        <h4 class="mt-3">Why being a partner with us ?</h4>
-                        <p class="mt-3">if you want to start your own business and loves coaching teams in a high speed, ever-changing enviroment, becoming a Harpygle Delivery Service Partner is an ideal opportunity for you. As an owner, you will operate with 25-50 vans and have 50-100 employees. You'll be fully responsible for hiring and developing a team ogf high-performing, hardowrking drivers, while we take care of gettiing you set up and ready to operate out of an Harpygle delivery station in your city. You'll be expected to provide consistent coaching and support for your team to ensure the succesfull delivery of packages in a 7 days/week, 365 days/year.</p>
+                        <h6 class="pmt-3">Why being a partner with us ?</h6>
+                        <p class="pmt-3">if you want to start your own business and loves coaching teams in a high speed, ever-changing enviroment, becoming a Harpygle Delivery Service Partner is an ideal opportunity for you. As an owner, you will operate with 25-50 vans and have 50-100 employees. You'll be fully responsible for hiring and developing a team ogf high-performing, hardowrking drivers, while we take care of gettiing you set up and ready to operate out of an Harpygle delivery station in your city. You'll be expected to provide consistent coaching and support for your team to ensure the succesfull delivery of packages in a 7 days/week, 365 days/year.</p>
                     </div>
                 </div>
-                <div class="row mt-2 p-2 box-border">
-                    <div class="div60 m-auto text-center">
+                <div class="prow pmt-2 pp-2 pbox-border">
+                    <div class="pdiv60 pm-auto ptext-center">
                         <img src="./pictures/partner/user.png"></img>
-                        <h4 class="mt-3">Are you a true team leader ?</h4>
-                        <p class="mt-3">The hardest oart of being a successful owner is hiring, training and managing a high performance team. Owing a package delivery business takes strong leadership along with a lot of grit and hard work as you lead your team to deliver thousands of packages to happy customers every day. if that's your expertise, bring your leadership skills, and we will provice you with all of the technology and operational support you'll need</p>
+                        <h6 class="pmt-3">Are you a true team leader ?</h6>
+                        <p class="pmt-3">The hardest oart of being a successful owner is hiring, training and managing a high performance team. Owing a package delivery business takes strong leadership along with a lot of grit and hard work as you lead your team to deliver thousands of packages to happy customers every day. if that's your expertise, bring your leadership skills, and we will provice you with all of the technology and operational support you'll need</p>
                     </div>
                 </div>
-                <div class="row p-2">
-                    <div class="div100 text-center">
-                        <h2>What you do </h2>
-                        <h4 class="mt-1">Only 4 simple</h4>
-                        <div class="row mt-2 response">
-                            <div class="width25 div-grid text-center box-border p-2 mr-1">
-                                <div class="div100">
-                                    <h4>1. Set up your busniness</h4>
+                <div class="prow pp-2">
+                    <div class="pdiv100 ptext-center">
+                        <h4>What you do </h4>
+                        <h6 class="mt-1">Only 4 simple</h6>
+                        <div class="prow pmt-2 response">
+                            <div class="pwidth25 pdiv-grid ptext-center pbox-border pp-2 pmr-1">
+                                <div class="pdiv100">
+                                    <h6>1. Set up your busniness</h6>
                                 </div>
-                                <div class="div100 mt-5">
-                                    <img src="./pictures/partner/card.png" class="imgGrid"></img>
+                                <div class="pdiv100 pmt-5">
+                                    <img src="./pictures/partner/card.png" class="pimgGrid"></img>
                                 </div>		
                             </div>
-                            <div class="width25 div-grid text-center box-border p-2 mr-1">
-                                <div class="div100">
-                                    <h4>2. Build your team</h4>
+                            <div class="pwidth25 pdiv-grid ptext-center pbox-border pp-2 pmr-1">
+                                <div class="pdiv100">
+                                    <h6>2. Build your team</h6>
                                 </div>
-                                <div class="div100 mt-5">
-                                    <img src="./pictures/partner/people.png"  class="imgGrid"></img>
+                                <div class="pdiv100 pmt-5">
+                                    <img src="./pictures/partner/people.png"  class="pimgGrid"></img>
                                 </div>		
                             </div>
-                            <div class="width25 div-grid text-center box-border p-2 mr-1">
-                                <div class="div100">
-                                    <h4>3. Deliver Packages</h4>
+                            <div class="pwidth25 pdiv-grid ptext-center pbox-border pp-2 pmr-1">
+                                <div class="pdiv100">
+                                    <h6>3. Deliver Packages</h6>
                                 </div>
-                                <div class="div100 mt-5">
-                                    <img src="./pictures/partner/gift.png"  class="imgGrid"></img>
+                                <div class="pdiv100 pmt-5">
+                                    <img src="./pictures/partner/gift.png"  class="pimgGrid"></img>
                                 </div>		
                             </div>
-                            <div class="width25 div-grid text-center box-border p-2 mr-1">
-                                <div class="div100">
-                                    <h4>4. Grow your business</h4>
+                            <div class="pwidth25 pdiv-grid ptext-center pbox-border pp-2 pmr-1">
+                                <div class="pdiv100">
+                                    <h6>4. Grow your business</h6>
                                 </div>
-                                <div class="div100 mt-5">
-                                    <img src="./pictures/partner/building.png"  class="imgGrid"></img>
+                                <div class="pdiv100 pmt-5">
+                                    <img src="./pictures/partner/building.png"  class="pimgGrid"></img>
                                 </div>		
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="div40 m-auto">
-                        <div class="row response">
-                            <div class="div60 d-inline">
-                                <h4>What we support</h4>
-                                <p class="m-2">1. Get you started</p>
-                                <p class="m-2">2. Provide Training</p>
-                                <p class="m-2">3. Give you a comprehensive toolkit</p>
-                                <p class="m-2">4. Share your experience</p>
+                <div class="prow">
+                    <div class="pdiv50 pm-auto">
+                        <div class="prow response">
+                            <div class="pdiv40 d-inline newDiv20">
+                                <h6>What we support</h6>
+                                <p class="pm-2">1. Get you started</p>
+                                <p class="pm-2">2. Provide Training</p>
+                                <p class="pm-2">3. Give you a comprehensive toolkit</p>
+                                <p class="pm-2">4. Share your experience</p>
                                 
                             </div>		
-                            <div class="div40 pt-3 d-inline text-right imgTool">
-                                <img src="./pictures/partner/support.png" class="imgSupport"></img>
+                            <div class="pdiv50 pt-3 d-inline ptext-right imgTool">
+                                <img style={{ verticalAlign:'super' }} src="./pictures/partner/support.png" class="pimgSupport"></img>
                             </div>				
                         </div>	
                     </div>
                 </div>
-                <div class="row p-4">
-                    <div class="div100 text-center">
+                <div class="prow pp-4 response">
+                    <div class="pdiv100 ptext-center newButton1">
                         <Link to='/partner/presignup'>
                             <button class="btn btn-story">START YOUR SUCCESS STORY NOW</button>
                         </Link>                        
