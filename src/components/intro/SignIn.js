@@ -250,6 +250,14 @@ class SignIn extends Component {
                                 return currentState;
                             });
                         }
+                        else if ('Sorry your email is not yet verified' === msg) {
+                            this.setState(currentState => {
+                                currentState.email.isValid = false;
+                                currentState.email.errMsg = msg;
+                                currentState.isValid = false;
+                                return currentState;
+                            });
+                        }
                     }
                 });
 
