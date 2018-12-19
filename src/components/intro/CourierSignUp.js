@@ -6,7 +6,6 @@ import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import apiPath from '../../services/apiPath';
-
 import Header from './Header';
 import Thanks from './Thanks';
 
@@ -41,7 +40,7 @@ const style = theme => ({
     },
 });
 
-class OwnerSignUp extends Component {
+class CourierSignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -111,7 +110,7 @@ class OwnerSignUp extends Component {
         this.validateForm();
         if (this.state.isValid) {
             const { email, password } = this.state;
-            axios.post(`${apiPath}business/create`, {
+            axios.post(`${apiPath}courier/create`, {
                 email: email.value,
                 password: password.value,
             }).then((response) => {
@@ -138,7 +137,13 @@ class OwnerSignUp extends Component {
 
     render() {
         const { classes } = this.props;
-        const { email, password, isChecked, isValid, repeatPassword } = this.state;
+        const {
+            email,
+            password,
+            repeatPassword,
+            isChecked,
+            isValid
+        } = this.state;
         if (this.state.sended) return (
             <div>
                 <Header />
@@ -150,7 +155,7 @@ class OwnerSignUp extends Component {
                 <Header />
                 <form className={classes.root} onSubmit={this.handleSign}>
                     <h1>SIGN UP</h1>
-                    as business owner
+                    as courier
                     <FormGroup>
                         <TextField
                             error={isChecked && !isValid && email.errMsg && !email.isValid}
@@ -188,8 +193,8 @@ class OwnerSignUp extends Component {
     }
 }
 
-OwnerSignUp.propTypes = {
+CourierSignUp.propTypes = {
     classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(style)(OwnerSignUp);
+export default withStyles(style)(CourierSignUp);

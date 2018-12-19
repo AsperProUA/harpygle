@@ -26,7 +26,7 @@ class App extends Component {
     // console.log(isLoad);
 
     if (isLoggedIn) {
-      user.token && (axios.defaults.headers.common['Authorization'] = user.token);
+      user.token && (axios.defaults.headers.common['Authorization'] = `Token ${user.token}`);
       return (
         
         <MainFrame role={user.role} isLoad={isLoad}/>

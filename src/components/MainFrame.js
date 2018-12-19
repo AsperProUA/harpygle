@@ -7,9 +7,11 @@ import Hidden from '@material-ui/core/Hidden';
 
 import AppBar from './AppBar';
 import BusinessMenu from './businessOwners/Menu';
+import CourierMenu from './Couriers/Menu'
 import PartnerMenu from './partnerOwners/Menu';
 import BusinessProfile from './businessOwners/Profile';
 import PartnerProfile from './partnerOwners/Profile';
+import CourierProfile from './Couriers/Profile';
 import Products from './products';
 import BusinessEarnings from './businessOwners/Earning';
 import PartnerEarnings from './partnerOwners/Earning'
@@ -78,6 +80,7 @@ class MainFrame extends Component {
     switch (this.props.role) {
       case 'BOwners': return <BusinessMenu />;
       case 'suppliers': return <div>supplierMenu</div>;
+      case 'courier': return <CourierMenu />;
       case 'partners': return <PartnerMenu/>;
 
     }
@@ -108,6 +111,7 @@ class MainFrame extends Component {
                     case 'BOwners': return <BusinessProfile />;
                     case 'suppliers': return <div>supplierProfile</div>;
                     case 'partners' : return <PartnerProfile />
+                    case 'courier': return <CourierProfile />
                   }
                 }} />
               <Route

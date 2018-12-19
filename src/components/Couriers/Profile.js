@@ -290,14 +290,6 @@ class Profile extends Component {
                         {verificationIDUrl && <p className={classes.removeImgText}><CheckIcon /><span className={classes.secondaryText}>Your Account Is Verified</span></p>}
                         <Button style={{ width: 261 }} >Update Your ID Number</Button>
                     </div>
-
-                    <div className={classes.url}>
-                        <div className={classes.shopify}><span><img src='/pictures/icons/preview.png'></img> Shopify URL </span><span>Edit</span></div>
-                        {ShopifyURL.value}
-                    </div>
-                    <div className={classes.accountId} style={{ paddingBottom: 0 }}>
-                        <Button onClick={this.handleDelete} style={{ backgroundColor: 'inherit', color: '#979797', fontSize: 14, margin: 0, textTransform: 'none' }}>Delete account</Button>
-                    </div>
                 </Grid>
                 <Grid item md={6} sm={12} xs={12}>
                     <form style={{ textAlign: 'center' }} onSubmit={(event) => this.updateOwner(event)}>
