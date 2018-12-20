@@ -177,6 +177,7 @@ class Profile extends Component {
         this.state = {
             snackbarOpen: false,
             snackbarMessage: '',
+            isLoading: false,
             user: {
                 id: '',
                 avatar: {
@@ -260,6 +261,9 @@ class Profile extends Component {
     }
 
     updatePartner = (e) => {
+        this.setState({
+            isLoading : true,
+        })
         e && e.preventDefault();
         const { id, securityQuestionID, securityAns, avatar, newPassword, idFile } = this.state.user;
         let body = {
@@ -268,11 +272,15 @@ class Profile extends Component {
         };
         avatar.updated && (body.picture = avatar.value);
         newPassword.value && (body.password = newPassword.value);
-        body.verificationID = idFile;
+        if (idFile.length !== 0) {
+            body.verificationID = idFile;
+        }        
         console.log(body);
         axios.put(`${apiPath}partner/update/${id}`, body, {
             headers: { 'Content-Type': 'application/json' },
-        }).then(this.handleOpenSnackbar());
+        }).then( (res) => {
+            this.handleOpenSnackbar();
+        }).catch((err)=>console.log(err))
     }
 
     handleFile = (e) => {
@@ -366,7 +374,7 @@ class Profile extends Component {
     }
 
     handleOpenSnackbar =  () => {
-        this.setState({ snackbarOpen: true, snackbarMessage:'Updated Successfully!' });
+        this.setState({ snackbarOpen: true, snackbarMessage: 'Updated Successfully!', isLoading: false });
     };
 
     handleCloseSnackbar = () => {
@@ -375,7 +383,12 @@ class Profile extends Component {
 
     deleteFile(e, indexKey) {
         var fileArray = this.state.user.idFile;
-        fileArray.splice(indexKey, 1);
+        if(fileArray.length === 1){
+            fileArray.splice(0, 1);
+        }
+        else{
+            fileArray.splice(indexKey, 1);
+        }        
         this.setState(currentState => {
             const { user } = currentState;
             user.idFile = fileArray;
@@ -397,10 +410,27 @@ class Profile extends Component {
         const { classes } = this.props;
         const { securityQuestionID, securityAns, email, currentPassword, newPassword,
              isChecked, isValid, avatar, idFile } = this.state.user;
-        const { snackbarOpen, snackbarMessage } = this.state;
+        const { snackbarOpen, snackbarMessage, isLoading } = this.state;
         const { handleInput } = this;
+        if(isLoading === true) {
+            var loader = <div className="loaderDiv">
+                <svg className="lds-typing" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                    <circle cx="35" cy="62.5" r="2" fill="#5f2a62">
+                        <animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="62.5;37.5;62.5;62.5" keyTimes="0;0.25;0.5;1" dur="0.8s" begin="-0.4s"></animate>
+                    </circle> <circle cx="42.5" cy="62.5" r="2" fill="#a976c3">
+                        <animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="62.5;37.5;62.5;62.5" keyTimes="0;0.25;0.5;1" dur="0.8s" begin="-0.30000000000000004s"></animate>
+                    </circle> <circle cx="50" cy="62.5" r="2" fill="#a0de59">
+                        <animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="62.5;37.5;62.5;62.5" keyTimes="0;0.25;0.5;1" dur="0.8s" begin="-0.2s"></animate>
+                    </circle> <circle cx="57.5" cy="49.2625" r="2" fill="#466b5a">
+                        <animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="62.5;37.5;62.5;62.5" keyTimes="0;0.25;0.5;1" dur="0.8s" begin="-0.1s"></animate>
+                    </circle>
+                </svg>
+            </div>
+        }
+        else {
+            var loader = '';
+        }
         return (
-
             <Grid container spacing={0}>
                 <Grid item md={6} sm={12} xs={12} className={classes.column}>
                     {avatar.value ? <div className={classes.avatar} style={{ backgroundImage: `url(${avatar.value})` }}></div> : <div className={[classes.avatar, classes.defaultAvatar].join(' ')}></div>}
@@ -489,6 +519,7 @@ class Profile extends Component {
                     onClose={this.handleCloseSnackbar}
                     message={snackbarMessage}
                 />
+                {loader}
             </Grid>
         );
     }
