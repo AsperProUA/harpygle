@@ -141,17 +141,12 @@ class ForgotPassword extends Component {
             })
             .then(json => {
                 if ('Message Sent' === json.data.msg) {
-
                     this.setState({ sended: true });
-
                 } else alert("restore failed");
-
             })
             .catch(error => {
                 if (error.response) {
-
                     const msg = error.response.data.msg;
-                    console.log(msg)
                     if ('No user found in this email' === msg) {
                         this.setState(currentState => {
                             currentState.email.isValid = false;

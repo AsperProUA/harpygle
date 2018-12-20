@@ -236,6 +236,7 @@ class Profile extends Component {
             .then(response => {
 
                 const { partnerID, securityQuestionID, securityAns, email, pictureUrl, verificationIDUrl, isDocumentVerified } = response.data;
+                console.log(response.data);
                 this.setState(currentState => {
                     const { user } = currentState;
                     user.id = partnerID;
@@ -243,8 +244,12 @@ class Profile extends Component {
                     user.securityAns.value = securityAns;
                     user.email.value = email;
                     user.avatar.value = pictureUrl;
-                    user.idFileName = verificationIDUrl;
+                    
+                    if(verificationIDUrl !== null){
+                        user.idFileName = verificationIDUrl;
+                    }
                     user.documentVerificationStatus = isDocumentVerified;
+                                         
                     return currentState;
                 });
 
@@ -449,12 +454,17 @@ class Profile extends Component {
             var documentStatus = <div><span className={classes.secondaryText}>Awaiting Verification</span></div>;
             var documentStatusHeading = <h4 className="alert-primary py-2">Thank you. We will notify you if you're accepted within 48 hours.</h4>
         }
-        else {
+        else if (documentVerificationStatus == 'declined'){
             var documentStatus = <div><span className={classes.secondaryText}>Documents Declined</span></div>;
             var documentStatusHeading = <h4 className="alert-primary py-2">Please try uploading documents again.</h4>
         }
+        else {
+            var documentStatus = <div><span className={classes.secondaryText}>Upload Documents</span></div>;
+            var documentStatusHeading = <h4 className="alert-primary py-2">Please try uploading documents.</h4>
+        }
 
-        if((documentVerificationStatus === 'not verified' && idFileName.length < 2)||documentVerificationStatus === 'declined'){
+        if((documentVerificationStatus === 'not verified' && idFileName.length < 2)||documentVerificationStatus === 'declined'
+            || documentVerificationStatus === undefined || documentVerificationStatus === null){
             var updateIdBtn =
                 <Button className={classes.fileUpload} style={{ width: 261 }} >Update Your ID Number
                 <input type='file' multiple onChange={(event) => { this.handleIdNumberFile(event) }} />
