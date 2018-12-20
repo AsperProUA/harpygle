@@ -3,6 +3,14 @@
     border-bottom: 1px solid gainsboro;
     padding: 5px;
     width: 100%;
+    word-break: break-all;
+    position: relative;
+}
+
+.fileDisplay span:last-child {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
 }
 
 .loaderDiv {

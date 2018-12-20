@@ -185,6 +185,8 @@ class Profile extends Component {
                     value: null,
                 },
                 idFile: [],
+                idFileName: [],
+                documentVerificationStatus: 'not verified',
                 email: {
                     value: '',
                     isValid: false,
@@ -233,7 +235,7 @@ class Profile extends Component {
         getData({ url: `partner/get/${this.props.loginData.user.id}` })
             .then(response => {
 
-                const { partnerID, securityQuestionID, securityAns, email, pictureUrl } = response.data;
+                const { partnerID, securityQuestionID, securityAns, email, pictureUrl, verificationIDUrl, isDocumentVerified } = response.data;
                 this.setState(currentState => {
                     const { user } = currentState;
                     user.id = partnerID;
@@ -241,6 +243,8 @@ class Profile extends Component {
                     user.securityAns.value = securityAns;
                     user.email.value = email;
                     user.avatar.value = pictureUrl;
+                    user.idFileName = verificationIDUrl;
+                    user.documentVerificationStatus = isDocumentVerified;
                     return currentState;
                 });
 
@@ -366,7 +370,7 @@ class Profile extends Component {
         return URL.createObjectURL(i);
     }
 
-    handleDelete = (e, indexKey) => {
+    handleDelete = () => {
         const { id } = this.state.user;
         axios.put(`${apiPath}partner/update/${id}`, { isDeletedAcc: true }, {
             headers: { 'Content-Type': 'application/json' },
@@ -404,12 +408,19 @@ class Profile extends Component {
             </div>
         );
     }
+    renderFileNames = (file) => {
+        return (
+            <span className="p-2" key={file}>
+                <img src={file} width={100} height={100} />
+            </span>
+        );
+    }
 
     render() {
         
         const { classes } = this.props;
         const { securityQuestionID, securityAns, email, currentPassword, newPassword,
-             isChecked, isValid, avatar, idFile } = this.state.user;
+            isChecked, isValid, avatar, idFile, idFileName, documentVerificationStatus } = this.state.user;
         const { snackbarOpen, snackbarMessage, isLoading } = this.state;
         const { handleInput } = this;
         if(isLoading === true) {
@@ -430,8 +441,35 @@ class Profile extends Component {
         else {
             var loader = '';
         }
+        if (documentVerificationStatus == 'verified'){
+            var documentStatus = <div><CheckIcon /> <span className={classes.secondaryText}>Documents Verified</span></div>;
+            var documentStatusHeading = ''
+        }
+        else if (documentVerificationStatus == 'not verified'){
+            var documentStatus = <div><span className={classes.secondaryText}>Awaiting Verification</span></div>;
+            var documentStatusHeading = <h4>Thank you. We will notify you if you're accepted within 48 hours.</h4>
+        }
+        else {
+            var documentStatus = <div><span className={classes.secondaryText}>Documents Declined</span></div>;
+            var documentStatusHeading = <h4>please try uploading documents again.</h4>
+        }
+
+        if((documentVerificationStatus === 'not verified' && idFileName.length < 2)||documentVerificationStatus === 'declined'){
+            var updateIdBtn =
+                <Button className={classes.fileUpload} style={{ width: 261 }} >Update Your ID Number
+                <input type='file' multiple onChange={(event) => { this.handleIdNumberFile(event) }} />
+                </Button>
+        }
+        else {
+            var updateIdBtn = ''
+        }
+        
         return (
             <Grid container spacing={0}>
+                <Grid item md={12} className="text-center mt-3">
+                    {documentStatusHeading}
+                </Grid>
+                
                 <Grid item md={6} sm={12} xs={12} className={classes.column}>
                     {avatar.value ? <div className={classes.avatar} style={{ backgroundImage: `url(${avatar.value})` }}></div> : <div className={[classes.avatar, classes.defaultAvatar].join(' ')}></div>}
                     <Button className={classes.fileUpload}>
@@ -440,13 +478,16 @@ class Profile extends Component {
                     </Button>
                     <p className={classes.removeImgText}><ClearIcon /> REMOVE IMAGE</p>
                     <div className={classes.accountId}>
-                        <p className={classes.removeImgText}><CheckIcon /><span className={classes.secondaryText}>Your Account Is Verified</span></p>
+                        <p className={classes.removeImgText}>{documentStatus}</p>
                         {idFile.map(file => {
                             return this.renderFiles(file);
                         })}
-                        <Button className={classes.fileUpload} style={{ width: 261 }} >Update Your ID Number
-                            <input type='file' multiple onChange={(event) => { this.handleIdNumberFile(event) }} />
-                        </Button>
+                        <div className="d-flex">
+                            {idFileName.map(file => {
+                                return this.renderFileNames(file);
+                            })}
+                        </div>
+                        {updateIdBtn}
                     </div>
                     <div className={classes.accountId} style={{ paddingBottom: 0 }}>
                         <Button  onClick={this.handleDelete} style={{ backgroundColor: 'inherit', color: '#979797', fontSize: 14, margin: 0, textTransform: 'none' }}>Delete account</Button>
