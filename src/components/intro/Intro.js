@@ -82,12 +82,13 @@ const style = theme => ({
     button: {
         width: '258px',
         height: '80px',
-        margin: '20px 169px',
+        margin: '20px 96px',
         borderRadius: '40px',
         color: theme.palette.common.white,
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
         textTransform: 'none',
+        lineHeight:1,
     },
     paper: {
         borderRadius: 0,
