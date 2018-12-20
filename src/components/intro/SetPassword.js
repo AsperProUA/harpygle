@@ -151,7 +151,7 @@ class SetPassword extends Component {
         const { classes } = this.props;
         if (this.state.sended) return (
             <div>
-                
+                <Header />
                 <Thanks />
             </div>
         );

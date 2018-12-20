@@ -175,6 +175,7 @@ class MainFrame extends Component {
                   render={() => {
                     switch(role) {
                       case 'courier': return <CourierJounATeam />;
+                      case 'partners': return <PartnerTeam />;
                     }
                   }}
                 />
@@ -185,13 +186,7 @@ class MainFrame extends Component {
                     case 'partners': return <PartnerRequest />
                   }
                 }} />
-              <Route
-                exact path='/team'
-                render={() => {
-                  switch (role) {
-                    case 'partners': return <PartnerTeam />;
-                  }
-                }} />
+              
               <Route
                 exact path='/products'
                 render={() => <Products />}

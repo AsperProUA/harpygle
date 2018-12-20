@@ -372,7 +372,7 @@ class Profile extends Component {
 
     handleDelete = () => {
         const { id } = this.state.user;
-        axios.put(`${apiPath}partner/update/${id}`, { isDeletedAcc: true }, {
+        axios.delete(`${apiPath}partner/delete/${id}`, { isDeletedAcc: true }, {
             headers: { 'Content-Type': 'application/json' },
         }).then(logOut);
     }

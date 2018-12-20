@@ -154,8 +154,10 @@ class ForgotPassword extends Component {
                     console.log(msg)
                     if ('No user found in this email' === msg) {
                         this.setState(currentState => {
+                            currentState.email.isValid = false;
                             currentState.email.errMsg = msg;
-                            return currentState;
+                            currentState.isValid = false;
+                            return currentState;                            
                         });
                     }
                 }
@@ -167,7 +169,8 @@ class ForgotPassword extends Component {
         const { email, password, isChecked, isValid, roles, role } = this.state;
         const { classes } = this.props;
         if (this.state.sended) return (
-            <div>                
+            <div>       
+                <Header />         
                 <Thanks />
             </div>
         );

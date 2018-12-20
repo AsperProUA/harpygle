@@ -298,7 +298,7 @@ class PartnerFinalSignUp extends Component {
         } = this.state;
         if (this.state.sended) return (
             <div>
-                {/* <Header /> */}
+                <Header />
                 <Thanks />
             </div>
         );
