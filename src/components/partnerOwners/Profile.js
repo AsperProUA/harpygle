@@ -411,7 +411,7 @@ class Profile extends Component {
     renderFileNames = (file) => {
         return (
             <span className="p-2" key={file}>
-                <img src={file} width={100} height={100} />
+                <a href={file} target='_blank'><img src={file} width={100} height={100} /></a>
             </span>
         );
     }
@@ -447,11 +447,11 @@ class Profile extends Component {
         }
         else if (documentVerificationStatus == 'not verified'){
             var documentStatus = <div><span className={classes.secondaryText}>Awaiting Verification</span></div>;
-            var documentStatusHeading = <h4>Thank you. We will notify you if you're accepted within 48 hours.</h4>
+            var documentStatusHeading = <h4 className="alert-primary py-2">Thank you. We will notify you if you're accepted within 48 hours.</h4>
         }
         else {
             var documentStatus = <div><span className={classes.secondaryText}>Documents Declined</span></div>;
-            var documentStatusHeading = <h4>please try uploading documents again.</h4>
+            var documentStatusHeading = <h4 className="alert-primary py-2">Please try uploading documents again.</h4>
         }
 
         if((documentVerificationStatus === 'not verified' && idFileName.length < 2)||documentVerificationStatus === 'declined'){
