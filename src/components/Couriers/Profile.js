@@ -121,7 +121,12 @@ class Profile extends Component {
         this.state = {
             user: {
                 id: '',
+                isVerified: false,
                 avatar: {
+                    updated: false,
+                    value: this.props.loginData.user.avatar,
+                },
+                verificationID: {
                     updated: false,
                     value: null,
                 },
@@ -130,6 +135,9 @@ class Profile extends Component {
                     isValid: false,
                     errMsg: 'invalid email',
                 },
+                name: { value: '', },
+                city: { value: '', },
+                phoneNum: { value: '', },
                 currentPassword: {
                     value: '',
                     isValid: false,
@@ -161,27 +169,27 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        this.fetchOwner();
+        this.fetchCourier();
     }
 
-    fetchOwner = () => {
-        getData({ url: `business/get/${this.props.loginData.user.id}` })
+    fetchCourier = () => {
+        getData({ url: `courier/getbyid/${this.props.loginData.user.id}` })
             .then(response => {
 
-                const { ownerID, email, pictureUrl, ShopifyURL } = response.data;
+                const { courierID, email, pictureUrl, name, city, phoneNum, isVerified } = response.data.response;
                 this.setState(currentState => {
                     const { user } = currentState;
-                    user.id = ownerID;
+                    user.id = courierID;
                     user.email.value = email;
-                    user.email.value = email;
-                    user.avatar.value = pictureUrl;
-                    user.ShopifyURL.value = ShopifyURL;
+                    user.name.value = name;
+                    user.city.value = city;
+                    user.phoneNum.value = phoneNum;
+                    // user.avatar.value = pictureUrl;
+                    user.isVerified = isVerified;
                     return currentState;
                 });
-
-                this.props.onUpdate({
-                    avatar: pictureUrl,
-                });
+                // response.data.avatar = pictureUrl;
+                this.props.onUpdate(response.data);
             });
 
     }
@@ -195,9 +203,22 @@ class Profile extends Component {
 
     }
 
-    updateOwner = (e) => {
+    updateCourier = (e) => {
         e && e.preventDefault();
-        const { id, email, avatar, currentPassword, newPassword, securityQuestion, securityAnswer, verificationID, ShopifyURL } = this.state.user;
+        const {
+            id,
+            email,
+            name,
+            city,
+            phoneNum,
+            avatar,
+            currentPassword,
+            newPassword,
+            securityQuestion,
+            securityAnswer,
+            verificationID,
+        } = this.state.user;
+
         let body = {};
         email.value && (body.email = email.value);
         avatar.updated && (body.picture = avatar.value);
@@ -206,10 +227,15 @@ class Profile extends Component {
         securityQuestion.value && (body.securityQuestion = securityQuestion.value);
         securityAnswer.value && (body.securityAnswer = securityAnswer.value);
         verificationID.updated && (body.verificationID = verificationID.value);
-        ShopifyURL.value && (body.ShopifyURL = ShopifyURL.value);
-        axios.put(`${apiPath}business/update/${id}`, body, {
+        verificationID.updated && (body.verificationID = verificationID.value);
+        name.value && (body.name = name.value);
+        city.value && (body.city = city.value);
+        phoneNum.value && (body.phoneNum = phoneNum.value);
+
+        this.props.onUpdate({avatar:avatar.value});
+        axios.put(`${apiPath}courier/update/${id}`, body, {
             headers: { 'Content-Type': 'application/json' },
-        }).then(this.fetchOwner);
+        }).then(this.fetchCourier);
     }
 
     handleFile = (e) => {
@@ -233,7 +259,32 @@ class Profile extends Component {
         }
     }
 
+    handleIdNumber = (e) => {
+        e.preventDefault && e.preventDefault();
+        var image, canvas, i;
+        var images = 'files' in e.target ? e.target.files : 'dataTransfer' in e ? e.dataTransfer.files : [];
+        if (images && images.length) {
+            for (i in images) {
+                if (typeof images[i] != 'object') continue;
+                image = new Image();
+                image.src = this.createObjectURL(images[i]);
+                image.onload = (e) => {
+                    canvas = document.createElement("canvas");
+                    canvas.width = e.target.width;
+                    canvas.height = e.target.height;
+                    canvas.getContext("2d").drawImage(e.target, 0, 0);
+                    this.setState(currentState => {
+                        currentState.user.verificationID.value = canvas.toDataURL('image/jpg')
+                        currentState.user.verificationID.updated = true;
+                        return currentState;
+                    });
+                }
+            }
+        }
+    }
+
     resizeCrop = (src, width, height) => {
+        console.log(src)
         var crop = width == 0 || height == 0;
         // not resize
         if (src.width <= width && height == 0) {
@@ -249,6 +300,7 @@ class Profile extends Component {
         var xscale = width / src.width;
         var yscale = height / src.height;
         var scale = crop ? Math.min(xscale, yscale) : Math.max(xscale, yscale);
+
         // create empty canvas
         var canvas = document.createElement("canvas");
         canvas.width = width ? width : Math.round(src.width * scale);
@@ -272,9 +324,22 @@ class Profile extends Component {
     }
 
     render() {
-
+        console.log(this.state);
         const { classes } = this.props;
-        const { email, securityQuestion, securityAnswer, currentPassword, newPassword, avatar, verificationIDUrl, ShopifyURL, isChecked, isValid } = this.state.user;
+        const {
+            email,
+            name,
+            city,
+            phoneNum,
+            securityQuestion,
+            securityAnswer,
+            currentPassword,
+            newPassword,
+            avatar,
+            verificationIDUrl,
+            isChecked,
+            isValid
+        } = this.state.user;
         const { handleInput } = this;
         return (
 
@@ -288,11 +353,14 @@ class Profile extends Component {
                     <p className={classes.removeImgText}><ClearIcon /> REMOVE IMAGE</p>
                     <div className={classes.accountId}>
                         {verificationIDUrl && <p className={classes.removeImgText}><CheckIcon /><span className={classes.secondaryText}>Your Account Is Verified</span></p>}
-                        <Button style={{ width: 261 }} >Update Your ID Number</Button>
+                        <Button className={classes.fileUpload} style={{ textTransform: 'none' }}>
+                            Update Your ID Number
+                        <input type='file' onChange={(event) => { this.handleIdNumber(event) }} />
+                        </Button>
                     </div>
                 </Grid>
                 <Grid item md={6} sm={12} xs={12}>
-                    <form style={{ textAlign: 'center' }} onSubmit={(event) => this.updateOwner(event)}>
+                    <form style={{ textAlign: 'center' }} onSubmit={(event) => this.updateCourier(event)}>
                         <h2>{email.value}</h2>
                         <FormGroup className={classes.formGroup}>
                             <TextField
@@ -301,6 +369,34 @@ class Profile extends Component {
                                 value={email.value}
                                 onInput={(event) => { handleInput('email', event.target.value) }}
                                 helperText={isChecked && !isValid && !email.isValid && email.errMsg}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                            <TextField
+                                error={isChecked && !isValid && name.errMsg && !name.isValid}
+                                label="Full Name"
+                                value={name.value}
+                                onInput={(event) => { this.handleInput('name', event.target.value) }}
+                                helperText={isChecked && !isValid && !name.isValid && name.errMsg}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                            <TextField
+                                error={isChecked && !isValid && city.errMsg && !city.isValid}
+                                label="City"
+                                value={city.value}
+                                onInput={(event) => { this.handleInput('city', event.target.value) }}
+                                helperText={isChecked && !isValid && !city.isValid && city.errMsg}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                            <TextField
+                                error={isChecked && !isValid && phoneNum.errMsg && !phoneNum.isValid}
+                                label="Phone Number"
+                                value={phoneNum.value}
+                                type='number'
+                                onInput={(event) => { this.handleInput('phoneNum', event.target.value) }}
+                                helperText={isChecked && !isValid && !phoneNum.isValid && phoneNum.errMsg}
                                 margin="normal"
                                 variant="outlined"
                             />
@@ -346,6 +442,7 @@ class Profile extends Component {
                         <Button className={classes.submitBtn} type='submit'>Submit</Button>
                     </form>
                 </Grid>
+                <img src={this.state.idNumber}></img>
             </Grid>
         );
     }

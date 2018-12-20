@@ -63,21 +63,22 @@ class Earnings extends Component {
     constructor(props) {
         super(props);
 
-
+        
 
         this.state = {
             totalEarnings: 0,
             swiftCode: 'AAAA BB CC DDD',
             accountNumber: '0123456789',
         }
+
     }
 
     componentDidMount() {
-        getData({ url: `business/earnings/${this.props.user.id}` }).then(data => {
+        getData({url: `courier/earnings/${this.props.user.id}`}).then(data => {
             this.setState(currentState => {
-                data.totalEarnings && (currentState.totalEarnings = data.totalEarnings);
-                data.swiftCode && (currentState.swiftCode = data.swiftCode);
-                data.accountNumber && (currentState.accountNumber = data.accountNumber);
+                data.data.totalEarnings && (currentState.totalEarnings = data.data.totalEarnings);
+                data.data.swiftCode && (currentState.swiftCode = data.data.swiftCode);
+                data.data.accountNumber && (currentState.accountNumber = data.data.accountNumber);
                 return currentState;
             });
         });
@@ -90,7 +91,7 @@ class Earnings extends Component {
         return (
             <div className={classes.root}>
                 <p className={classes.label}>You earnings</p>
-                <div style={{boxShadow: '0 3px 6px rgba(0,0,0,0.16)', padding: 10}}>
+                <div style={{boxShadow: '0 3px 6px rgba(0,0,0,0.16)',}}>
                     <p style={{ fontSize: 18 }}>Your Total Earnign</p>
                     <p style={{ fontSize: 40, margin: '0 auto', fontWeight: 'bold' }}>{totalEarnings} <span style={{ fontSize: 24 }}> MAD</span></p>
                     <div>

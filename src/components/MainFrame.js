@@ -12,10 +12,13 @@ import PartnerMenu from './partnerOwners/Menu';
 import BusinessProfile from './businessOwners/Profile';
 import PartnerProfile from './partnerOwners/Profile';
 import CourierProfile from './Couriers/Profile';
+import CourierJounATeam from './Couriers/JoinATeam';
 import Products from './products';
 import BusinessEarnings from './businessOwners/Earning';
 import PartnerEarnings from './partnerOwners/Earning'
+import CourierEarnings from './Couriers/Earning';
 import BusinessAnalytics from './businessOwners/Analytics';
+import CourierAnalytics from './Couriers/Analytics';
 import BusinessSuppliers from './businessOwners/Suppliers';
 import BusinessOrders from './businessOwners/Orders';
 import BusinessDelivery from './businessOwners/Delivery';
@@ -119,8 +122,9 @@ class MainFrame extends Component {
                 render={() => {
                   switch (role) {
                     case 'BOwners': return <BusinessEarnings />;
-                    case 'suppliers': return <div>supplierProfile</div>
                     case 'partners': return <PartnerEarnings />
+                    case 'suppliers': return <div>supplierProfile</div>;
+                    case 'courier': return <CourierEarnings />
                   }
                 }} />
               <Route
@@ -130,6 +134,7 @@ class MainFrame extends Component {
                     case 'BOwners': return <BusinessAnalytics />;
                     case 'suppliers': return <div>supplierProfile</div>;
                     case 'partners': return <PartnerTab />;
+                    case 'courier': return <CourierAnalytics />
                   }
                 }} />
               <Route
@@ -162,6 +167,14 @@ class MainFrame extends Component {
                     switch(role) {
                       case 'BOwners': return <BusinessInventory />;
                       case 'suppliers': return <div>supplierProfile</div>;
+                    }
+                  }}
+                />
+                <Route
+                  exact path='/team'
+                  render={() => {
+                    switch(role) {
+                      case 'courier': return <CourierJounATeam />;
                     }
                   }}
                 />

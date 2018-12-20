@@ -71,10 +71,10 @@ function ListItemComposition(props) {
             <ListItemIcon className={classes.icon}>
               <SvgIcon viewBox='0 0 27 27' className={classes.svgIcon} stroke='#fff'>
                 <g id="iconfinder_git-pull-request_3325135" transform="translate(-2 -2)" >
-                  <circle id="Ellipse_92" data-name="Ellipse 92" cx="3.667" cy="3.667" r="3.667" transform="translate(17.667 17.667)" stroke-width="2" stroke="inherit" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-                  <circle id="Ellipse_93" data-name="Ellipse 93" cx="3.667" cy="3.667" r="3.667" transform="translate(3 3)" stroke-width="2" stroke="inherit" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-                  <path id="Path_378" data-name="Path 378" d="M13,6h3.667a2.444,2.444,0,0,1,2.444,2.444V17" transform="translate(2.222 0.667)" fill="none" stroke="inherit" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-                  <line id="Line_36" data-name="Line 36" y2="14.667" transform="translate(6.667 10.333)" fill="none" stroke="inherit" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                  <circle id="Ellipse_92" data-name="Ellipse 92" cx="3.667" cy="3.667" r="3.667" transform="translate(17.667 17.667)" strokeWidth="2" stroke="inherit" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                  <circle id="Ellipse_93" data-name="Ellipse 93" cx="3.667" cy="3.667" r="3.667" transform="translate(3 3)" strokeWidth="2" stroke="inherit" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                  <path id="Path_378" data-name="Path 378" d="M13,6h3.667a2.444,2.444,0,0,1,2.444,2.444V17" transform="translate(2.222 0.667)" fill="none" stroke="inherit" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+                  <line id="Line_36" data-name="Line 36" y2="14.667" transform="translate(6.667 10.333)" fill="none" stroke="inherit" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                 </g>
               </SvgIcon>
             </ListItemIcon>
