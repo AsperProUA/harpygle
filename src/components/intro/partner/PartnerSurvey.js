@@ -120,7 +120,7 @@ class partner extends Component {
                 <div class="prow">
                     <div class="pdiv50 pm-auto">
                         <div class="pdiv100 ptext-center pmt-3">
-                            <h4><b>Start your own business and earn with Hapygle</b></h4>
+                            <h4><b>Start your own business and earn with Harpygle</b></h4>
                         </div>				
                         <div class="pdiv100 pmt-2">
                             <div class="prow response top">

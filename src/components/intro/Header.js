@@ -19,7 +19,7 @@ function Header(props) {
     return (
         <div className={classes.root}>
             <Link to='/'>
-                <img height={90} width='auto' src={'/logo.png'} alt='Logo'></img>
+                <img height={90} width='auto' src={'../pictures/Logo.png'} alt='Logo'></img>
             </Link>
         </div>
     );
