@@ -154,7 +154,7 @@ class NewOrder extends Component {
         this.setState({ isChecked: true });
         this.validateForm();
         if (isValid) {
-            axios.post(`${apiPath}business/shipmentrequest/${this.props.user.id}`, {
+            axios.post(`${apiPath}business/shipmentrequest/`, {
                 "isCOD": (deliveryType === 'cashOnDelivery'),
                 "businessOwnerID": this.props.user.id,
                 "pickupTime": pickupDate.value + pickupTime.value,
@@ -332,10 +332,10 @@ class NewOrder extends Component {
                                 fullWidth
                                 variant="outlined"
                             >
-                                <MenuItem value='Kyiv'>Kyiv</MenuItem>
-                                <MenuItem value='Kharkiv'>Kharkiv</MenuItem>
-                                <MenuItem value='Lviv'>Lviv</MenuItem>
-                                <MenuItem value='Dnipro'>Dnipro</MenuItem>
+                                <MenuItem value='Casablanca'>Casablanca</MenuItem>
+                                <MenuItem value='Fès'>Fès</MenuItem>
+                                <MenuItem value='Rabat'>Rabat</MenuItem>
+                                <MenuItem value='Marrakash'>Marrakash</MenuItem>
                             </TextField>
                             <TextField
                                 label="Product type"

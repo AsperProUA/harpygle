@@ -3,20 +3,10 @@ import { connect } from 'react-redux'
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import FormGroup from '@material-ui/core/FormGroup';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
-import apiPath from '../../../services/apiPath';
 import getData from '../../../services/getData';
 import Snackbar from '@material-ui/core/Snackbar';
 import CustomizedSnackbar from '../../globalComponents/CustomizedSnackbar';
-import { Grid } from '@material-ui/core';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import AddIcon from '@material-ui/icons/Add';
 import NewOrder from './NewOrder';
 
@@ -93,16 +83,23 @@ class SheduleANewOrder extends Component {
         super(props);
         console.log(props)
         this.state = {
-            orders: [
-                <NewOrder snackData={this.changeSnack} />
-            ],
+            orders: [],
             snackOpen: false,
             snackMessage: {
                 key: 1,
                 message: '',
             },
             snackVariant: '',
+            preventProducts: [],
         }
+    }
+
+    componentDidMount() {
+        getData({ url: `business/productrequest/getbyownerid/${this.props.user.id}` }).then(response => {
+            let productNames = response.data.map(product=> ({label: product.name}));
+            this.setState({preventProducts: productNames})
+        });
+        this.addOrder();
     }
 
     changeSnack = (snackData) => {
@@ -128,7 +125,7 @@ class SheduleANewOrder extends Component {
 
     addOrder = () => {
         this.setState(state => {
-            state.orders.push(<NewOrder snackData={this.changeSnack} />);
+            state.orders.push(<NewOrder preventProducts={this.state.preventProducts} snackData={this.changeSnack} key={state.orders.length} />);
             return state
         });
     }
@@ -136,8 +133,7 @@ class SheduleANewOrder extends Component {
     render() {
 
         const { classes } = this.props;
-        const { orders, snackVariant, snackOpen,snackMessage} = this.state;
-        console.log(orders)
+        const { orders, snackVariant, snackOpen, snackMessage } = this.state;
         return (
             <div>
                 <Snackbar
@@ -176,4 +172,8 @@ SheduleANewOrder.propTypes = {
     classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(style)(SheduleANewOrder);
+export default connect(
+    state => ({
+        user: state.loginData.user,
+    })
+)(withStyles(style)(SheduleANewOrder));

@@ -113,8 +113,16 @@ class AvaliableCouriers extends Component {
     }
 
     componentDidMount(){
-        getData({url: 'allcouriers'}).then(response => {
-            this.setState({couriers: response.data.couriers})
+        getData({url: 'courier/getallcourier'}).then(response => {
+            this.setState({couriers: response.data.response});
+            response.data.response.forEach((courier, i) => {
+                getData({url: `courier/getbyid/${courier.courierID}`}).then(response => {
+                    this.setState(state => {
+                        state.couriers[i] = response.data.response;
+                        return state;
+                    });
+                })
+            })
         });
     }
 
@@ -135,7 +143,7 @@ class AvaliableCouriers extends Component {
                                 <RateToStars rate={courier.rate} />
                             </div>
                             <div className={classes.completedOrders}>
-                                {courier.completedOrders} <span style={{fontWeight:400}}> Completed orders</span>
+                                {courier.completedOrders || 0} <span style={{fontWeight:400}}> Completed orders</span>
                             </div>
                         </div>
                         <CardActions style={{ textAlign: 'center' }}>
