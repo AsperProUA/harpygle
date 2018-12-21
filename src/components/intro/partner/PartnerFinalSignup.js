@@ -96,16 +96,16 @@ class PartnerFinalSignUp extends Component {
                 errMsg: 'invalid zipcode',
             },
             location: {
-                value: '',
+                value: 'Anywhere',
                 isValid: false,
                 errMsg: 'invalid location',
             },
             location1: {
-                value: '',
+                value: 'Anywhere',
                 isValid: true,
             },
             location2: {
-                value: '',
+                value: 'Anywhere',
                 isValid: true,
             },
             country_states : [],
@@ -363,41 +363,42 @@ class PartnerFinalSignUp extends Component {
                             />
                         </div>
                         <div className="div100 mt-3">
-                            <div className="div30 d-inline mr-1">
-                                <TextField
-                                    error={isChecked && !isValid && city.errMsg && !city.isValid}
-                                    label="City"
-                                    value={city.value}
-                                    onInput={(event) => { this.handleInput('city', event.target.value) }}
-                                    helperText={isChecked && !isValid && !city.isValid && city.errMsg}
-                                    variant="outlined"
-                                />
-                            </div>
-                            <div className="div30 d-inline mr-1">
-                                {/* <TextField
-                                    error={isChecked && !isValid && state.errMsg && !state.isValid}
-                                    label="State"
-                                    value={state.value}
-                                    onInput={(event) => { this.handleInput('state', event.target.value) }}
-                                    helperText={isChecked && !isValid && !state.isValid && state.errMsg}
-                                    variant="outlined"
-                                /> */}
+                            <div className="div30 d-inline mr-1">                                
                                 <TextField className="my-0"
+                                error={isChecked && !isValid && city.errMsg && !city.isValid}
                                 select
-                                error={isChecked && !isValid && state.errMsg && !state.isValid}
-                                label="State"
-                                value={state.value}
-                                onChange={(event) => { this.handleInput('state', event.target.value) }}                                
-                                helperText={isChecked && !isValid && !state.isValid && state.errMsg}
+                                label="city"
+                                value={city.value}
+                                onChange={(event) => { this.handleInput('city', event.target.value) }}
+                                helperText={isChecked && !isValid && !city.isValid && city.errMsg}
                                 margin="normal"
                                 variant="outlined"
                             >
-                                {this.state.country_states.map(option => (
+                                {this.state.country_city.map(option => (
                                     <MenuItem key={option.id} value={option.id}>
                                         {option.name}
                                     </MenuItem>
                                 ))}
-                        </TextField>
+                                
+                            </TextField>
+                            </div>
+                            <div className="div30 d-inline mr-1">
+                                <TextField className="my-0"
+                                    select
+                                    error={isChecked && !isValid && state.errMsg && !state.isValid}
+                                    label="State"
+                                    value={state.value}
+                                    onChange={(event) => { this.handleInput('state', event.target.value) }}                                
+                                    helperText={isChecked && !isValid && !state.isValid && state.errMsg}
+                                    margin="normal"
+                                    variant="outlined"
+                                >
+                                    {this.state.country_states.map(option => (
+                                        <MenuItem key={option.id} value={option.id}>
+                                            {option.name}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
                             </div>
                             <div className="div30 d-inline mr-1">
                                 <TextField
@@ -408,65 +409,39 @@ class PartnerFinalSignUp extends Component {
                                     helperText={isChecked && !isValid && !zipcode.isValid && zipcode.errMsg}
                                     variant="outlined"
                                 />
+                            </div>                            
+                            <div className="div100 mt-3">
+                                <TextField className="my-1"
+                                    error={isChecked && !isValid && location.errMsg && !location.isValid}
+                                    label="Preferred Location"
+                                    value={location.value}
+                                    onInput={(event) => { this.handleInput('location', event.target.value) }}
+                                    helperText={isChecked && !isValid && !location.isValid && location.errMsg}
+                                    variant="outlined"
+                                />
                             </div>
-                            <TextField
-                                error={isChecked && !isValid && location.errMsg && !location.isValid}
-                                select
-                                label="Preferred Location"
-                                value={location.value}
-                                onChange={(event) => { this.handleInput('location', event.target.value) }}
-                                helperText={isChecked && !isValid && !location.isValid && location.errMsg}
-                                margin="normal"
-                                variant="outlined"
-                            >
-                                <MenuItem key="das" value="Anywhere">
-                                    Anywhere
-                                </MenuItem>
-                                {this.state.country_city.map(option => (
-                                    <MenuItem key={option.id} value={option.id}>
-                                        {option.name}
-                                    </MenuItem>
-                                ))}
-                                
-                            </TextField>
-                            <TextField
-                                
-                                select
-                                label="Preferred Location 1 (optional)"
-                                value={location1.value}
-                                onChange={(event) => { this.handleInput('location1', event.target.value) }}
-                                helperText={isChecked && !isValid && !location1.isValid && location1.errMsg}
-                                margin="normal"
-                                variant="outlined"
-                            >
-                                <MenuItem key="das" value="Anywhere">
-                                    Anywhere
-                                </MenuItem>
-                                {this.state.country_city.map(option => (
-                                    <MenuItem key={option.id} value={option.id}>
-                                        {option.name}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-                            <TextField
-                                
-                                select
-                                label="Preferred Location 2 (optional)"
-                                value={location2.value}
-                                onChange={(event) => { this.handleInput('location2', event.target.value) }}
-                                helperText={isChecked && !isValid && !location2.isValid && location2.errMsg}
-                                margin="normal"
-                                variant="outlined"
-                            >
-                                <MenuItem key="das" value="Anywhere">
-                                    Anywhere
-                                </MenuItem>
-                                {this.state.country_city.map(option => (
-                                    <MenuItem key={option.id} value={option.id}>
-                                        {option.name}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
+                            
+                            <div className="div100 mt-3">
+                                <TextField className="my-1"
+                                    error={isChecked && !isValid && location1.errMsg && !location1.isValid}
+                                    label="Preferred Location 1"
+                                    value={location1.value}
+                                    onInput={(event) => { this.handleInput('location1', event.target.value) }}
+                                    helperText={isChecked && !isValid && !location1.isValid && location1.errMsg}
+                                    variant="outlined"
+                                />
+                            </div>
+                            <div className="div100 mt-3">
+                                <TextField className="my-1"
+                                    error={isChecked && !isValid && location2.errMsg && !location2.isValid}
+                                    label="Preferred Location 2"
+                                    value={location2.value}
+                                    onInput={(event) => { this.handleInput('location2', event.target.value) }}
+                                    helperText={isChecked && !isValid && !location2.isValid && location2.errMsg}
+                                    variant="outlined"
+                                />
+                            </div>
+                            
                         </div>
                         <div class="div100 text-left">
                             <label>Do you have experience building and developing a team?</label>

@@ -33,7 +33,7 @@ class Welcome extends Component {
         const { classes, user } = this.props;
         return (
             <div className={classes.root}>
-                <h1> Welcome Back , {user.email}</h1>
+                <h1> Welcome Back , <h1 className="breakWord">{user.email}</h1></h1>
             </div>
         );
     }

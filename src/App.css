@@ -21,6 +21,9 @@
 .App-link {
   color: #61dafb;
 }
+.breakWord{
+  word-break: break-all;
+}
 
 @keyframes App-logo-spin {
   from {
