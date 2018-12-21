@@ -244,7 +244,7 @@ class Profile extends Component {
                     user.securityAns.value = securityAns;
                     user.email.value = email;
                     user.avatar.value = pictureUrl;
-                    
+                    user.idFile = [];
                     if(verificationIDUrl !== null){
                         user.idFileName = verificationIDUrl;
                     }
@@ -289,6 +289,7 @@ class Profile extends Component {
             headers: { 'Content-Type': 'application/json' },
         }).then( (res) => {
             this.handleOpenSnackbar();
+            this.fetchPartner();
         }).catch((err)=>console.log(err))
     }
 

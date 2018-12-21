@@ -31,8 +31,8 @@
     width: 45%;
   }
   .pimgGrid{
-    width:45%;
-    margin-top: 40%;
+    width:110px;
+    margin-top: 30px;
   }
   body{
     font-family: 'Roboto', sans-serif;
@@ -161,8 +161,7 @@
     vertical-align: top;
   }
   .pdiv-grid{
-    padding-top: 2%;
-    padding-bottom: 5%;
+    padding: 20px;
     height: 250px;
     vertical-align: top;
   }

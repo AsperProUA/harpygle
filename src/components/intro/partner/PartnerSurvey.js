@@ -142,7 +142,7 @@ class partner extends Component {
                     <div class="pdiv80 pm-auto ptext-center">
                         <img src="./pictures/partner/hand.png"></img>
                         <h6 class="pmt-3">Why being a partner with us ?</h6>
-                        <p class="pmt-3">if you want to start your own business and loves coaching teams in a high speed, ever-changing enviroment, becoming a Harpygle Delivery Service Partner is an ideal opportunity for you. As an owner, you will operate with 25-50 vans and have 50-100 employees. You'll be fully responsible for hiring and developing a team ogf high-performing, hardowrking drivers, while we take care of gettiing you set up and ready to operate out of an Harpygle delivery station in your city. You'll be expected to provide consistent coaching and support for your team to ensure the succesfull delivery of packages in a 7 days/week, 365 days/year.</p>
+                        <p class="pmt-3">if you want to start your own business and loves coaching teams in a high speed, ever-changing enviroment, becoming a Harpygle Delivery Service Partner is an ideal opportunity for you. As an owner, you will operate with 25-50 vans and have 50-100 employees. You'll be fully responsible for hiring and developing a team ogf high-performing, hardowrking drivers, while we take care of gettiing you set up and ready to operate out of an Harpygle delivery station in your city. You'll be expected to provide consistent coaching and support for your team to ensure the succesful delivery of packages in a 7 days/week, 365 days/year.</p>
                     </div>
                 </div>
                 <div class="prow pmt-2 pp-2 pbox-border">
@@ -161,7 +161,7 @@ class partner extends Component {
                                 <div class="pdiv100">
                                     <h6>1. Set up your busniness</h6>
                                 </div>
-                                <div class="pdiv100 pmt-5">
+                                <div class="pdiv100">
                                     <img src="./pictures/partner/card.png" class="pimgGrid"></img>
                                 </div>		
                             </div>
@@ -169,7 +169,7 @@ class partner extends Component {
                                 <div class="pdiv100">
                                     <h6>2. Build your team</h6>
                                 </div>
-                                <div class="pdiv100 pmt-5">
+                                <div class="pdiv100">
                                     <img src="./pictures/partner/people.png"  class="pimgGrid"></img>
                                 </div>		
                             </div>
@@ -177,7 +177,7 @@ class partner extends Component {
                                 <div class="pdiv100">
                                     <h6>3. Deliver Packages</h6>
                                 </div>
-                                <div class="pdiv100 pmt-5">
+                                <div class="pdiv100">
                                     <img src="./pictures/partner/gift.png"  class="pimgGrid"></img>
                                 </div>		
                             </div>
@@ -185,7 +185,7 @@ class partner extends Component {
                                 <div class="pdiv100">
                                     <h6>4. Grow your business</h6>
                                 </div>
-                                <div class="pdiv100 pmt-5">
+                                <div class="pdiv100">
                                     <img src="./pictures/partner/building.png"  class="pimgGrid"></img>
                                 </div>		
                             </div>
