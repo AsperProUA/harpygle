@@ -6,7 +6,13 @@ function getData( data ){
     
     store.dispatch({type: 'LOAD_START'});
     return new Promise((resolve) => {
-        axios.get(apiPath + data.url).then((response) => {
+        axios.get(apiPath + data.url,
+            { headers: 
+                { 
+                    "Access-Control-Allow-Origin": "*" 
+                }
+            }
+        ).then((response) => {
 
             if (/*response.data.auth*/true) {
                 store.dispatch({type: 'LOAD_END'});
