@@ -195,10 +195,7 @@ class Profile extends Component {
         password.value && (body.password = password.value);
         axios.put(`${apiPath}business/update/${id}`, body, {
             headers: { 'Content-Type': 'application/json' },
-        }).then((response)=>{
-            console.log(response)
-            alert("Modifications has been saved")
-        });
+        }).then(console.log);
     }
 
     handleFile = (e) => {
