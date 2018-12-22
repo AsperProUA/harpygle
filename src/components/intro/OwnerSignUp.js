@@ -55,6 +55,11 @@ class OwnerSignUp extends Component {
                 isValid: false,
                 errMsg: 'password is too short',
             },
+            fullName : {
+                value: '',
+                isValid: false,
+                errMsg: 'invalid fullname'
+            },
             isValid: false,
             isChecked: false,
             sended: false,
@@ -85,6 +90,9 @@ class OwnerSignUp extends Component {
         let valid = false;
         let errMsg = undefined;
         switch (field) {
+            case 'fullName':
+                valid = (value.length > 1 && value.length < 10 && !/\d/.test(value)) 
+                break;
             case 'email':
                 valid = !!value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
                 errMsg = 'invalid email';
@@ -106,8 +114,9 @@ class OwnerSignUp extends Component {
         this.setState({ isChecked: true });
         this.validateForm();
         if (this.state.isValid) {
-            const { email, password } = this.state;
+            const { fullName , email, password } = this.state;
             axios.post(`${apiPath}business/create`, {
+                name: fullName.value,
                 email: email.value,
                 password: password.value,
             }).then((response) => {
@@ -116,6 +125,7 @@ class OwnerSignUp extends Component {
                     this.setState({ sended: true });
                 }
             }).catch((error) => {
+                console.log(error)
                 if (error.response.data.error) {
                     this.setState(currentState => {
 
@@ -134,7 +144,7 @@ class OwnerSignUp extends Component {
 
     render() {
         const { classes } = this.props;
-        const { email, password, isChecked, isValid } = this.state;
+        const { email, password, fullName, isChecked, isValid } = this.state;
         if (this.state.sended) return (
             <div>
                 <Header />
@@ -149,9 +159,18 @@ class OwnerSignUp extends Component {
                     as business owner
                     <FormGroup>
                         <TextField
+                            error={isChecked && !isValid && fullName.errMsg && !fullName.isValid}
+                            label="Full Name"
+                            value={fullName.value}
+                            onInput={(event) => { this.handleInput('fullName', event.target.value) }}
+                            helperText={isChecked && !isValid && !fullName.isValid && fullName.errMsg}
+                            variant="outlined"
+                        />
+                        <TextField
                             error={isChecked && !isValid && email.errMsg && !email.isValid}
                             label="Email"
                             value={email.value}
+                            margin="normal"
                             onInput={(event) => { this.handleInput('email', event.target.value) }}
                             helperText={isChecked && !isValid && !email.isValid && email.errMsg}
                             variant="outlined"
