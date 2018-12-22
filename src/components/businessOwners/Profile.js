@@ -197,7 +197,7 @@ class Profile extends Component {
             headers: { 'Content-Type': 'application/json' },
         }).then((response)=>{
             console.log(response)
-            alert("modifications has been saved")
+            alert("Modifications has been saved")
         });
     }
 
