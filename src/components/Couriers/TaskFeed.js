@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Divider, Button } from '@material-ui/core';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import classnames from '@material-ui/core/node_modules/classnames'
+import Avatar from '../globalComponents/Avatar';
 
-import RateToStars from '../../globalComponents/RateToStars';
-import UserInfo from '../../globalComponents/UserInfo';
-import RateCourier from './RateCourier';
+import RateToStars from '../globalComponents/RateToStars';
+import UserInfo from '../globalComponents/UserInfo';
 
 
 const fakeOrders = [
@@ -21,7 +22,7 @@ const fakeOrders = [
         deliveryAddress: '85 Bd de La Liberté Benjdia, 20000 Casablanca',
         sendAddress: '83/85 Bd de La Liberté Benjdia, 20000 Casablanca',
         date: '23 November, 10:00 AM',
-        courier: {
+        owner: {
             id: 'harpygle-courier-6dhzga7rgjps7mukm',
             name: 'Fatima',
             img: 'http://pngimg.com/uploads/face/face_PNG5651.png',
@@ -41,7 +42,7 @@ const fakeOrders = [
         deliveryAddress: '85 Bd de La Liberté Benjdia, 20000 Casablanca',
         sendAddress: '83/85 Bd de La Liberté Benjdia, 20000 Casablanca',
         date: '23 November, 10:00 AM',
-        courier: {
+        owner: {
             name: 'Oleh',
             img: '',
             rate: 4,
@@ -61,7 +62,7 @@ const fakeOrders = [
         deliveryAddress: '85 Bd de La Liberté Benjdia, 20000 Casablanca',
         sendAddress: '83/85 Bd de La Liberté Benjdia, 20000 Casablanca',
         date: '23 November, 10:00 AM',
-        courier: {
+        owner: {
             name: 'Igor',
             img: '',
             rate: 4,
@@ -81,7 +82,7 @@ const fakeOrders = [
         deliveryAddress: '85 Bd de La Liberté Benjdia, 20000 Casablanca',
         sendAddress: '83/85 Bd de La Liberté Benjdia, 20000 Casablanca',
         date: '23 November, 10:00 AM',
-        courier: {
+        owner: {
             name: 'Mohamed',
             img: '',
             rate: 4,
@@ -113,9 +114,6 @@ const styles = theme => ({
         marginRight: 10,
         width: 60,
         height: 60,
-    },
-    courier: {
-        display: 'flex',
     },
     photo: {
         border: '1px solid #CECECE',
@@ -221,7 +219,7 @@ const styles = theme => ({
         fontSize: 30,
         color: '#CECECE',
     },
-    courier: {
+    owner: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -239,43 +237,84 @@ const styles = theme => ({
     defaultAvatar: {
         backgroundImage: `url(${defaultAvatar})`,
     },
-    aboutCourier: {
+    aboutOwner: {
         display: 'inline-block',
         marginLeft: 8,
         verticalAlign: 'middle',
         fontSize: 20,
     },
     btn: {
-        height: 42,
+        height: 50,
+        width: 200,
         margin: 'auto',
-        backgroundColor: '#88C601',
-        color: theme.palette.common.white,
         alignSelf: 'center',
-        '&:hover': { backgroundColor: '#7BB203' },
+        color: theme.palette.common.white,
         [theme.breakpoints.down('xs')]: {
             width: '100%',
-        }
+            margin: 10,
+        },
+        margin: 30,
     },
+    btnAccept: {
+        backgroundColor: '#88C601',
+        '&:hover': { backgroundColor: '#7BB203' },
+    },
+    btnHide: {
+        backgroundColor: '#CECECE',
+        '&:hover': { backgroundColor: '#BFBEBE' },
+    },
+    btnLine: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+    },
+    driver: {
+        fontSize: 18,
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        fontWeight: 400,
+    },
+    icon: {
+        width: 32,
+        height: 32,
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        padding: 1,
+        display: 'inline-block',
+        backgroundImage: "url('pictures/icons/courier/Layer_3.png')",
+    },
+    name: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        margin: '0 20px',
+    },
+    user: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        padding: 5,
+        alignItems: 'center',
+        marginBottom: 40,
+        color: '#979797',
+    },
+    info: {
+        color: '#979797',
+        textAlign: 'center',
+    }
 })
 
 const defaultAvatar = '/pictures/fakeData/poy_benbernanke.png';
 
-class CompletedOrders extends Component {
+class TaskFeed extends Component {
     constructor(props) {
         super(props);
         this.state = {
             orders: fakeOrders,
-            openRate: false,
-            ratedCourier: null,
         }
     }
 
     componentDidMount() {
-        // fetch products & set state;
-    }
-
-    openRate = (courier) => {
-        this.setState({ openRate: true, ratedCourier: courier });
+        // fetch orders & set state;
     }
 
     closeRate = () => {
@@ -283,7 +322,7 @@ class CompletedOrders extends Component {
     }
 
     renderOrders = (order) => {
-        const { classes } = this.props;
+        const { classes, user } = this.props;
         return (
             <Grid container key={order.id}>
                 <Grid item xs={12} sm={12} md={4} lg={3} xl={2} className={classes.productInfo}>
@@ -303,20 +342,23 @@ class CompletedOrders extends Component {
                         </div>
                     </div>
                 </Grid>
-                <Grid item xs={12} sm={12} md={4} lg={3} xl={3} className={classes.courier}>
+                <Grid item xs={12} sm={12} md={4} lg={3} xl={3} className={classes.owner}>
                     <div >
                         {
-                            order.courier.img ?
-                                <div className={classes.avatar} style={{ backgroundImage: `url(${order.courier.img})` }} /> :
+                            order.owner.img ?
+                                <div className={classes.avatar} style={{ backgroundImage: `url(${order.owner.img})` }} /> :
                                 <div className={[classes.avatar, classes.defaultAvatar].join(' ')} />
                         }
-                        <div className={classes.aboutCourier}>
-                            <span>Order By</span><br />
-                            <span style={{ margin: '5px 0', fontWeight: "bold" }}>{order.courier.name}</span>
-                            <RateToStars rate={order.courier.rate} />
+                        <div className={classes.aboutOwner}>
+                            <span style={{ margin: '5px 0', fontWeight: "bold" }}>{order.owner.name}</span><br />
+                            <span>{order.owner.completed}Completed Orders</span>
+                            <RateToStars rate={order.owner.rate} />
                         </div>
                     </div>
-                    <Button onClick={() => this.openRate(order.courier)} className={classes.btn}>Rate this courier</Button>
+                </Grid>
+                <Grid item xs={12} className={classes.btnLine}>
+                    <Button onClick={() => this.accept()} className={classnames(classes.btn, classes.btnAccept)}>ACCEPT</Button>
+                    <Button className={classnames(classes.btn, classes.btnHide)}>HIDE</Button>
                 </Grid>
             </Grid >
         );
@@ -324,38 +366,38 @@ class CompletedOrders extends Component {
 
     render() {
         const { orders } = this.state;
-        const { classes } = this.props;
+        const { classes, user } = this.props;
         return (
             <Grid container spacing={0} >
                 <Grid item sm={12} xs={12} md={4} lg={3} className={classes.userBadge}>
                     <Paper className={classes.paper}>
-                        <UserInfo />
-                        <div>
-                            <hr className={classes.hrLight} />
-                            <div className={classes.city}>
-                                <span className={[classes.icon, classes.iconMap].join(' ')}></span><span style={{ marginLeft: 15 }}>{this.props.user.city}</span>
+                        <div className={classes.user}>
+                            <Avatar size={60} />
+                            <div className={classes.name}>
+                                <span >{user.name}</span>
+                                <br />
+                                <span className={classes.driver}>
+                                    <span className={classes.icon}></span><span style={{ marginLeft: 15 }}>Driver</span>
+                                </span>
                             </div>
-                            <hr className={classes.hrLight} />
-                            <div className={classes.orders}>
-                                <p className={classes.orderLabel}>MY ORDERS</p>
-                                <Grid container>
-                                    <Grid item xs={6}>
-                                        <div className={classes.ordersType}>
-                                            Completed Orders
-                                        </div>
-                                        <div className={classes.ordersCount}>
-                                            {this.props.user.completedOrders}
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <div className={classes.ordersType}>
-                                            In Progress
-                                        </div>
-                                        <div className={classes.ordersCount}>
-                                            {this.props.user.inProgressOrders}
-                                        </div>
-                                    </Grid>
-                                </Grid>
+                        </div>
+                        <hr className={classes.hrLight} />
+                        <div className={classes.info}>
+                            {user.companyName &&
+                                <p style={{ fontSize: 20, fontWeight: 'bold' }}>
+                                    {user.companyName}
+                                </p>
+                            }
+                            <p style={{ fontSize: 16 }}>
+                                <span style={{ fontWeight: 'bold' }}>{user.completedOrders}</span> Completed Orders
+                            </p>
+                            <div className={classes.info}>
+                                <p style={{fontWeight: 'bold', fontSize: 20
+                                }}>MY CITIES</p>
+                                <div>
+
+                                </div>
+
                             </div>
                         </div>
                     </Paper>
@@ -365,18 +407,12 @@ class CompletedOrders extends Component {
                         return <Paper key={order.id} className={classes.orderItem}>{this.renderOrders(order)}</Paper>;
                     })}
                 </Grid>
-                <RateCourier
-                    open={this.state.openRate}
-                    close={this.closeRate}
-                    courier={this.state.ratedCourier}
-                    owner={this.props.user.id}
-                />
             </Grid>
         );
     }
 }
 
-CompletedOrders.propTypes = {
+TaskFeed.propTypes = {
     classes: PropTypes.object.isRequired,
 }
 
@@ -384,4 +420,4 @@ export default withStyles(styles)(connect(
     state => ({
         user: state.loginData.user,
     })
-)(CompletedOrders));
+)(TaskFeed));

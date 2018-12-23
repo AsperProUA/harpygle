@@ -12,8 +12,10 @@ import PartnerMenu from './partnerOwners/Menu';
 import BusinessProfile from './businessOwners/Profile';
 import PartnerProfile from './partnerOwners/Profile';
 import CourierProfile from './Couriers/Profile';
-import CourierJounATeam from './Couriers/JoinATeam';
+import CourierJoinATeam from './Couriers/JoinATeam';
+import CoureierRequests from './Couriers/Requests';
 import Products from './products';
+import AddNewProductRequest from './businessOwners/AddNewProductRequest';
 import BusinessEarnings from './businessOwners/Earning';
 import PartnerEarnings from './partnerOwners/Earning'
 import CourierEarnings from './Couriers/Earning';
@@ -46,7 +48,7 @@ const styles = theme => ({
     },
   },
   content: {
-    flexDirection:'column',
+    flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     minHeight: '100vh',
@@ -84,7 +86,7 @@ class MainFrame extends Component {
       case 'BOwners': return <BusinessMenu />;
       case 'suppliers': return <div>supplierMenu</div>;
       case 'courier': return <CourierMenu />;
-      case 'partners': return <PartnerMenu/>;
+      case 'partners': return <PartnerMenu />;
 
     }
   }
@@ -97,10 +99,10 @@ class MainFrame extends Component {
       <BrowserRouter>
         <div className={classes.root}>
           <Hidden smDown implementation="css">
-              {this.renderMenu()}
+            {this.renderMenu()}
           </Hidden>
           <Grid container className={classes.content}>
-            <AppBar role={role}/>
+            <AppBar role={role} />
             {isLoad && (
               <div className={classes.preloaderBG}>
                 {preloader}
@@ -161,7 +163,7 @@ class MainFrame extends Component {
                     case 'suppliers': return <div>supplierProfile</div>;
                   }
                 }} />
-                <Route
+              <Route
                   exact path='/inventory'
                   render={() => {
                     switch(role) {
@@ -179,6 +181,22 @@ class MainFrame extends Component {
                     }
                   }}
                 />
+              <Route
+                exact path='/requests'
+                render={() => {
+                  switch (role) {
+                    case 'courier': return <CoureierRequests />;
+                  }
+                }}
+              />
+              <Route
+                exact path='/addnewproduct'
+                render={() => {
+                  switch(role) {
+                    case 'BOwners': return <AddNewProductRequest />
+                  }
+                }}
+              />
               <Route
                 exact path='/request'
                 render={() => {
@@ -198,6 +216,10 @@ class MainFrame extends Component {
               <Route
                 exact path='/welcome'
                 render={() => <Welcome />}
+                />
+              <Redirect
+                from='/'
+                to={((role === 'BOwners') && '/delivery') || ((role === 'courier') && '/requests')}
               />
             </Switch>
           </Grid>

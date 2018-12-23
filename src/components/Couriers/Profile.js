@@ -175,7 +175,6 @@ class Profile extends Component {
     fetchCourier = () => {
         getData({ url: `courier/getbyid/${this.props.loginData.user.id}` })
             .then(response => {
-
                 const { courierID, email, pictureUrl, name, city, phoneNum, isVerified } = response.data.response;
                 this.setState(currentState => {
                     const { user } = currentState;
@@ -189,7 +188,7 @@ class Profile extends Component {
                     return currentState;
                 });
                 // response.data.avatar = pictureUrl;
-                this.props.onUpdate(response.data);
+                this.props.onUpdate(response.data.response);
             });
 
     }
@@ -233,7 +232,7 @@ class Profile extends Component {
         phoneNum.value && (body.phoneNum = phoneNum.value);
 
         this.props.onUpdate({avatar:avatar.value});
-        axios.put(`${apiPath}courier/update/${id}`, body, {
+        axios.put(`${apiPath}courier/update/${this.props.loginData.user.id}`, body, {
             headers: { 'Content-Type': 'application/json' },
         }).then(this.fetchCourier);
     }
@@ -284,7 +283,6 @@ class Profile extends Component {
     }
 
     resizeCrop = (src, width, height) => {
-        console.log(src)
         var crop = width == 0 || height == 0;
         // not resize
         if (src.width <= width && height == 0) {
@@ -324,7 +322,6 @@ class Profile extends Component {
     }
 
     render() {
-        console.log(this.state);
         const { classes } = this.props;
         const {
             email,
@@ -375,7 +372,7 @@ class Profile extends Component {
                             <TextField
                                 error={isChecked && !isValid && name.errMsg && !name.isValid}
                                 label="Full Name"
-                                value={name.value}
+                                value={name.value||''}
                                 onInput={(event) => { this.handleInput('name', event.target.value) }}
                                 helperText={isChecked && !isValid && !name.isValid && name.errMsg}
                                 margin="normal"
@@ -384,7 +381,7 @@ class Profile extends Component {
                             <TextField
                                 error={isChecked && !isValid && city.errMsg && !city.isValid}
                                 label="City"
-                                value={city.value}
+                                value={city.value||''}
                                 onInput={(event) => { this.handleInput('city', event.target.value) }}
                                 helperText={isChecked && !isValid && !city.isValid && city.errMsg}
                                 margin="normal"
@@ -393,7 +390,7 @@ class Profile extends Component {
                             <TextField
                                 error={isChecked && !isValid && phoneNum.errMsg && !phoneNum.isValid}
                                 label="Phone Number"
-                                value={phoneNum.value}
+                                value={phoneNum.value||''}
                                 type='number'
                                 onInput={(event) => { this.handleInput('phoneNum', event.target.value) }}
                                 helperText={isChecked && !isValid && !phoneNum.isValid && phoneNum.errMsg}
@@ -403,7 +400,7 @@ class Profile extends Component {
                             <TextField
                                 // error={isChecked && !isValid && securityQuestion.errMsg && !securityQuestion.isValid}
                                 label="Security Question"
-                                value={securityQuestion.value}
+                                value={securityQuestion.value||''}
                                 onInput={(event) => { handleInput('securityQuestion', event.target.value) }}
                                 helperText={isChecked && !isValid && !securityQuestion.isValid && securityQuestion.errMsg}
                                 margin="normal"
@@ -412,7 +409,7 @@ class Profile extends Component {
                             <TextField
                                 error={isChecked && !isValid && securityAnswer.errMsg && !securityAnswer.isValid}
                                 label="Security Answer"
-                                value={securityAnswer.value}
+                                value={securityAnswer.value||''}
                                 onInput={(event) => { handleInput('securityAnswer', event.target.value) }}
                                 helperText={isChecked && !isValid && !securityAnswer.isValid && securityAnswer.errMsg}
                                 margin="normal"
@@ -421,7 +418,7 @@ class Profile extends Component {
                             <TextField
                                 error={isChecked && !isValid && currentPassword.errMsg && !currentPassword.isValid}
                                 label="Current Password"
-                                value={currentPassword.value}
+                                value={currentPassword.value||''}
                                 onInput={(event) => { handleInput('currentPassword', event.target.value) }}
                                 helperText={isChecked && !isValid && !currentPassword.isValid && currentPassword.errMsg}
                                 type='password'
@@ -431,7 +428,7 @@ class Profile extends Component {
                             <TextField
                                 error={isChecked && !isValid && newPassword.errMsg && !newPassword.isValid}
                                 label="New Password"
-                                value={newPassword.value}
+                                value={newPassword.value||''}
                                 onInput={(event) => { handleInput('newPassword', event.target.value) }}
                                 helperText={isChecked && !isValid && !newPassword.isValid && newPassword.errMsg}
                                 type='password'

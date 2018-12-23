@@ -1,35 +1,15 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import apiPath from '../../services/apiPath';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Paper, Table, TableRow, TableHead, TableCell, TableBody, TextField } from '@material-ui/core';
+import { Grid, Paper, Table, TableRow, TableHead, TableCell, TableBody, TextField, Button } from '@material-ui/core';
 import { connect } from 'react-redux'
 import getData from '../../services/getData';
+import { Link } from 'react-router-dom';
 
 import UserInfo from '../globalComponents/UserInfo';
-
-const fakeProducts = [
-    {
-        id: 1,
-        photo: 'http://pngimg.com/uploads/smartphone/smartphone_PNG8523.png',
-        name: 'HTC ONE  blue',
-        description: 'Qualcomm® Snapdragon™ 810, ROM: 32GB / RAM: 3GB, 4G LTE,',
-        quantity: 0,
-    },
-    {
-        id: 2,
-        photo: 'http://pngimg.com/uploads/smartphone/smartphone_PNG8523.png',
-        name: 'HTC ONE  blue',
-        description: 'Qualcomm® Snapdragon™ 810, ROM: 32GB / RAM: 3GB, 4G LTE,',
-        quantity: 0,
-    },
-    {
-        id: 3,
-        photo: 'http://pngimg.com/uploads/smartphone/smartphone_PNG8523.png',
-        name: 'HTC ONE  blue',
-        description: 'Qualcomm® Snapdragon™ 810, ROM: 32GB / RAM: 3GB, 4G LTE,',
-        quantity: 0,
-    },
-];
+import products from '../products';
 
 const styles = theme => ({
     row: {
@@ -46,6 +26,7 @@ const styles = theme => ({
         }
     },
     td: {
+        textAlign: 'left',
         [theme.breakpoints.down('sm')]: {
             padding: 4,
         }
@@ -117,6 +98,14 @@ const styles = theme => ({
     },
     paper: {
         padding: 15,
+    },
+    btn: {
+        backgroundColor: '#88C601',
+        color: theme.palette.common.white,
+        width: 250,
+        '&:hover': {
+            backgroundColor: '#7BB203',
+        },
     }
 })
 
@@ -124,7 +113,7 @@ class Inventory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: fakeProducts,
+            products: [],
             user: {
                 completedOrders: 13,
                 inProgressOrders: 2,
@@ -134,26 +123,32 @@ class Inventory extends Component {
 
     changeQuantity = (id, value) => {
         let index = this.state.products.findIndex((product) => {
-            return product.id == id;
+            return product.productRequestID == id;
         });
         if(index !== -1){
             this.setState(currentState => {
-                currentState.products[index].quantity = value;
+                currentState.products[index].reqAmount = value;
                 return currentState;
             });
+            axios.put(`${apiPath}business/productrequest/${id}`, {reqAmount: value});
         }
     }
 
     componentDidMount() {
-        getData({url: `inventory/${this.props.user.id}`})
+        getData({url: `business/productrequest/getbyownerid/${this.props.user.id}`}).then(response=>{
+            console.log(response);
+            this.setState({products: response.data});
+        })
     }
 
     render() {
         const { products } = this.state;
         const { classes, user } = this.props;
-        console.log(products);
         return (
             <Grid container spacing={0} >
+            <Grid item xs={12} style={{padding: 20}}>
+                <Link to='/addnewproduct' style={{textDecoration: 'none'}}><Button className={classes.btn}> Add New product</Button></Link>
+            </Grid>
                 <Grid item sm={4} xs={12} md={4} lg={3} className={classes.userBadge}>
                     <Paper className={classes.paper}>
                         <UserInfo/>
@@ -200,16 +195,16 @@ class Inventory extends Component {
                             <TableBody>
                                 {products.map(product => {
                                     return (
-                                        <TableRow className={classes.row} key={product.id}>
-                                            <TableCell className={classes.td}><div className={classes.photo}><img src={product.photo}></img></div></TableCell>
+                                        <TableRow className={classes.row} key={product.productRequestID}>
+                                            <TableCell className={classes.td} style={{width: 110}}><div className={classes.photo}><img src={product.imgUrls[0]}></img></div></TableCell>
                                             <TableCell className={classes.td}>{product.name}<br />{product.description}</TableCell>
-                                            <TableCell className={classes.td}>
+                                            <TableCell className={classes.td} style={{width: 110}}>
                                                 <TextField
                                                     InputProps={{
                                                         inputProps: { min: 0, max: 1000 },
                                                         classes: { input: classes.numberInput }
                                                     }}
-                                                    value={product.quantity}
+                                                    value={product.reqAmount}
                                                     // onChange={this.handleChange('age')}
                                                     type="number"
                                                     className={classes.textField}
@@ -218,7 +213,7 @@ class Inventory extends Component {
                                                     }}
                                                     margin="normal"
                                                     variant="outlined"
-                                                    onInput={(event) => this.changeQuantity(product.id, event.target.value)}
+                                                    onInput={(event) => this.changeQuantity(product.productRequestID, event.target.value)}
                                                 />
                                             </TableCell>
                                         </TableRow>

@@ -177,7 +177,8 @@ class Profile extends Component {
         getData({ url: `business/get/${this.props.loginData.user.id}` })
             .then(response => {
 
-                const { ownerID, email, pictureUrl, ShopifyURL, name, city, phoneNum, pickupAddress } = response.data;
+                const { ownerID, email, pictureUrl, shopifyShopName, name, city, phoneNum, pickupAddress } = response.data;
+                console.log(response.data)
                 this.setState(currentState => {
                     const { user } = currentState;
                     user.id = ownerID;
@@ -187,7 +188,7 @@ class Profile extends Component {
                     user.phoneNum.value = phoneNum;
                     user.pickupAddress.value = pickupAddress;
                     // user.avatar.value = pictureUrl;
-                    user.ShopifyURL.value = ShopifyURL;
+                    user.ShopifyURL.value = shopifyShopName;
                     user.isVerified = response.data.isVerified;
                     return currentState;
                 });
@@ -232,14 +233,14 @@ class Profile extends Component {
         securityQuestion.value && (body.securityQuestion = securityQuestion.value);
         securityAnswer.value && (body.securityAnswer = securityAnswer.value);
         verificationID.updated && (body.verificationID = verificationID.value);
-        ShopifyURL.value && (body.ShopifyURL = ShopifyURL.value);
+        ShopifyURL.value && (body.shopifyShopName = ShopifyURL.value);
         name.value && (body.name = name.value);
         city.value && (body.city = city.value);
         phoneNum.value && (body.phoneNum = phoneNum.value);
         pickupAddress.value && (body.pickupAddress = pickupAddress.value);
 
-        this.props.onUpdate({avatar:avatar.value});
-        axios.put(`${apiPath}business/update/${id}`, body, {
+        this.props.onUpdate({ avatar: avatar.value });
+        axios.put(`${apiPath}business/update/${this.props.loginData.user.id}`, body, {
             headers: { 'Content-Type': 'application/json' },
         }).then(this.fetchOwner);
     }
@@ -369,7 +370,15 @@ class Profile extends Component {
 
                     <div className={classes.url}>
                         <div className={classes.shopify}><span><img src='/pictures/icons/preview.png'></img> Shopify URL </span><span>Edit</span></div>
-                        {ShopifyURL.value}
+                        <TextField
+                            error={isChecked && !isValid && ShopifyURL.errMsg && !ShopifyURL.isValid}
+                            value={ShopifyURL.value}
+                            fullWidth
+                            onInput={(event) => { this.handleInput('ShopifyURL', event.target.value) }}
+                            helperText={isChecked && !isValid && !ShopifyURL.isValid && ShopifyURL.errMsg}
+                            margin="normal"
+                            variant="outlined"
+                        />
                     </div>
                     <div className={classes.accountId} style={{ paddingBottom: 0 }}>
                         <Button onClick={this.handleDelete} style={{ backgroundColor: 'inherit', color: '#979797', fontSize: 14, margin: 0, textTransform: 'none' }}>Delete account</Button>
