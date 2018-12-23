@@ -1,0 +1,266 @@
+/* custom css for partner */
+.box-border{
+    box-shadow: 0 0 10px #ccc;
+  }
+  .pbox-border{
+    box-shadow: 0 0 10px #ccc;
+  }
+  .width25{
+    width: 19%;
+    display: inline-block;
+  }
+  .pwidth25{
+    width: 19%;
+    display: inline-block;
+  }
+  h4{
+    font-weight: bold;
+  }
+  .imgwidthHeight{
+    height: 88px;
+      width: 97px;
+  }
+  .btn-story{
+    background: #88C601;
+      border-color: #88C601;
+      font-weight: bold;
+      padding: 15px;
+      color: white;
+  }
+  .imgGrid{
+    width: 45%;
+  }
+  .pimgGrid{
+    width:110px;
+    margin-top: 30px;
+  }
+  body{
+    font-family: 'Roboto', sans-serif;
+      color: #707070;
+  }
+  /* custom css for partner */
+  .content-box{
+    width: 80%;
+    margin: 0 auto;
+  }
+  .pcontent-box{
+    width: 80%;
+    margin: 0 auto;
+  }
+  .div30{
+    width: 32%;
+    float: left;
+  }	
+  .div40{
+    width: 40%;
+  }	
+  .div50{
+    width: 50%;
+    margin: 0 auto;
+  }
+  .div60{
+    width: 59%;
+  }
+  .div80{
+    width: 80%;
+  }
+
+  .div100{
+    width: 100%;
+    display: inline-block;;
+  }
+  .pdiv30{
+    width: 32%;
+    float: left;
+  }	
+  .pdiv40{
+    width: 40%;
+  }	
+  .pdiv50{
+    width: 50%;
+    margin: 0 auto;
+  }
+  .pdiv60{
+    width: 59%;
+  }
+  .pdiv80{
+    width: 80%;
+  }
+
+  .pdiv100{
+    width: 100%;
+    display: inline-block;;
+  }
+  .mt-2{
+    margin-top : 2%;
+  }
+  .pmt-2{
+    margin-top : 2%;
+  }
+  .p-2{
+    padding: 2%;
+  }
+  .pp-2{
+    padding: 2%;
+  }
+  .mt-5{
+    margin-top: 5%;
+  }
+  .pmt-5{
+    margin-top: 5%;
+  } 
+  .mt-3{
+    margin-top: 3%;
+  }
+  .pmt-3{
+    margin-top: 3%;
+  }
+  .mr-5{
+    margin-right: 5%;
+  }
+  .mr-1{
+    margin-right: 1%;
+  }
+  .pmr-1{
+    margin-right: 1%;
+  }
+  .p-3{
+      padding: 3%;
+  }
+  .p-4{
+    padding: 4%;
+  }
+  .pp-4{
+    padding: 4%;
+  }
+  .p-5{
+    padding: 5%;
+  } 
+  .m-auto{
+    margin: 0 auto;
+  }
+  .pm-auto{
+    margin:0 auto;
+  }
+  .text-center{
+    text-align: center;
+  }
+  .ptext-center{
+    text-align: center;
+  }
+  .text-left{
+    text-align: left;
+  }
+  .d-inline{
+    display: inline-block !important;
+  }
+  .div-grid{
+    padding-top: 2%;
+    padding-bottom: 5%;
+    height: 250px;
+    vertical-align: top;
+  }
+  .pdiv-grid{
+    padding: 20px;
+    height: 250px;
+    vertical-align: top;
+  }
+  .div-grid .div100.mt-5{
+    vertical-align: middle;
+    height: 200px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  .imgSupport{
+    height: 100px;
+  }
+  .pimgSupport{
+    height: 100px;
+  }
+  .text-right{
+      text-align: right;
+  }
+  .ptext-right{
+    text-align: right;
+}
+.m-1{
+    margin: 1%;
+}
+.m-2{
+    margin: 2%;
+}
+.pm-2{
+  margin: 2%;
+  font-size: 15px;
+}
+
+.MuiFormControl-root-6{
+  width: 100%;
+}
+.jss6{
+  width: 100% !important;
+}
+.justify{
+  text-align: justify;
+}
+.MuiAppBar-colorPrimary-260{
+  color: black !important;
+  background-color: white !important;
+}
+.textClass{
+  font-size: 15px !important;
+}
+.tableRow{
+  border-bottom: 1px solid black;
+  height: 90px;
+}
+.teamName{
+  font-size: 12px;
+  vertical-align: super;
+  cursor: pointer;
+}
+.cell{
+  padding-right: 10px;
+}
+.headIcon{
+  vertical-align: middle;
+  font-size: 40px !important;
+}
+.right{
+  float: right;
+}
+.imgTool{
+  height: 18px;
+}
+.imgSize30{
+  height: 30px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.cusor{
+  cursor: pointer;
+}
+p{
+  text-align: justify;
+}
+@media only screen and (min-width : 768px) and (max-width : 1024px) {
+  .response>.pwidth25 { width: 33% !important; height: 300px;}
+  .pdiv50 {width:auto;}
+  p { text-align: justify !important;}
+  .response>.newDiv20 { width:78% !important;}
+}
+
+@media only screen and (min-width : 320px) and (max-width : 480px) {
+  .response>.pwidth25 { width: 60% !important;}
+  .pdiv50 {width:auto;}
+  .response>.pdiv60 { width:103% !important;}
+  p { text-align: justify !important;}
+  .imgTool {display: block !important; width: 25% !important; margin-left: auto !important; margin-right: auto !important;}
+  .response>.newDiv20 { width:auto !important;}
+  .response>.newButton1 { margin-top: 30% !important; }
+}
+
+/* @media only screen and (min-width : 1224px) {
+  .top { padding-left: 21% !important; width: auto;}
+} */

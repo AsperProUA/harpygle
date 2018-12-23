@@ -14,64 +14,63 @@ import getData from '../../services/getData';
 import Header from './Header';
 
 const style = theme => ({
-    root: {
-        maxWidth: 465,
-        textAlign: 'center',
-        margin: 'auto',
-        backgroundColor: theme.palette.common.white,
-        fontSize: 14,
-        fontWeight: 'lighter',
-        color: '#707070',
-        '& h1': {
-            fontSize: 36,
+        root: {
+            maxWidth: 465,
+            textAlign: 'center',
+            margin: 'auto',
+            backgroundColor: theme.palette.common.white,
+            fontSize: 14,
             fontWeight: 'lighter',
             color: '#707070',
-            margin: '30px auto',
-            marginBottom: 5,
+            '& h1': {
+                fontSize: 36,
+                fontWeight: 'lighter',
+                color: '#707070',
+                margin: '30px auto',
+                marginBottom: 5,
+            },
+            [theme.breakpoints.down('sm')]: {
+                paddingTop: 0,
+            },
         },
-        [theme.breakpoints.down('sm')]: {
-            paddingTop: 0,
+        input: {
+            border: '1px solid #D0D0D0',
+            borderRadius: '10px',
+            padding: '10px 20px',
         },
-    },
-    input: {
-        border: '1px solid #D0D0D0',
-        borderRadius: '10px',
-        padding: '10px 20px',
-    },
-    label: {
-        textAlign: 'left',
-        margin: '10px',
-        color: '#979797',
-        fontSize: 18,
-        fontWeight: 'bold',
-        width: 'auto',
-    },
-    btn: {
-        backgroundColor: '#88C601',
-        color: theme.palette.common.white,
-        marginBottom: 50,
-        width: 250,
-        '&:hover': {
-            backgroundColor: '#7BB203',
-        }
-    },
-    error: {
-        fontSize: 12,
-        color: theme.palette.error.main,
-        fontWeight: 300
-    },
-    forgot: {
-        '& a': {
-            textDecoration: 'none',
-            color: '#25AAE1',
+        label: {
+            textAlign: 'left',
+            margin: '10px',
+            color: '#979797',
+            fontSize: 18,
+            fontWeight: 'bold',
+            width: 'auto',
         },
-    },
+        btn: {
+            backgroundColor: '#88C601',
+            color: theme.palette.common.white,
+            marginBottom: 50,
+            width: 250,
+            '&:hover': {
+                backgroundColor: '#7BB203',
+            }
+        },
+        error: {
+            fontSize: 12,
+            color: theme.palette.error.main,
+            fontWeight: 300
+        },
+        forgot: {
+            '& a': {
+                textDecoration: 'none',
+                color: '#25AAE1',
+            },
+        },
 });
 
 class SignIn extends Component {
     constructor(props) {
         super(props);
-        console.log(props)
         this.state = {
             email: {
                 value: '',
@@ -98,8 +97,12 @@ class SignIn extends Component {
                     label: 'Supplier'
                 },
                 {
-                    value: 'Couriers',
+                    value: 'courier',
                     label: 'Courier'
+                },
+                {
+                    value: 'partners',
+                    label: 'Partner'
                 },
             ],
             isValid: false,
@@ -128,7 +131,6 @@ class SignIn extends Component {
     }
 
     validateField = (field, value) => {
-        console.log(value)
         let valid = false;
         let errMsg = undefined;
         switch (field) {
@@ -137,7 +139,7 @@ class SignIn extends Component {
                 errMsg = 'invalid email';
                 break;
             case 'password':
-                valid = !!value.match(/\s*([\w]{6,})\s*/);
+                valid = !!value.match(/(?=^.{8,}$)^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/);
                 console.log(valid);
                 break;
             case 'role':
@@ -181,14 +183,59 @@ class SignIn extends Component {
                         // save app state with user date in reducer
 
                         this.props.onLogin(appState);
-                    } else alert("Login Failed!");
+                        window.location.href = window.location.origin + '/profile';
+                    } 
+                    else if ('supplier logged in successfully' === json.data.msg) {
+                        let userData = {
+                            id: json.data.supplierID,
+                            token: json.data.accessToken,
+                            expireAt: json.data.expires_at,
+                            role: role.value,
+                            email: email.value,
+                        };
+                        let appState = {
+                            isLoggedIn: true,
+                            user: userData
+                        };
+                        this.props.onLogin(appState);
+                        window.location.href = window.location.origin + '/profile';
+                    }
+                    else if('couriers logged in successfully' == json.data.msg){
+                        let userData = {
+                            id: json.data.courierID,
+                            token: json.data.accessToken,
+                            expireAt: json.data.expires_at,
+                            role: role.value,
+                            email: email.value,
+                        };
+                        let appState = {
+                            isLoggedIn: true,
+                            user: userData
+                        };
+                        this.props.onLogin(appState);
+                        window.location.href = window.location.origin + '/profile';
+                    }
+                    else if ('partner logged in successfully' === json.data.msg) {
+                        let userData = {
+                            id: json.data.partnerID,
+                            token: json.data.accessToken,
+                            expireAt: json.data.expires_at,
+                            role: role.value,
+                            email: email.value,
+                        };
+                        let appState = {
+                            isLoggedIn: true,
+                            user: userData
+                        };
+                        this.props.onLogin(appState);
+                    }
+                    else alert("Login Failed!");
 
                 })
                 .catch(error => {
                     if (error.response) {
 
                         const msg = error.response.data.msg;
-                        console.log(msg)
                         if ('No user found in this email' === msg) {
                             this.setState(currentState => {
                                 currentState.email.isValid = false;
@@ -200,6 +247,14 @@ class SignIn extends Component {
                             this.setState(currentState => {
                                 currentState.password.isValid = false;
                                 currentState.password.errMsg = msg;
+                                currentState.isValid = false;
+                                return currentState;
+                            });
+                        }
+                        else if ('Sorry your email is not yet verified' === msg) {
+                            this.setState(currentState => {
+                                currentState.email.isValid = false;
+                                currentState.email.errMsg = msg;
                                 currentState.isValid = false;
                                 return currentState;
                             });
@@ -281,12 +336,18 @@ export default withStyles(style)(connect(
     dispath => ({
         onLogin: (loginData) => {
             dispath({ type: 'LOGIN_USER', payload: loginData });
-            getData({ url: `business/get/${loginData.user.id}` }).then(response => {
-                let userData = {};
-                userData.name = response.data.name;
-                userData.avatar = response.data.pictureUrl;
-                userData.city = response.data.city;
-                dispath({ type: 'USER_DATA', payload: userData });
+            let role = loginData.user.role;
+            switch (role) {
+                case 'BOwners':
+                    role = 'business';
+                    break;
+            }
+            getData({ url: `${role}/get${(loginData.user.role === 'courier')?'byid':''}/${loginData.user.id}` }).then(response => {
+                let userData = response.data;
+                if(loginData.user.role === 'courier') userData = response.data.response;
+
+                userData.avatar = userData.pictureUrl;
+                dispath({ type: 'USER_DATA', payload: userData});
             });
         }
     }),

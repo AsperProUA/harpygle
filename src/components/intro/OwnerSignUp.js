@@ -53,16 +53,17 @@ class OwnerSignUp extends Component {
             password: {
                 value: '',
                 isValid: false,
-                errMsg: 'password is too short',
+                errMsg: 'Password should contain lowercase and uppercase characters and digits. It must be at least 8 characters long.',
+            },
+            repeatPassword: {
+                value: '',
+                isValid: false,
+                errMsg: 'passwords are not equal',
             },
             isValid: false,
             isChecked: false,
             sended: false,
         }
-    }
-
-    handleClickAway = () => {
-        this.props.close();
     }
 
     handleInput = (field, value) => {
@@ -76,7 +77,7 @@ class OwnerSignUp extends Component {
 
     validateForm = () => {
         this.setState(currentState => {
-            currentState.isValid = (currentState.email.isValid && currentState.password.isValid);
+            currentState.isValid = (currentState.email.isValid && currentState.password.isValid && currentState.repeatPassword.isValid);
             return currentState;
         });
     }
@@ -90,7 +91,10 @@ class OwnerSignUp extends Component {
                 errMsg = 'invalid email';
                 break;
             case 'password':
-                valid = !!value.match(/\s*([\w]{6,})\s*/);
+                valid = !!value.match(/(?=^.{8,}$)^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/);
+                break;
+            case 'repeatPassword':
+                valid = (value == this.state.password.value);
                 break;
         }
         this.setState((currentState) => {
@@ -134,7 +138,7 @@ class OwnerSignUp extends Component {
 
     render() {
         const { classes } = this.props;
-        const { email, password, isChecked, isValid } = this.state;
+        const { email, password, isChecked, isValid, repeatPassword } = this.state;
         if (this.state.sended) return (
             <div>
                 <Header />
@@ -162,6 +166,16 @@ class OwnerSignUp extends Component {
                             value={password.value}
                             onInput={(event) => { this.handleInput('password', event.target.value) }}
                             helperText={isChecked && !isValid && !password.isValid && password.errMsg}
+                            type='password'
+                            margin="normal"
+                            variant="outlined"
+                        />
+                        <TextField
+                            error={isChecked && !isValid && repeatPassword.errMsg && !repeatPassword.isValid}
+                            label="Repeat password"
+                            value={repeatPassword.value}
+                            onInput={(event) => { this.handleInput('repeatPassword', event.target.value) }}
+                            helperText={isChecked && !isValid && !repeatPassword.isValid && repeatPassword.errMsg}
                             type='password'
                             margin="normal"
                             variant="outlined"

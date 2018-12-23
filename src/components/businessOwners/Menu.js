@@ -21,6 +21,7 @@ const styles = theme => ({
     textAlign: 'center',
   },
   menuItem: {
+    height: 40,
     '&:focus': {
       color: theme.palette.common.white,
       '& $primary, & $icon': {
@@ -61,7 +62,7 @@ function ListItemComposition(props) {
     <Paper className={classes.root} onClick={() => {props.hide && props.hide()}}>
       <div className={classes.logo}>
         <Link to='/'>
-          <img src='harpygle Logo white.png' width={114}></img>
+          <img src='/harpygle Logo white.png' width={114}></img>
         </Link>
       </div>
       <MenuList className={classes.menu}>

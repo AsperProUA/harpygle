@@ -82,12 +82,13 @@ const style = theme => ({
     button: {
         width: '258px',
         height: '80px',
-        margin: '20px 169px',
+        margin: '20px 96px',
         borderRadius: '40px',
         color: theme.palette.common.white,
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
         textTransform: 'none',
+        lineHeight:1,
     },
     paper: {
         borderRadius: 0,
@@ -204,7 +205,7 @@ function Intro(props) {
                     <Grid item md={6} >
                         <Paper className={classes.paper} >
                             <div>
-                                <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/undraw_Container_ship_urt4 (1)@2x.png'} alt='Ship'></img>
+                                <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/undraw_Container_ship_urt4@2x.png'} alt='Ship'></img>
                             </div>
                             <div className={classes.badge}>
                                 <p className={classes.bageNum}>01</p>
@@ -230,7 +231,7 @@ function Intro(props) {
                     <Grid item md={6} >
                         <Paper className={classes.paper} >
                             <div>
-                                <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/Group 55@2x.png'} alt='Group'></img>
+                                <img style={{ margin: '20px' }} src={window.location.origin + '/pictures/Intro/Group55@2x.png'} alt='Group'></img>
                             </div>
                             <div className={classes.badge}>
                                 <p className={classes.bageNum}>03</p>
@@ -257,8 +258,20 @@ function Intro(props) {
                 <p className={classes.aboutLabel}>ABOUT US</p>
                 <p className={classes.aboutText}>Harpygle was born as a startup in 2018 due to the increasing need of such services in the market. E-commerce was vastly growing globally and this growth was being witnessed in Morocco despite having a slower rate. With this in mind, Harpygle decided to become more of a partner to its clients rather than a service provider by solving its importing and delivery problems, being the most chronic problems of E-commerce.</p>
             </div>
+            <div className={classes.buttonGroup} class="text-center">
+                <Link style={{textDecoration:'none'}} to='/partner'>
+                    <Button
+                        variant="contained"
+                        style={{ backgroundColor: "#88C601",width : 'auto'}}
+                        className={classes.button}                        
+                    >
+                        Become Harpygle Partner
+                    </Button>
+                </Link>
+            </div>
             <Footer/>
         </div>
+        
     );
 }
 
